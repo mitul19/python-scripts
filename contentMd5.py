@@ -6,6 +6,7 @@ import os
 Content-MD5 and Etag calculation Program.
 Auther : Mitul Patel 
 github : https://github.com/mitul19
+Open Source Code.
 '''
 
 # Argument list, Help and input validation
