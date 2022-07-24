@@ -22,7 +22,9 @@ Basic of Object oriented Programming
 		Super class defines some functions but inherit version is implemented differently in subclass making it polymorphic
 
 using namespace std; // --> It eliminates need to specify where variables and functions in the standard library are declared (like cout, cin,
-vector. endl etc)resulting in short code 
+vector. endl etc)resulting in short code. Although the statement saves us from typing std:: whenever we wish to access a class or type defined 
+in the std namespace, it imports the entirety of the std namespace into the current namespace of the program. it is considers as bad practice
+
 
 Data Types:
 	Integers:
@@ -30,27 +32,21 @@ Data Types:
 		implementaion dependent - 32 bit or 16 bit
 		char (8 bit) can be used to show ASCII
 		stdint.h contains portable types like unit32_t, int8_t
+	https://en.cppreference.com/w/cpp/language/types
+
 	Floating point numbers:
 		Float
 		Double 
 		Long Double
+
 	Boolean:
 		{TRUE, FALSE}
 		anything other than 0 is TRUE
-	String class:
-		not native support, available as standard class <string>, std::string 
-		Array of chars terminated with zero
+
 	Pointers:
 		Special datatype for memory address.
 		Pointers may act as reference to existing variable
 		same pointer can be used to access many variable sequence wise
-	Array:
-		collection of data
-		homogeneous
-		fixed size
-		contiguous in memory
-		AUTO doesn't work for array
-
 
 Variables:
 	Temporary data storage unit 
@@ -58,24 +54,16 @@ Variables:
 	Must specify type and name
 	declaration may contain initialization
 
-	int 123, -5 //decimal   ø23  //octal, 0x3A //Hexadecimal, 0b1101 //binary, 23U //Unsigned
+	int 123, -5 //decimal   023  //octal, 0x3A //Hexadecimal, 0b1101 //binary, 23U //Unsigned
 	float 23.0f, 0.0f
 	double 25.4, -22.5
 	char 'a' , 'X', '\0', '\n' [fits in 8 bit but ASCII represents in single quotes]
-	strint "Hello"  [string literals between double quotes]
+	string "Hello"  [string literals between double quotes]
 
 	GLOBAL  									| Local
 	All part of code							| limited to scope of function or loop only 
 	Allocated memory by data segment of memory	| Allocated inside stack which is temporary 
 	once program ends then mem. is freed 		| execution leaves once scope variable deleted and mem. is freed
-
-Constants:
-	useful for parameters in code
-	Identifiers with values that will not change during execution
-	may be implemented via directives or as variables
-	you can define Const qualifier 
-		scope encapsulation is enforced
-		declaration specific type 
 
 Expressions:
 	symbolic representation of calculation
@@ -86,7 +74,7 @@ Assignment:
 	line of code that assigns a value to variable
 	must contain left hand side and right hand side
 	left side must be able to hold value
-	data type of bot expressions must match 
+	data type of both expressions must match (not enforced by compiler - Signed to Unsigned)
 
 Operations:
 	Arithmentic :  + - * / %
@@ -96,6 +84,7 @@ Operations:
 	Pointers : 	* (access to variable it point to)
 				& (address of variable)
 				-> (access of member of class or structur from pointer)
+	https://en.cppreference.com/w/cpp/language/operator_precedence
 
 Auto (type inference)
 	TYPEID operator is implementaion dependent so it will show int, float, bool, char or i, f, b, c single letter
@@ -105,7 +94,32 @@ Preprocessor directives:
 	directives tells the preprocessor what to add or remove
 	useful for Libraries, Constants, selection code blocks etc 
 	using MACROS, IFDEF etc 
+	Some of most popular c header files have been made available in cpp as well names like cstdind (preceed with lower case c)
+	IFDEF - to include code Conditionally 
 
+Constants:
+	useful for parameters in code
+	Identifiers with values that will not change during execution
+	may be implemented via directives or as variables
+	you can define Const qualifier 
+		scope encapsulation is enforced
+		declaration specific type 
+
+Array:
+	collection of data
+	homogeneous
+	fixed size
+	contiguous in memory
+	AUTO doesn't work for array
+
+Strings:
+	String class:
+		not native support 
+		Available as standard class <string>, std::string 
+		Array of chars terminated with zero
+----------------------------------------------------- 
+Older notes 
+----------------------------------------------------- 
 
 https://repl.it/  - online IDE 
 
