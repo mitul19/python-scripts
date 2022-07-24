@@ -1,0 +1,405 @@
+Basic of Object oriented Programming
+	Models to represent reality
+	Encapsulations:
+		Keep data and operations in their model 
+		It must include info only about themselves
+		Operations must be consice 
+		Example: car model shouldn't contain gas price.
+	Class:
+		c++ construct of model
+		Two types - Data, Functions [car.make, car.paint()]
+		instance of class also known as object.
+	Access specifiers:
+		Members may be public, private or protected
+		Private member - only with in class
+		Protected member - accessible in inherited class
+	Inheritance:
+		Class may have subclass based on it.
+		A subclass may inherit member from super class
+		Example: Animal.legs, dog.legs bird.wings
+	Polymorphism:
+		Sibling classes
+		Super class defines some functions but inherit version is implemented differently in subclass making it polymorphic
+
+using namespace std; // --> It eliminates need to specify where variables and functions in the standard library are declared (like cout, cin,
+vector. endl etc)resulting in short code 
+
+Data Types:
+	Integers:
+		Signed or Unsigned
+		implementaion dependent - 32 bit or 16 bit
+		char (8 bit) can be used to show ASCII
+		stdint.h contains portable types like unit32_t, int8_t
+	Floating point numbers:
+		Float
+		Double 
+		Long Double
+	Boolean:
+		{TRUE, FALSE}
+		anything other than 0 is TRUE
+	String class:
+		not native support, available as standard class <string>, std::string 
+		Array of chars terminated with zero
+	Pointers:
+		Special datatype for memory address.
+		Pointers may act as reference to existing variable
+		same pointer can be used to access many variable sequence wise
+	Array:
+		collection of data
+		homogeneous
+		fixed size
+		contiguous in memory
+		AUTO doesn't work for array
+
+
+Variables:
+	Temporary data storage unit 
+	Must be declared prior to use
+	Must specify type and name
+	declaration may contain initialization
+
+	int 123, -5 //decimal   ø23  //octal, 0x3A //Hexadecimal, 0b1101 //binary, 23U //Unsigned
+	float 23.0f, 0.0f
+	double 25.4, -22.5
+	char 'a' , 'X', '\0', '\n' [fits in 8 bit but ASCII represents in single quotes]
+	strint "Hello"  [string literals between double quotes]
+
+	GLOBAL  									| Local
+	All part of code							| limited to scope of function or loop only 
+	Allocated memory by data segment of memory	| Allocated inside stack which is temporary 
+	once program ends then mem. is freed 		| execution leaves once scope variable deleted and mem. is freed
+
+Constants:
+	useful for parameters in code
+	Identifiers with values that will not change during execution
+	may be implemented via directives or as variables
+	you can define Const qualifier 
+		scope encapsulation is enforced
+		declaration specific type 
+
+Expressions:
+	symbolic representation of calculation
+	may contain variable, constant and operator
+	must produce a value
+
+Assignment:
+	line of code that assigns a value to variable
+	must contain left hand side and right hand side
+	left side must be able to hold value
+	data type of bot expressions must match 
+
+Operations:
+	Arithmentic :  + - * / %
+	Bitwise : & | ~ ^
+	Logical : && || !
+	Relations : == != > < >= <=
+	Pointers : 	* (access to variable it point to)
+				& (address of variable)
+				-> (access of member of class or structur from pointer)
+
+Auto (type inference)
+	TYPEID operator is implementaion dependent so it will show int, float, bool, char or i, f, b, c single letter
+
+Preprocessor directives:
+	Your code is preprocessed prior to compiling
+	directives tells the preprocessor what to add or remove
+	useful for Libraries, Constants, selection code blocks etc 
+	using MACROS, IFDEF etc 
+
+
+https://repl.it/  - online IDE 
+
+- Object oriented language
+- GUI/HTML take button click where as C or Java have compiler
+- Algo needs to be defined in Cpp
+	Variable 
+		Temp space in memory to hold data
+		can be dynamic (changes with user input) or constant 
+	Computer assigns data right to left X = 100 [100 will be assigned to X]
+
+CH1
+	Hello Word to take cout and cin and print it 
+
+CH2 - Data representation
+	Added it in notesChap2.cpp
+
+	Quiz:
+
+		Question 1 of 5
+		If we wanted to store whole numbers, which would be the best data type to choose?
+		You are correct!
+		integer
+
+		Question 2 of 5
+		All variables can be overwritten with a new value?
+		Correct answer:
+		FALSE
+
+		Question 3 of 5
+		Integers will truncate the decimal portion instead of rounding it up or down.
+		You are correct!
+		TRUE
+
+		Question 4 of 5
+		How many dimensions can you have in an array?
+		You are correct!
+		as many as you want
+
+		Question 5 of 5
+		How many different data types can you store in the same array?
+		You are correct!
+		one
+
+CH3 - Flow of Control
+	Added it in notesChap3.cpp and solutions
+
+	Quiz:
+		Question 1 of 6
+		An if within another if is called an embedded if?
+		You are correct!
+		FALSE
+
+		Question 2 of 6
+		The else is required in the if structure?
+		You are correct!
+		FALSE
+
+		Question 3 of 6
+		How many else ifs can you have?
+		You are correct!
+		as many as you want
+
+		Question 4 of 6
+		The other decision structure we use is the switch case?
+		You are correct!
+		TRUE
+
+		Question 5 of 6
+		Loops are used when we want a section of code to repeat for a certain number of times?
+		You are correct!
+		TRUE
+
+		Question 6 of 6
+		The do/while loop is the only post-test loop we commonly use?
+		You are correct!
+
+CH4 - Functions 
+	Added in notesChap4.cpp and challange solutions
+
+	Quiz:
+		Question 1 of 3
+		If functions don't return anything, we say they are type void?
+		You are correct!
+		TRUE
+
+		Question 2 of 3
+		Function parameters must match between calling statement and function header by type, order and number .
+		You are correct!
+
+		Question 3 of 3
+		Efficient coding practice says to put all of your code into as many functions as possible.
+		This answer is incorrect.
+		TRUE
+		Correct answer:
+		FALSE
+
+CH5 -  File I/O
+
+	Quiz:
+		Question 1 of 3
+		Both inputting and outputting from a file can be done by including the fstream library.
+		You are correct!
+		TRUE
+
+		Question 2 of 3
+		Outputting to a text file will always overwrite the text file if it already exists.
+		You are correct!
+		FALSE
+
+		Question 3 of 3
+		You can only open files that are .txt.
+		You are correct!
+		FALSE
+
+
+CH6 - Data Structures
+	chap6notes.cpp contains data
+	Struct 
+	Class 
+		ClassExample.cpp contains details 
+	pointers
+	LinkedList
+
+	Quiz:
+		Question 1 of 4
+		The keywords public, protected and private are called access specifiers.
+		You are correct!
+		TRUE
+
+		Question 2 of 4
+		You can only use pointers to point to integers.
+		You are correct!
+		FALSE
+
+		Question 3 of 4
+		The * is used to denote a pointer.
+		You are correct!
+
+		Question 4 of 4
+		A linked list is a list of nodes with a pointer .
+		You are correct!
+
+
+--------------------------------------------
+C++ Essential Training (2018): Bill Weinman
+--------------------------------------------
+
+CH1: Intro
+	Distinct parts of c++
+		C langauge
+		C preprocessor
+		Classes and objects
+		Templates
+		Standard Template Library 
+
+	Xcode 
+		Xcode is an excellent IDE and Clang is a superb compiler and this combination will provide a great environment for this course.
+	VS Code
+
+CH2: Basic Syntax 
+	(hello.cpp contains details as well)
+	Functions, Statements [ends with semicolon ;] and expressions [returns a value]
+	varible must be decalred before it is used
+	// for comment till end of line 
+	/* -- */ multi line comment 
+	white spaces are ignored 
+	Identifiers
+		26 ISO Lation alphabets (both upper and lower) + 10 western Arabic numerals + ASCII underscore _ 
+		can be of any length but first 63 chars checked for uniqueness anf first 31 chars for external indentifiers 
+		initial underscrore _privateIdentifier and more that one underscrore __systemLevelIdenifiers
+	pointers and references
+	primitive array or c type array 
+	primitive string or c-string 
+		primitive array is guaranteed to be stored contiguosly 
+	Conditional Statement 
+	while.cpp edited with details
+CH3: Data Types
+	Strongly types langauge
+	Data Type defines Size and interpretation of a value.
+		Signed Int (32 bits) - Values -2,147,483,648 to 2,147,483,647
+		Unsigned Int (32 bits) - Values - 0 to 4,294,967,295
+		primitive types - int, floating, boolean
+		Compound type 
+			- Array - contiguouse sequential set of object of same type. it is flexible, powerful and have low overhead. also basis of C-String and C++ STL container class
+			- No primitive string type, null terminated array of charactes is special case, often called C-string 
+			- Struct - Sequential set up of various types, it may contains scalars, arrays, even other struct and classes.
+			- c++ classes are based on C-structures, basically class is a structur that defaults to private membership. it contains function member as well as data members 
+			- union is set overlapping objects (in memory space)
+			- pointer is a reference to object an object of a given type.
+			- refernce is like pointer but diff semantics, references are immutable - used as aliases 
+
+CH4: Operators
+	Common operators
+		Assignment  x = y
+		Arithmentic  x = x + y
+		compound --> x -= y 
+		unary -  ++i, unary minus(-), increment(++), decrement(--), NOT(!), Addressof operator(&), sizeof()
+		Logical 
+		Bitwise
+		ternary 
+		Dynamic Memory Operator - specific to cpp only  - new-delete.cpp
+		type cast - 
+		size of  - working.cpp
+		typeid - typeid.cpp
+		operator precedence 
+CH5: Functions 
+	Overview 
+		Basic building block 
+		call by reference is used is you want to changes values to passed variables otherwise variable remains local to the function
+		The return type, the name of the function, and the types of the function arguments are all combined to form the function signature
+	Creation of function:
+		via top of program
+		via forward definition and declaring it later 
+		via adding func.h where you can declare
+	Passing a value to function:
+		makes sure not to pass large values  to functions as it gets copied over to stack. rather pass it by reference or pointer
+		internally, a reference is managed as a pointer, and so it's a relatively small amount of data that gets passed on the stack. By default, function parameters are passed by value in C++. You can pass pointers or references if you need to pass larger values, but you'll need to do so explicitly.
+	Auto and static 
+		Variables declared in a function default to automatic storage, if you want your data to be persistent, you may declare your variables as static
+		non persistend data (auto) is defined in stack and each invocation function gets fresh stack of value
+	Returing values and references 
+	function pointers  - check jump.cpp
+	ocerloading function - cpp checks for full function signature where as c required each function names to be unique - check volume.cpp
+	variable number of arguments  - cstdarg lib - check variadic.cpp 
+	recursive - factorial
+
+CH6: Classes and Objects
+	Overview
+		Class (custom fundamental datatypes) & object
+		Object get instanciated with class - it is called class instance as well
+		Class have data memebers (properties) and functions (method) in it
+		Class contain Constructors (basically a member function with the same name as the class itself, and it's used to initialize each of the data members) and one destructor
+		by calling destructor we can remove object instances
+	Defining class - class.cpp
+	Data Members - struct and class are kind of same. Struct have all public data member where as in class you need to define it public.
+	Function member - class.cpp
+	Constructors and Deconstructors - constructors.cpp
+	operator overload - with member function and non member function
+CH7: Templates
+	Generic type - any data type can be processed 
+	temp. Func
+	Temp Class. - LIFO stack. temp-class.cpp
+CH8: Standard Libraries
+	Standard lib's are inherited from c. 
+CH9: Standard Template Lib (STL)
+	cpp standard 
+	like 
+		vector - Sequence containers  You can think of it as an object-oriented array
+		list - double linked list  - optimized for faster inserts and deletes 
+		set - ordered sequence container 
+		map - key value pairs - associative container
+		LIFO (stack), FIFO (queue), double ended containers (deque)
+		Strings and iostring
+
+--------------------------------------------
+C++ Templates and the STL: Bill Weinman
+--------------------------------------------
+Learning objectives
+	Template fundamentals
+	STL containers
+	Accessing iterators
+	Output, forward, and bidirectional iterators
+	The transform function
+	Transforming strings and types
+	Arithmetic, relational, and logical functions
+	STL algorithms
+
+CH1: Templates
+	A template is essentially a compiler abstraction that allows you to write generic code that applies to various types or classes without concern for the details of the type.
+	when you call the function a specialization with required datatype is created.
+	template classes are generally entirely contained in the header file and this does impact compile times.	
+CH2: STL containers
+	The STL array type is a fixed-size sequence container. The size of the array is defined when the array object is created. The size cannot change during the life of the array. The array object is available beginning with C++ 11. The array is designed to be fast and efficient. Although less functional than a vector, it carries no data other than its elements, and those elements are guaranteed to be stored in contiguous memory locations.
+CH3: STL iterators
+CH4: Transformations
+CH5: STL Functions
+CH6: STL Algorithm
+
+
+
+
+
+-----------------------------------------------------
+C++ Standard Template Library (STL): Eduardo Corpeño
+-----------------------------------------------------
+
+https://en.cppreference.com/w/
+Open source c++ IDE
+	1. Dev-C++ 
+	2. Eclipse 
+	3. VS Code community 
+	4. XCODE
+	5. onlinegdb.com
+
+Generic Programming (Compile time polymorphism)
+	Programming paradigm where data types are not specified in implementaion of code, but rather in its use
