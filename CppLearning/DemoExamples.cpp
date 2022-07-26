@@ -30,6 +30,56 @@ char array_str2[] = "What's up?";
 string std_str1 = "Hi everybody! ";
 string std_str2 = "How's the going?";
 
+float flt = -7.44f;
+int32_t sgn;
+uint32_t unsgn;
+
+// Structure related items
+enum purpose { dairy, meat, hide, pet };
+
+// enum cow_purpose { dairy, meat, hide, pet }; //hiding this to keep single purpose enum
+struct cow{
+    string name;
+    int age;
+    unsigned char purpose;
+};
+
+//Class related Items:
+// enum goat_purpose { dairy, meat, hide, pet }; //hiding this to keep single purpose enum
+class goat{
+public:
+    //Constructor to set inialization - overloading a function - public member function 
+    goat(string name_i, int age_i, unsigned char purpose_i){
+        name = name_i;
+        age = age_i;
+        purpose = purpose_i;
+    }   
+    //getter functions
+    string get_name(){
+        return name;
+    }
+    int get_age(){
+        return age;
+    }
+    unsigned char get_purpose(){
+        return purpose;
+    }
+    //Setter functions.
+    void set_age(int new_age){
+        age = new_age;
+    }
+    void set_name(string new_name){
+        name = new_name;
+    }
+    void set_purpose(unsigned char new_purpose){
+        purpose = new_purpose;
+    }
+private:
+    string name;
+    int age;
+    unsigned char purpose;
+};
+
 int main() //must return integer as defined
 {
 
@@ -100,9 +150,74 @@ int main() //must return integer as defined
     //cstring strcat function to concat. and store it on first string.
     strcat(array_str1, array_str2);
     // strcat_s(array_str1, LENGTH1, array_str2); it may be asked to use strcat_s on VS code.
+    cout << endl;
     cout << array_str1 << endl;
     //operator overloading via + to concat and none of the operand gets modified 
     cout << std_str1 + std_str2 << endl;
+
+//Type casting 
+    sgn = flt; //implecit type conversion or casting.
+    unsgn = sgn; //-ve will be 2^32 - 7 
+    cout << endl;
+    cout << " float: " << flt << endl;
+    cout << " int32: " << sgn << endl;
+    cout << "uint32: " << unsgn << endl;
+
+    int fahrenheit = 100; //length of int will be implementation dependant 
+    int celsius;
+
+    celsius = (5 / 9) * (fahrenheit - 32); //INT div will yield INT Quotient 
+    cout << endl;
+    cout << "Fahrenheit: " << fahrenheit << endl;
+    cout << "Celsius   : " << celsius << endl;
+
+    celsius = ((float)5 / 9.0) * (fahrenheit - 32);  //Expression convert to largest type present so it will be float
+    cout << endl;
+    cout << "Fahrenheit: " << fahrenheit << endl;
+    cout << "Celsius   : " << celsius << endl;
+
+    float weight = 10.99;  //Extracting float
     
+    cout << endl;
+    cout << "Float          : " << weight << endl;
+    cout << "Integer part   : " << (int) weight << endl;
+    cout << "Fractional part: " << (int)((weight - (int)weight) * 10000) << endl;  //Floating point num representation.
+
+    double d_weight = 10.99;  //Extracting double
+    
+    cout << endl;
+    cout << "Float          : " << d_weight << endl;
+    cout << "Integer part   : " << (int) d_weight << endl;
+    cout << "Fractional part: " << (int)((d_weight - (int)d_weight) * 10000) << endl;  //double give better fractional representation.
+
+//PRACTICAL Work. 
+	int nums[5] = {1,23,32,24,337};
+	float result; 
+    result = (float)(nums[0] + nums[1] + nums[2] + nums[3] + nums[4])/5.0; 
+    cout << endl;
+	cout << "The average is " << result << endl;
+
+//STRUCTURE Work.
+    cow my_cow;
+    my_cow.age = 5;
+    my_cow.name = "Betsy";
+    my_cow.purpose = dairy;
+    cout << endl;
+    cout << my_cow.name << " is a type-" << (int)my_cow.purpose << " cow." << endl;
+    cout << my_cow.name << " is " << my_cow.age << " years old." << endl;
+
+//CLASS 
+    goat my_goat("Hildy",7,pet);
+    cout << endl;
+    cout << my_goat.get_name() << " is a type-" << (int)my_goat.get_purpose() << " goat." << endl;
+    cout << my_goat.get_name() << " is " << my_goat.get_age() << " years old." << endl;
+    my_goat.set_name("lola");
+    my_goat.set_age(10);
+    my_goat.set_purpose(hide);
+    
+    cout << "Printing newer values set via setter" <<endl;
+    cout << my_goat.get_name() << " is a type-" << (int)my_goat.get_purpose() << " goat." << endl;
+    cout << my_goat.get_name() << " is " << my_goat.get_age() << " years old." << endl;
+
     return(0);
 }

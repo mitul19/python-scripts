@@ -1,4 +1,6 @@
+
 Basic of Object oriented Programming
+----------------------------------------------------- 
 	Models to represent reality
 	Encapsulations:
 		Keep data and operations in their model 
@@ -27,6 +29,7 @@ in the std namespace, it imports the entirety of the std namespace into the curr
 
 
 Data Types:
+----------------------------------------------------- 
 	Integers:
 		Signed or Unsigned
 		implementaion dependent - 32 bit or 16 bit
@@ -117,6 +120,88 @@ Strings:
 		not native support 
 		Available as standard class <string>, std::string 
 		Array of chars terminated with zero
+		Operator overloading - redefine operations by existing operator by tapping into semantics of the langauge
+
+Type Casting:
+	How to interpret piece of data, useful for converting data types
+	Example: int32_t or float 
+	Syntax: (unit32_t) (expression)
+
+Q&A:
+1.
+What does this part of a main.cpp file do?
+#include "library.h"
+	Causes the replacement of the #include directive by the entire contents of the source file library.h. This is similar to a Copy-Paste operation of library.h into main.cpp.
+2.
+Why is it important to specify the data type when declaring a variable.
+	Because the compiler needs to know how to interpret the data, and its width in bytes.
+3.
+When is type casting useful?
+	when an operation needs to be performed on specific data types like float or int
+4.
+What is the assumed type of a constant represented in the source code as 0.44?
+	double
+5.
+What is type casting?
+	Explicitly specifying the data type of an expression.
+6.
+What does the auto type specifier do in this line of code? (since C++11)
+auto x = 40000.22;
+	Specifies that the type of x will be deduced from the initializer. In this case, double.
+7.
+Which of the following is not a built-in operator of the C++ programming language?
+	Logical XOR
+8.
+What's a disadvantage of defining constants as macros?
+	They may lead to syntax errors.
+9.
+Suppose you want to have several lines of code that print data out for debugging purposes, but you don't want those lines to make it to the final application, for efficiency reasons. Which of the following achieves the desired behavior by using preprocessor directives?
+	// comment the following line for the final application
+	#define DEBUGGING
+
+	// copy and customize this for every debugging line
+	#ifdef DEBUGGING
+	cout<<"Var1 = "<<var1<<endl;
+	#endif
+10.
+What is a variable of type double?
+	a floating point number
+11.
+How does the string data type work in C++?
+	Strings are implemented as the string class in the string header file.
+12.
+What's a correct way of accessing the third element in the following array?
+int array[10];
+	array[2]
+
+
+Structures, Classes and Pointers
+----------------------------------------------------- 
+Structures
+	containers of heterogeneous data memebers
+	Useful for implementing simple Models
+	available in C constructs as well but dont follow same syntax in CPP
+
+Enums
+	sets of symbols that acts as constant and they are usually assigned consecutive values. 
+	prefering enum over constant is that they provide encapsulation
+
+Classes	
+	Basic elements of Object oriented programming
+	Used for implementing Models
+	contain data and function Members
+	it means same in java or python classes
+	By default class member are private. if you make all data member as public then we forced class to be struct
+	We should Encapsulate data member from outside world and use getter/setter function to access it. 
+	When we assigns we write to data member and when we print we reads data member
+	Constructor of a class is called when object is created - its public member function and it sets memory for all data members
+	Implicit constructor is always called when object is called.
+	if we write a class which are correlated, we dont want to tweak data freely from outside thats why use function written inside your class only.
+
+Header and implementaion files.
+
+
+
 ----------------------------------------------------- 
 Older notes 
 ----------------------------------------------------- 
