@@ -199,6 +199,191 @@ Classes
 	if we write a class which are correlated, we dont want to tweak data freely from outside thats why use function written inside your class only.
 
 Header and implementaion files.
+	Header files contain class definintions and function declaration
+	implementaion files contains execution code
+	implementaion files must include their header file
+	your code should only include header files
+	All implementaion file must be compiled 
+
+	Compiler 	- 	C++ Source file
+						|					 
+	Assembler 	-	Assembly file (Human readable native langauge or target CPU)
+						|
+	Linker 		- 	Object file (Other Object files from distributed Libraries)
+						|
+					Executable binary 
+
+Pointers
+	Special type of variable which holds memory address
+	We specify the type of variable we will be pointing to followed by name of pointer precedence via asterisk (*) (int a = 37; int *ptr; ptr = &a )
+	For 32 bit CPU pointer will be 32 bit. 
+	Pointer are mostly used for dynamic memory management, when you declare variable that memory will be needed and compiler creates that but most real application creates variables and object in memory during run time. this is known dynamic memory allocation. 
+	In c it is common to dynamically allocate memory via malloc and as programmer you are responsible to release that
+	Pointers dynamically allocate when calling class constructor and free them when you dont need them
+
+References
+	Special datatypes
+	Aliases to existing variables: int& my_ref = my_int; 
+	References are not pointers nor objects and they dont have address
+	There are no arrays of references
+	There are no pointer to References
+	There are no references to references
+	application:
+		Pass parameters by reference so program will not copy objects as function parameters
+		Avoid copying large object in for loops
+
+Pointers 							| References
+--------------------------			----------------- 
+initialization is optional			| Must be initialized at declaration
+can point to different object 		| can't reference a second object
+Can be void and NULL 				| have a fixed type and object
+Multiple level of indirection		| one level of indirection
+Must be dereferenced to access data | No need to dereferencing as its just aliases
+Pointer are more powerful 			| references are safer 
+
+Vectors 
+	Dynamic-size containers
+	The memory is managed for you
+	Generic container class
+	part for standard template Library
+	Two ends - inserting at start requires reallocation so always add at end. 
+
+
+Q&A:
+1.
+What would be the correct declaration of a constructor for a class named Sprite?
+	public:
+	Sprite();
+
+2.
+What is one purpose of a structure?
+	to contain several data members of different types
+
+3.
+Which of the following is an actual difference between a pointer and an iterator?
+	Incrementing an iterator always means accessing the next element in the container (if any), no matter the container. Incrementing a pointer means pointing to the next element in memory, not always the next element.
+
+4.
+Which of the following is a true statement about the difference between pointers and references?
+	A reference cannot be assigned a new value (i.e. refer to a new object other than the original.)
+
+5.
+What's the correct way to call the count member function for the object pointer called grades?
+class my_array{
+ public:
+  int count();
+};  // ... more members above
+
+int main(){
+ my_array *grades = new my_array();
+} // ... more code above
+
+	grades->count()
+
+6.
+Why is it not possible to declare an array of references, a pointer to a reference, or a reference to a reference?
+	Because references are not objects nor variables, so they are not guaranteed to occupy storage and have an address.
+
+7.
+The '&' character has many uses in the C++ programming language. Which of the following is not one of these uses?
+	to declare a pointer to a function
+
+8.
+What is the statement below equivalent to? 
+sprite->x
+	(*sprite).x
+
+9.
+Suppose you want to have several lines of code that print some variables out for debugging purposes, but you don't want those lines to make it to the final application, for efficiency reasons. Which of the following achieves the desired behavior producing the shortest possible code length regardless of the level of optimization used?
+	// comment the following line for the final application
+	#define DEBUGGING
+
+	// copy and customize this for every debugging line
+	#ifdef DEBUGGING
+	cout<<"Var1 = "<<var1<<endl;
+	#endif
+
+10.
+Which of the following is an include guard for the header file my_library.h?
+	#ifndef MY_LIBRARY_H
+	#define MY_LIBRARY_H
+
+	// my_library.h content 
+
+	#endif /* MY_LIBRARY_H */
+
+11.
+What is the purpose of the following line in a header file?
+#pragma once
+	to make the compiler only parse that header file once even if it is included multiple times in the source
+
+12.
+What is an include guard?
+	a preprocessor statement that prevents a source file to be included more than once in a project
+
+13.
+What is the following expression equivalent to?
+A->B->C->D
+	*(*((*A).B).C).D
+
+14. 
+What's the correct way to call the count member function for the object called grades?
+class my_array{
+ public:
+  my_array();
+  int count();
+  // ... more members
+};
+int main(){
+ my_array grades;
+ // ... more code
+ return 0;
+}
+	grades.count()
+
+15.
+Which of the following is a type almost identical to a class?
+	Struct
+
+16.
+What's the difference between a public and a private class member?
+	Public members can be accessed by any function, while private members can only be accessed by the same class' member functions and the friends of the class.
+
+Control Flow 
+----------------------------------------------------- 
+IF Statements
+Switch  
+While Loops - first condition is checked
+Do While loop - first we do task and check while letter. use if you are sure on getting inside code without checking condition first
+For Loop - when we know the range to traverse 
+
+Q&A:
+1.
+What's the correct syntax of an if statement in C++?
+	if(condition)
+	// true block
+	else
+	// false block
+
+2.
+What's a difference between a while loop and a do...while loop?
+	do...while loops always run the body of the loop in the first iteration regardless of the condition.
+
+3.
+When is a switch statement useful?
+	When we want to branch to different blocks of code according to some values of a variable.
+
+4.
+What's the meaning of the two sections specified between parentheses in a range-based for loop, separated by a colon?
+	The first is a variable declaration which will hold an element in a sequence. The second is the sequence to traverse.
+
+5.
+What's the meaning of the three sections specified between parentheses in a for loop, separated by semicolons?
+	The first is the initialization block, the second is the condition to iterate, and the third is the increment block.
+
+
+Functions
+----------------------------------------------------- 
 
 
 

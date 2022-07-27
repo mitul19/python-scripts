@@ -11,6 +11,7 @@ identing is important to make code readable. complier dont require identation
 #include <cstdint> //c header file made available in cpp
 #include <cstring> //include function to handle char array strings 
 #include "mylib.cpp"  //Directive to include my libraries and header
+#include <vector>  //STL addition 
 
 #define CAPACITY 5000 
 #define DEBUG  //Comment MACROS then debug cout will not be printed. 
@@ -79,6 +80,8 @@ private:
     int age;
     unsigned char purpose;
 };
+
+vector<int> primes;
 
 int main() //must return integer as defined
 {
@@ -219,5 +222,30 @@ int main() //must return integer as defined
     cout << my_goat.get_name() << " is a type-" << (int)my_goat.get_purpose() << " goat." << endl;
     cout << my_goat.get_name() << " is " << my_goat.get_age() << " years old." << endl;
 
+//VECTOR STL
+    primes.push_back(2);
+    primes.push_back(3);
+    primes.push_back(5);
+    primes.push_back(7);
+    primes.push_back(11);
+    cout << endl;
+    cout << "The vector has " << primes.size() << " elements." << endl;
+    cout << "The element at index 2 is " << primes[2] << endl;
+    primes[2] = 13;
+    cout << "The element at index 2 is " << primes[2] << endl;
+    cout << endl;
+
+    vector<goat> cattle;
+    cattle.push_back(goat("Betty", 6, meat));
+    cattle.push_back(goat("Libby", 4, hide));
+    cattle.push_back(goat("Trudy", 5, pet));
+    cattle.push_back(goat("Betsy", 2, dairy));
+
+    cout << "The first goat is " << cattle.begin()->get_name() << endl;
+    cout << "At index 1 we have " << cattle[1].get_name() << endl;
+    cout << "Next to last is " << prev(cattle.end(), 2)->get_name() << endl;
+    cout << "The last goat is " << (cattle.end() - 1)->get_name() << endl;
+
     return(0);
+
 }
