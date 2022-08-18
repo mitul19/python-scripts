@@ -384,7 +384,27 @@ What's the meaning of the three sections specified between parentheses in a for 
 
 Functions
 ----------------------------------------------------- 
+Procedural blocks that return a value
+Functions usually receive fixed number of arguments
+Parameters take the values of their arguments
+Functions may be global or members of a class 
 
+Function Parameters : 
+	pass by value (creates copies)
+	pass by pointers (address of variable, it is dangerous but possible)
+	pass by references (best options)
+
+1.
+Which of the following is NOT a difference between passing arguments by pointer or by reference.
+	Pointer arguments use the same syntax as reference arguments.
+
+2.
+What's a difference between the implementation of a global function and a member function?
+	Member function implementations need to specify the class with the scope resolution operator (double colon).
+
+3.
+Why is a function prototype necessary?
+	Because it informs the compiler about the return data type, and the parameter types prior to using the functions.
 
 
 ----------------------------------------------------- 
