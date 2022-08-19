@@ -110,15 +110,67 @@ string StudentRecords::get_course_name(int cid){
 	return courses[j].get_name();
 }
 
-void StudentRecords::report_card(int sid){
+// void StudentRecords::report_card(int sid){
+// 	float points = 0.0f, credits = 0.0f;
+// 	cout << endl << "Report Card for " << get_student_name(sid) << endl;
+// 	for (Grade& grd : grades)
+// 		if (grd.get_student_id() == sid){
+// 			cout << get_course_name(grd.get_course_id()) << endl;
+// 			cout << grd.get_grade() << endl;
+// 			unsigned char current_credits = get_course_credits(grd.get_course_id());
+// 			credits += current_credits;
+// 			points += get_num_grade(grd.get_grade()) * current_credits;
+// 		}
+// 	cout << "GPA: " << (points / credits) << endl;
+// }
+
+
+
+// void StudentRecords::report_file(ofstream &outFile){
+// 	int sid;
+// 	outFile.open("report.txt");
+// 	if(outFile.fail())
+// 		cout << endl << "Couldn't open report.txt file !!" << endl;
+// 	else {
+// 		outFile << "......." << endl;
+// 		for(auto st : students ) {
+// 			sid = st.get_id();
+// 			report_card(sid);
+// 			outFile << "......." << "\n";
+// 		}
+// 		outFile.close();
+// 		cout << "Created report.txt" << "\n";
+// 	}
+// 	float points = 0.0f, credits = 0.0f;
+// 	cout << endl << " Report Card for  " << get_student_name(sid) << endl;
+// }
+
+void StudentRecords::report_card(int sid, ostream& stream){
 	float points = 0.0f, credits = 0.0f;
-	cout << endl << "Report Card for " << get_student_name(sid) << endl;
+	stream << "Report Card for " << get_student_name(sid) << endl;
 	for (Grade& grd : grades)
 		if (grd.get_student_id() == sid){
-			cout << get_course_name(grd.get_course_id()) << ": " << grd.get_grade() << endl;
+			stream <<  grd.get_grade() << " : " << get_course_name(grd.get_course_id()) << endl;
 			unsigned char current_credits = get_course_credits(grd.get_course_id());
 			credits += current_credits;
 			points += get_num_grade(grd.get_grade()) * current_credits;
 		}
-	cout << "GPA: " << (points / credits) << endl;
+	stream << "GPA: " << (points / credits) << endl; 
+}
+
+void StudentRecords::report_file(ofstream &outFile){
+	int sid;
+	outFile.open("report.txt");
+    if (outFile.fail())
+        cout << endl << "Couldn't open the file!" << endl;
+	else{
+		outFile << "======================================" << endl;
+		for (auto& st : students){
+			sid = st.get_id();
+			report_card(sid, outFile);
+			outFile << "======================================" << endl;
+		}
+		outFile.close();
+		cout << "Created report.txt successfully" << endl;
+	}
 }

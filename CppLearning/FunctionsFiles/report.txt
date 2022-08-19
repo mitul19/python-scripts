@@ -1,0 +1,25 @@
+======================================
+Report Card for George P. Burdell
+B : Algebra
+A : Physics
+C : English
+GPA: 3.08333
+======================================
+Report Card for Nancy Rhodes
+A : Algebra
+A : Physics
+B : Economics
+GPA: 3.69231
+======================================
+Report Card for Mitul Patel
+B : Algebra
+A : Physics
+B : English
+GPA: 3.33333
+======================================
+Report Card for Shivani
+A : Algebra
+A : English
+A : Economics
+GPA: 4
+======================================

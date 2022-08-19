@@ -406,6 +406,18 @@ What's a difference between the implementation of a global function and a member
 Why is a function prototype necessary?
 	Because it informs the compiler about the return data type, and the parameter types prior to using the functions.
 
+File I/O
+----------------------------------------------------- 
+fstream header - part if input output lib. 
+
+
+1.
+Which class can be used to read from a text file?
+	ifstream
+2.
+Which of the following is NOT an advantage of using the insertion operator for writing into a file?
+	It's safe to use when the file is not open, or it doesn't exist.
+
 
 ----------------------------------------------------- 
 Older notes 
