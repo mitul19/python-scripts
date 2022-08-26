@@ -592,7 +592,7 @@ How are command-line programs run in Microsoft Visual Studio?
 
 
 CH2: Basic Syntax 
-	(hello.cpp contains details as well)
+	(firstStep.cpp contains details as well)
 
 
 

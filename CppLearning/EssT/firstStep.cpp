@@ -74,8 +74,20 @@ int main()
 
     /*
 	primitive string or c-string 
-		primitive array is guaranteed to be stored contiguosly 
+		primitive array is guaranteed to be stored contiguosly and terminated with null character 
     */
+   char sa[] = {'s','t','r','i','n','g',0};
+   char sb[] = "string";
+   printf("s is %s\n",sa);
+   printf("s is %s\n",sb);
+   char sc[] = "string";
+   for(int i = 0; sc[i] != 0; ++i) {
+        printf("char is %c\n", sc[i]);
+   }
+   for(char * cp = sc; *cp != 0; ++cp){
+        printf("char is %c\n", *cp);
+   }
+
     /*
 	Conditional Statement 
 	while.cpp edited with details
