@@ -1,6 +1,14 @@
 #include <cstdio>
 #include <iostream> // STD template 
 
+//Struct example
+struct firstStepStruct
+{
+    int i;
+    double d;
+    const char * s;
+};
+
 
 
 int main()
@@ -8,12 +16,12 @@ int main()
 
 // CH1: Intro
     /*
-	Distinct parts of c++
-		C langauge  - Basis 
-		C preprocessor - 
-		Classes and objects  - object oriented Programming
-		Templates - Generic programming
-		Standard Template Library - Part of c++ standard  
+    Distinct parts of c++
+        C langauge  - Basis 
+        C preprocessor - 
+        Classes and objects  - object oriented Programming
+        Templates - Generic programming
+        Standard Template Library - Part of c++ standard  
     Compiled langauge : Source code -> preprocessor -> Compiler -> linker -> run 
     */
     puts("Hello, World!");
@@ -76,23 +84,86 @@ int main()
 	primitive string or c-string 
 		primitive array is guaranteed to be stored contiguosly and terminated with null character 
     */
-   char sa[] = {'s','t','r','i','n','g',0};
-   char sb[] = "string";
-   printf("s is %s\n",sa);
-   printf("s is %s\n",sb);
-   char sc[] = "string";
-   for(int i = 0; sc[i] != 0; ++i) {
+    char sa[] = {'s','t','r','i','n','g',0};
+    char sb[] = "string";
+    printf("s is %s\n",sa);
+    printf("s is %s\n",sb);
+    char sc[] = "string";
+    for(int i = 0; sc[i] != 0; ++i) {
         printf("char is %c\n", sc[i]);
-   }
-   for(char * cp = sc; *cp != 0; ++cp){
+    }
+    for(char * cp = sc; *cp != 0; ++cp){
         printf("char is %c\n", *cp);
-   }
+    }
 
     /*
-	Conditional Statement 
-	while.cpp edited with details
+    Conditional Statements    - O -> FALSE 
     */
+    printf("Value of %d\n",x<y);
+    if(x<y) puts("condition is true");
+    else puts("condition is false");
+
+    const int iONE = 1;
+    const int iTWO = 2;
+    const int iTHREE = 3;
+    const int iFOUR = 4;
+    
+    int xx = 3;
+    
+    switch(xx) {
+        case iONE:
+            puts("one");
+            break;
+        case iTWO:
+            puts("two");
+            break;
+        case iTHREE:
+            puts("three");
+            break;
+        case iFOUR:
+            puts("four");
+            break;
+        default:
+            puts("default");
+            break;
+    }
+
+    int arrayWhile[] = { 1, 2, 3, 4, 5 };
+    int i = 0;
+    
+    while(i < 5) {
+        if(i == 4) break;
+        if(i == 2) { ++i; continue; }
+        printf("element %d is %d\n", i, arrayWhile[i]);
+        ++i;
+    }
+    int j = 0;
+    do {
+        printf("element %d is %d\n", j, arrayWhile[j]);
+        ++j;
+    } while (j<5);
+
+    int arrayFor[] = { 1, 2, 3, 4, 5 };
+
+    for(int i = 0; i < 5; ++i) {
+        printf("element %d is %d\n", i, arrayFor[i]);
+    }
+    // Look at c-string example for other FOR loop work. 
+    // Range based for loop , knows size of array 
+    int arrayRange[] = { 1, 2, 3, 4, 5 };
+    for(int i : arrayRange) {
+        printf("i is %d\n", i);
+    }
+    //for c-string 
+    char sRange[] = "sRange";
+    for (char c : sRange) {
+        if (c == 0 ) break; //Null terminator check 
+        printf("c is %c\n",c);
+    }
+
+    //Struct is aggregated variable 
+    firstStepStruct s1 = { 3, 47.9, "string one" };
+    printf("s1: %d, %f, %s\n", s1.i, s1.d, s1.s);
+
     return 0;
-
-
 }
