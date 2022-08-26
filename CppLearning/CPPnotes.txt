@@ -1,3 +1,6 @@
+--------------------------------------------
+Learning C++ 
+--------------------------------------------
 
 Basic of Object oriented Programming
 ----------------------------------------------------- 
@@ -349,6 +352,7 @@ Which of the following is a type almost identical to a class?
 What's the difference between a public and a private class member?
 	Public members can be accessed by any function, while private members can only be accessed by the same class' member functions and the friends of the class.
 
+
 Control Flow 
 ----------------------------------------------------- 
 IF Statements
@@ -424,6 +428,7 @@ Older notes
 ----------------------------------------------------- 
 
 https://repl.it/  - online IDE 
+https://cpp.sh/   - online C++ program
 
 - Object oriented language
 - GUI/HTML take button click where as C or Java have compiler
@@ -567,38 +572,30 @@ CH6 - Data Structures
 
 
 --------------------------------------------
-C++ Essential Training (2018): Bill Weinman
+C++ Essential Training : Bill Weinman
 --------------------------------------------
 
-CH1: Intro
-	Distinct parts of c++
-		C langauge
-		C preprocessor
-		Classes and objects
-		Templates
-		Standard Template Library 
+CH1: Intro - EssT folder 
 
-	Xcode 
-		Xcode is an excellent IDE and Clang is a superb compiler and this combination will provide a great environment for this course.
-	VS Code
+1. 
+What is a compiled language?
+	a language that must be converted from source code into something the OS can run. Source code must be compiled through the preprocessor, compiler, and linker before the OS can read it.
+
+2.
+After compiling, running, and deleting a source file with Xcode, what should you do before compiling another source file?
+	Run the Clean Build Folder command to remove the compiled data.The Clean Build Folder removes the files and paths that are created when the source file is compiled.
+
+3. 
+How are command-line programs run in Microsoft Visual Studio?
+	They are compiled through Visual Studio, and then run from the Windows command line.
+	Visual Studio will compile source files into a program to run, which can be done through PowerShell.
+
 
 CH2: Basic Syntax 
 	(hello.cpp contains details as well)
-	Functions, Statements [ends with semicolon ;] and expressions [returns a value]
-	varible must be decalred before it is used
-	// for comment till end of line 
-	/* -- */ multi line comment 
-	white spaces are ignored 
-	Identifiers
-		26 ISO Lation alphabets (both upper and lower) + 10 western Arabic numerals + ASCII underscore _ 
-		can be of any length but first 63 chars checked for uniqueness anf first 31 chars for external indentifiers 
-		initial underscrore _privateIdentifier and more that one underscrore __systemLevelIdenifiers
-	pointers and references
-	primitive array or c type array 
-	primitive string or c-string 
-		primitive array is guaranteed to be stored contiguosly 
-	Conditional Statement 
-	while.cpp edited with details
+
+
+
 CH3: Data Types
 	Strongly types langauge
 	Data Type defines Size and interpretation of a value.
