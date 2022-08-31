@@ -594,6 +594,187 @@ How are command-line programs run in Microsoft Visual Studio?
 CH2: Basic Syntax 
 	(firstStep.cpp contains details as well)
 
+1. 
+A reference can be re-defined to refer to a different variable.
+FALSE
+
+2. 
+A c-string is an array of _____ type values
+char
+
+3.
+The switch control uses _____ to exit out of the block.
+break
+
+4.
+C++ supports both single-line and multiple-line comments.
+TRUE
+
+5.
+A statement is terminated with _____.
+a semicolon
+
+6.
+What characters are allowed in a C++ identifier?
+any upper- and lower-case letters, numbers, and the underscore character (_)
+
+7.
+A pointer is type-aware in C++.
+TRUE
+
+8.
+Which statement would correctly declare a variable s1 for the structure S declared in the following code?
+struct S {
+	int i;
+	const char * s;
+};
+S s1 = { 3, "string one" };
+The integer `3` and string `string one` would be set to the variable `s1` in this example.
+
+9.
+Which C++ element includes a return type, a name, parentheses, and a code block in curly braces?
+a function
+Functions include all these components, and are essentially standalone code blocks.
+
+10.
+What is the purpose of having private data members and public function members in a class in C++?
+Private data is encapsulated so objects can manipulate it, without exposing inner workings to the interface.
+Encapsulation is a key function of object-oriented programming.
+
+11.
+What is one advantage of using cout instead of printf or puts?
+The cout class is type aware, and can string together different data types.
+You can use strings, integers, and other types seamlessly with `cout`.
+
+12.
+The cout class is found in the _____ header.
+iostream
+
+13.
+Which code block correctly uses a break statement to break out of the while loop?
+    int array[] = { 1, 2, 3, 4, 5 };
+    int i = 0;
+
+    while(i < 5) {
+        if(i == 3) break;
+        printf("element %d is %d\n", i, array[i]);
+        ++i;
+    }
+The if statement will evaluate to true in this example, and immediately break out of the while loop execution.
+
+
+14.
+What are the necessary parts of a C for loop?
+an expression, a condition, and post-loop control
+
+15.
+Which flow control statement that is available in 2011 versions of C++ and newer is most useful for iterating through the elements in a container?
+the range-based for loop
+This type of flow control will not work in older versions of C++, and requires variable and container controls.
+
+16.
+What is a primitive string in C++?
+an array of characters terminated with a 0
+Primitive strings in C++ are arrays that end in 0, so they can be iterated through like other arrays.
+
+17.
+What happens in the following code execution after the conditional check?
+    int x = 7;
+    int y = 32;
+
+    if(x > y) {
+        puts("condition is true"); }
+The puts function is skipped.
+Because the condition evaluates to false, the `puts` function that follows is skipped.
+
+18.
+What is the purpose of a switch statement in C++?
+to evaluate multiple conditions
+The switch statement uses case clauses to evaluate multiple conditions.
+
+19.
+The while loop uses a _____ to control the loop
+Conditional Expression
+
+20.
+The for loop uses _____ expressions to control flow
+3
+
+21.
+What is the difference between a statement and an expression?
+A statement is a line of code that ends with a semicolon, and an expression is anything that returns a value.
+Statements are treated like units of execution, whereas an expression returns a value that may or may not be used.
+
+22.
+Which characters are restricted when defining identifiers in C++?
+reserved words
+C++ reserves 73 keywords and 11 alternative tokens.
+
+23.
+What is wrong with the following variable expression?
+int main()
+{
+    int i;
+    printf("The value of i is %d\n", i);
+    return 0;
+}
+The variable has no value defined.
+The variable `i` has no defined value in this expression.
+
+24.
+Which data type uses a value, without the value being stored in the type's assigned memory space?
+a pointer
+A pointer points to the memory address of an object to get its value.
+
+25.
+When using a range-based for loop with a c-string you must test for the null terminator.
+TRUE
+
+26.
+All the elements in a structure must be the same type.
+FALSE
+
+27.
+What is the main function in C++?
+the entry point of the program, called by the OS when the program launches
+
+28.
+A function definition in C++ must always include a return type.
+TRUE
+
+29.
+Which code contains the correct use of a comment?
+int main()
+{
+    puts("Hello, World!"); // This is a comment
+    return 0;
+}
+Single-line comments are signaled by `//` and multi-line comments are signaled by `/*` followed by `*/` at the end.
+
+30.
+While struct members default to public access, class members default to _____.
+private
+
+31.
+The main function is called by the operating system.
+TRUE
+
+32.
+Which value will be returned for variable x in the following printf function?
+{
+    int x = 7;
+    int &y = x;
+    y = 21;
+
+    printf("The value of x is %d\n", x);
+    printf("The value of y is %d\n", y);
+}
+Because the reference y is set to 21, it will change the value of x to also be 21.
+
+33.
+What is the difference between an initialized and an uninitialized primitive array?
+Initialized arrays have values defined in the array, and uninitialized arrays do not have values defined.
+An initialized array has index values.
 
 
 CH3: Data Types
@@ -610,6 +791,145 @@ CH3: Data Types
 			- union is set overlapping objects (in memory space)
 			- pointer is a reference to object an object of a given type.
 			- refernce is like pointer but diff semantics, references are immutable - used as aliases 
+
+1.
+How are escape characters identified in C++?
+by beginning with a "\"
+Escape characters begin with "\" like the common "\n" to create a new line, or "\t" to add a tab.
+
+2.
+What is the correct syntax to add Joe and his age to the Friend structure below, using an initializer list?
+struct Friend {
+    int age;
+    const char * name;
+};
+int main() {
+    Friend joe = { 42, "Joe" };
+    return 0;
+}
+The initializer list contains the values `42` and `Joe`, which would be added to the structure.
+
+3.
+Which data structure allows you to use the same memory space for different types?
+Because unions use the same memory space, they can conserve and reuse space for various purposes.
+
+4.
+What could you expect to see when attempting to build and compile the following code block?
+void func () {
+    puts("this is void func ( void )");
+    return 3;
+}
+a build error indicating a problem with the expected return
+The void type specifies a null value, so the return cannot have a value.
+
+5.
+Any valid type may be a member of a structure.
+TRUE
+
+6.Bit fields allow you to pack multiple values into less space.
+TRUE
+
+7.
+Enumerated types have _____ values.
+integer
+
+8.
+When should you use the cstdint header?
+when you require an integer of a specific size
+This header allows you to specify size of integers, both signed and unsigned.
+
+9.
+What is the purpose of the * 8 in calculating the long long integer size in the following code?
+int main()
+{
+    long long int lli = 0;
+
+    printf("sizeof long long int is %zd bits\n", sizeof(lli) * 8);
+    return 0;
+}
+It converts bytes to bits.
+There are 8 bits in a byte.
+
+10.
+When would you use the int32_t integer type?
+when you need a signed integer with a fixed size of 32 bits
+This is the correct format for a signed integer of 32 bits; you could also designate 8, 16, or 64 bit fixed sizes.
+
+11.
+What do you sacrifice when you use floating points in C++?
+precision
+Floating points can introduce rounding errors, so they should not be used when accuracy or precision is extremely important.
+
+12.
+Unions allow you to use the same memory for values of different types.
+TRUE
+
+13.
+A typedef may be used as an alias for a type.
+TRUE
+
+14.
+A function return type of void means _____.
+no return value
+
+15.
+What is meant by C++ being a strongly typed language?
+It means every value has a specific data type.
+Data types determine both the size and interpretation of a value.
+
+16.
+In C++ every value has a _____.
+Type
+
+17.
+A long int is always 64 bits.
+FALSE
+
+18.
+The primitive integer types are guaranteed to be specific sizes.
+FALSE
+
+19.
+Which example demonstrates a correct format to concatenate two primitive strings in C++?
+const char * cstring = "String" " and another string";
+This format concatenates string "String" with " and another string" using a pointer and const modifier.
+
+20.
+The static qualifier affects _____.
+storage duration
+
+21.
+Once defined, a reference can never be re-assigned.
+TRUE
+
+22.
+The types defined in the cstdint header are guaranteed to be consistent sizes.
+TRUE
+
+23.
+Floating point types sacrifice precision for scale.
+TRUE
+
+24.
+The fundamental C-string is an array of char terminated with _____
+0
+
+25.
+A character escape sequence is introduced with the _____ character.
+\
+
+26.
+The special nullptr value is used to provide an unambiguous null value for _____.
+Pointers
+
+27.
+The auto type allows you to derive the type of a variable from _____.
+the type of the initialization
+the return type of a function
+the type of an expression   
+Ans : (All of these answers are corrects )
+
+
 
 CH4: Operators
 	Common operators

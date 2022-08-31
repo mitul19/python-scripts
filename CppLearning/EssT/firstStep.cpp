@@ -9,6 +9,23 @@ struct firstStepStruct
     const char * s;
 };
 
+//Function example
+void func(int i) {
+    printf("this is func(%i)\n",i);
+}
+
+// Simple Class example:
+// Members defaults to private in class where as they default to public in Struct
+// public function member servers as interface and allows you to access private member. So it can encapsulate the private integer i.
+class C_firstStep {
+    int i = 0;
+public:
+    void setvalue( int value ) { i = value; }
+    int getvalue() { return i; }
+};
+
+//Print is differently 
+const char Exercise_string[] = "This is a null-terminated string.";
 
 
 int main()
@@ -26,7 +43,10 @@ int main()
     */
     puts("Hello, World!");
     // 	std::cout is part of standard template it requires STL, it has unique syntax, we will use puts and printf which is cleaner. 
+    // cout is actually a class, it loads bitwise left shift "<<" operator to stream of char to terminal 
+    // cout takes in STL related code when you compile and it take extra memory and size.
     std::cout << "Hello, World!" << std::endl;
+    std::cout << "Hello, World!" << 2 * 7 << " another string" << std::endl;
 
     
 //CH2: Basic Syntax 
@@ -161,9 +181,43 @@ int main()
         printf("c is %c\n",c);
     }
 
-    //Struct is aggregated variable 
+    //Struct is aggregated variable its a way of collecting a number of disparate varibles.
     firstStepStruct s1 = { 3, 47.9, "string one" };
     printf("s1: %d, %f, %s\n", s1.i, s1.d, s1.s);
+
+    
+    //Function is standlone block of code, it may and may not have parameters were returns value which makes not distinction between function and procedure.
+    //defination include return type, parameter are optional
+    func(47);
+
+    // CLASS is building block for objects in OOP.
+    int ci = 47;
+    C_firstStep o1, o2, o3;
+    o1.setvalue(ci); o2.setvalue(ci*3);o3.setvalue(ci/2);
+    printf("value is %d\n", o1.getvalue());
+    printf("value is %d\n", o2.getvalue());
+    printf("value is %d\n", o3.getvalue());
+
+    //Challenge 
+    int challengeCount = 0;
+    for (char c : Exercise_string) {
+        if (c == 0) break;
+        ++challengeCount;
+    }
+    printf("The number of characters is: %d using for as char array\n", challengeCount);
+    
+    for (challengeCount=0; Exercise_string[challengeCount]; ++challengeCount);
+    printf("The number of characters is: %d using for loop\n", challengeCount);
+
+    challengeCount=0;
+    while (Exercise_string[challengeCount]) 
+    {
+        ++challengeCount;
+    }
+    printf("The number of characters is: %d using while loop\n", challengeCount);
+
+
+
 
     return 0;
 }
