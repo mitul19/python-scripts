@@ -945,6 +945,117 @@ CH4: Operators
 		size of  - working.cpp
 		typeid - typeid.cpp
 		operator precedence 
+
+1.
+The new and delete operators are used to allocate and deallocate memory.
+TRUE
+
+2.
+When do prefix increment and decrement operators operate on variables?
+before the variable returns a value
+Using ++x or --x completes the operation before the variable is returned.
+
+3.
+The relational operators return a boolean value of one or zero.
+TRUE
+
+4.
+Logical operators are used to operate on _____.
+Boolean logical values
+
+5.
+The bitwise operators are used to operate on _____.
+Individual bits
+
+6.
+The ternary conditional operator chooses one of _____ values based on a conditional expression.
+Two
+
+7.
+The type cast operator converts a value from one type to another _____ type.
+Compatible
+
+8.
+The sizeof operator returns a value of type _____.
+size_t
+
+9.
+Which value would be returned for a in the printf function below?
+int main()
+{
+    bool a = true;
+    bool b = false;
+
+    a = 10
+
+    printf("a is %d\n", a);
+    return 0;
+}
+1
+Boolean operators are true (1) or false (0), and any non-0 integer evaluates to true.
+
+10.
+The type_info class is defined in the _____ header.
+typeinfo
+
+11.
+Which code block demonstrates the correct usage of the ternary conditional operator?
+int main() {
+    int x = 10;
+    int y = 23;
+    const char * s = x < y ? "yes" : "no";
+
+    puts(s);
+    return 0;}
+The ternary conditional operator has three operands: the condition, the return if the condition is true, and the return if the condition is false.
+
+12.
+In the expression 1 + 2 * 3 which operator is evaluated first?
+Multiplication
+
+13.
+You see the following code block with the new operator allocating memory space for an object. What needs to be in a separate code block to prevent memory leaks?
+    long int * ip;
+    try {
+        ip = new long int [count];
+    } catch (std::bad_alloc & ba) {
+        fprintf(stderr, "Cannot allocate memory (%s)\n", ba.what());
+        return 1;
+    }
+the delete operator
+The delete operator is used to deallocate space to free it from memory.
+
+14.
+Which operation will be executed first in the following code?
+int main()
+{
+    int a = 8 * 2 + (32 + 4) / 13 - 8;
+    printf("the value of a is %d", a);
+return 0;
+}
+(32 + 4)
+The parentheses operators have precedence over the other operators in the expression.
+
+
+15.
+The assignment operator _____ a value from one object to another.
+Copies
+
+16.
+The compound assignment operators combine an operator with _____.
+An assignment
+
+17.
+The postfix version of the increment operator returns the value _____ it increments.
+Before
+
+
+
+
+
+
+
+
 CH5: Functions 
 	Overview 
 		Basic building block 
