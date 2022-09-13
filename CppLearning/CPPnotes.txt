@@ -1051,11 +1051,6 @@ Before
 
 
 
-
-
-
-
-
 CH5: Functions 
 	Overview 
 		Basic building block 
@@ -1076,6 +1071,22 @@ CH5: Functions
 	ocerloading function - cpp checks for full function signature where as c required each function names to be unique - check volume.cpp
 	variable number of arguments  - cstdarg lib - check variadic.cpp 
 	recursive - factorial
+
+1.
+2.
+3.
+4.
+5.
+6.
+7.
+8.
+9.
+10.
+11.
+12.
+13.
+14.
+
 
 CH6: Classes and Objects
 	Overview
