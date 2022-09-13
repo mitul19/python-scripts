@@ -1073,20 +1073,97 @@ CH5: Functions
 	recursive - factorial
 
 1.
-2.
-3.
-4.
-5.
-6.
-7.
-8.
-9.
-10.
-11.
-12.
-13.
-14.
+You run the following small program and notice i does not increment in the return value. Why?
+void func() {
+    int i = 5;
+    printf("i is %d\n", i++);}
 
+int main() {
+    func();
+    func();
+    return 0;}
+The variable i is in automatic storage.
+`i` is a function, so it is created fresh on the stack each time the function calls it, and must be set to static to increment correctly.
+
+2.
+You cannot return a reference to _____.
+Automatic storage
+
+3.
+A function pointer is _____.
+a pointer to a function
+
+4.
+The following code is incomplete. How can you complete it to return a value of "x is 84" with the printf function?
+int func( int i ) {
+    return i * 2;}
+int main() {
+    printf("x is %d\n", x);
+    return 0;}
+
+// `int x = func(42)` passes the value 42 to the function `func` and returns that value times two, and then stores the value in variable `x`.
+int func( int i ) {
+    return i * 2;}
+int main() {
+    int x = func(42);
+    printf("x is %d\n", x);
+    return 0;}
+
+5.
+A function signature includes _____.
+function name and number, order, and type of formal parameters
+
+6.
+How does C++ handle multiple functions with the same name?
+The program will compile if the function signatures are different.
+The function signature consists of the function's return type, name, and list of parameter types.
+
+7.
+When using a variadic function, the va_end() macro is always required.
+TRUE
+
+8.
+All executable code in C++ happens in functions.
+TRUE
+
+9.
+All functions must be declared before they are called
+TRUE
+
+10.
+Function parameters are passed _____.
+On the stack
+
+11.
+What is wrong with the following code?
+int main() {
+    puts("this is main()");
+    func();
+    return 0;
+}
+
+void func() {
+    puts("this is func()");
+}
+
+The function func is not declared before it is called.
+A function must be declared before it can be called.
+
+12.
+What is the best practice for passing larger values to a function?
+by passing a reference
+Passing reference values to functions helps to prevent security and stability problems.
+
+13.
+Automatic storage is _____.
+The default for function data
+Temporary (for the life of the function)
+Stored on the stack
+all of these answers --> Correct
+
+14.
+A recursive solution is always best.
+FALSE
 
 CH6: Classes and Objects
 	Overview
