@@ -1165,18 +1165,107 @@ all of these answers --> Correct
 A recursive solution is always best.
 FALSE
 
+
 CH6: Classes and Objects
-	Overview
-		Class (custom fundamental datatypes) & object
-		Object get instanciated with class - it is called class instance as well
-		Class have data memebers (properties) and functions (method) in it
-		Class contain Constructors (basically a member function with the same name as the class itself, and it's used to initialize each of the data members) and one destructor
-		by calling destructor we can remove object instances
-	Defining class - class.cpp
-	Data Members - struct and class are kind of same. Struct have all public data member where as in class you need to define it public.
-	Function member - class.cpp
-	Constructors and Deconstructors - constructors.cpp
-	operator overload - with member function and non member function
+
+1.
+How many constructors may a class have?
+There is no limit
+
+2.
+Operator overloads define how an object uses common operators.
+TRUE
+
+3.
+When would I choose to use non-member operator overloads?
+When a constructor allows implicit conversions
+
+4.
+Which statement in the code below is the class destructor?
+class C1 {
+    int i;
+public:
+    C1();
+    C1( int value );
+    ~C1();
+    void setValue( int value );
+    int getValue(); };
+
+~C1();
+
+5.
+Why does the following code fail to build and compile?
+class A {
+    int ia;
+    int ib;
+    int ic;};
+
+int main() {
+    A a(1, 2, 3);
+    printf("ia is %d, ib is %d, ic is %d\n", a.ia, a.ib, a.ic);
+    return 0;}
+C++ classes default to private data members.
+C++ classes default to private data members, and structures default to public data members.
+
+6.
+What is the purpose of separating the member functions from the class, as in the example code below?
+class C1 {
+    int i = 0;
+public:
+    void setvalue( int value );};
+
+void C1::setvalue(int value) {
+    i = value;}
+
+to separate the implementation from the interface
+The interface is the public data members, and the implementation is the member functions; it is a best practice to separate these.
+
+
+7.
+What is a member function used to deallocate and reset resources when an object is destroyed?
+a destructor
+A destructor is used after a constructor sets up and initializes an object.
+
+8.
+Class function members default to const-safe.
+FALSE
+
+9.
+How could the main function below be completed to set and get the value of the class's private data member?
+class C1 {
+    int i = 0;
+public:
+    void setvalue( int value ) { i = value; }
+    int getvalue() { return i; } };
+
+int main() {
+    int i = 47;
+    C1 o1;}
+
+int main() {
+    int i = 47;
+    C1 o1;
+    o1.setvalue(i);
+    printf("value is %d\n", o1.getvalue());
+    return 0;}
+Dot notation is used to access the public members, which can interface with the private data member.
+
+
+10.
+An object is _____.
+Derived from a class
+
+11.
+Data members are usually _____ access.
+private
+
+12.
+Class data members default to public access.
+FALSE
+
+
+
+
 CH7: Templates
 	Generic type - any data type can be processed 
 	temp. Func
