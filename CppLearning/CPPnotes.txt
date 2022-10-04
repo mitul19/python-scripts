@@ -1402,9 +1402,6 @@ cstring
 To convert an errno to a string error message you may use _____.
 strerror or perror
 
-
-
-
 CH9: Standard Template Lib (STL)
 	cpp standard 
 	like 
@@ -1414,6 +1411,63 @@ CH9: Standard Template Lib (STL)
 		map - key value pairs - associative container
 		LIFO (stack), FIFO (queue), double ended containers (deque)
 		Strings and iostring
+
+1.
+Use the _____ operator to concatenate STL strings.
++
+
+2.
+The cout class overloads the _____ operator to add values to the output stream.
+Shift Left operator <<
+
+3.
+The exception class is designed to be inherited.
+TRUE
+
+4.
+The following code uses the cin class to store one word of user input. Which function would store a complete multi-line string?
+int main() {
+    std::string istr;
+    std::cout << "Please enter a greeting: ";
+    std::cin >> istr;
+    std::cout << "Input: " << istr << std::endl;
+    return 0;}
+std::cin.getline()
+The `getline` function allows character inputs with a buffer size limit.
+
+5.
+The Standard Template Library is part of the C++ standard.
+TRUE
+
+6.
+The STL vector is a flexible _____ container.
+Sequence
+
+
+7.
+Which values would cout return for the size, front, and back elements in the following code?
+int main() {
+    std::cout << "vector from initializer list: " << std::endl;
+    std::vector<int> vi1 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+    std::cout << "size: " << vi1.size() << std::endl;
+    std::cout << "front: " << vi1.front() << std::endl;
+    std::cout << "back: " << vi1.back() << std::endl;
+    std::cout << std::endl;
+    return 0;}
+size 10, front 1, and back 10
+The size of the vector is 10, with a 1 as the front value and 10 as the back value.
+
+8.
+Which example demonstrates a correct format to concatenate two strings using the C++ Standard Template Library?
+int main() {
+    std::string s1 = "String 1";
+    std::string s2 = "String 2";
+    std::cout << s1 + ":" + s2 << std::endl;
+    std::cout << std::endl;
+    return 0;}
+The "+" sign is used to concatenate STL strings.
+
+
 
 --------------------------------------------
 C++ Templates and the STL: Bill Weinman
