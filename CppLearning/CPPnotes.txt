@@ -1511,3 +1511,197 @@ Open source c++ IDE
 
 Generic Programming (Compile time polymorphism)
 	Programming paradigm where data types are not specified in implementaion of code, but rather in its use
+
+
+-----------------------------------------------------
+Web Servers and APIs using C++ : Troy Miles
+-----------------------------------------------------
+
+Docker installation 
+	https://docs.docker.com/desktop/install/mac-install/ 
+
+Docker file location
+	mpatel@blr-mpd67 cppbox % pwd
+	/Users/mpatel/git/PycharmProjects/CPP_LinkdinLearning/Ex_Files_Web_Servers_APIs_C_PlusPlus/ExerciseFiles/Ch01/01_03/end/cppweb/cppbox
+	mpatel@blr-mpd67 cppbox % ls -l
+	total 8
+	-rwxrwxrwx@ 1 mpatel  staff  284 Jun  6  2018 Dockerfile
+	mpatel@blr-mpd67 cppbox % cat Dockerfile 
+	FROM gcc:7.3.0
+
+	RUN apt-get -qq update
+	RUN apt-get -qq upgrade
+	RUN apt-get -qq install cmake
+
+	RUN apt-get -qq install libboost-all-dev=1.62.0.1
+	RUN apt-get -qq install build-essential libtcmalloc-minimal4 && \
+	ln -s /usr/lib/libtcmalloc_minimal.so.4 /usr/lib/libtcmalloc_minimal.so
+
+Built command will take some time based on internet speed 
+	mpatel@blr-mpd67 cppbox % docker build -t cppbox .
+	[+] Building 217.7s (10/10) FINISHED                                                                                                                                                                                                                        
+	=> [internal] load build definition from Dockerfile                                                                                                                                                                                                   0.0s
+	=> => transferring dockerfile: 459B                                                                                                                                                                                                                   0.0s
+	=> [internal] load .dockerignore                                                                                                                                                                                                                      0.0s
+	=> => transferring context: 2B                                                                                                                                                                                                                        0.0s
+	=> [internal] load metadata for docker.io/library/gcc:7.3.0                                                                                                                                                                                           5.3s
+	=> [1/6] FROM docker.io/library/gcc:7.3.0@sha256:dd76a1c3ed21c917844a8b446d0337492bac62c481b40aa047995c2eddf712cb                                                                                                                                    70.7s
+	=> => resolve docker.io/library/gcc:7.3.0@sha256:dd76a1c3ed21c917844a8b446d0337492bac62c481b40aa047995c2eddf712cb                                                                                                                                     0.0s
+	=> => sha256:d6341e30912f12f56e18564a3b582853f65376766f5f9d641a68a724ed6db88f 10.74MB / 10.74MB                                                                                                                                                       5.5s
+	=> => sha256:087a57faf9491b1b82a83e26bc8cc90c90c30e4a4d858b57ddd5b4c2c90095f6 4.34MB / 4.34MB                                                                                                                                                         2.2s
+	=> => sha256:c73fc3aa861503f6020dd7739dc7c362c71477ea69926faec7b6069ac486afb5 9.38kB / 9.38kB                                                                                                                                                         0.0s
+	=> => sha256:7b4132bbf7faaf9d64b30ff3e5edc0ea2c284d3c7a9004106b281d521c31ec47 2.22kB / 2.22kB                                                                                                                                                         0.0s
+	=> => sha256:54f7e8ac135a5f502a6ee9537ef3d64b1cd2fa570dc0a40b4d3b6f7ac81e7486 45.32MB / 45.32MB                                                                                                                                                      24.5s
+	=> => sha256:dd76a1c3ed21c917844a8b446d0337492bac62c481b40aa047995c2eddf712cb 2.06kB / 2.06kB                                                                                                                                                         0.0s
+	=> => sha256:5d71636fb824265e30ff34bf20737c9cdc4f5af28b6bce86f08215c55b89bfab 50.06MB / 50.06MB                                                                                                                                                      27.1s
+	=> => sha256:0c1db95989906f161007d8ef2a6ef6e0ec64bc15bf2c993fd002edbdfc7aa7df 213.21MB / 213.21MB                                                                                                                                                    59.4s
+	=> => sha256:e9bc960296a9ebcb7d39cf27093838319dadd90872013bef7c953ec53affb3fb 108.32kB / 108.32kB                                                                                                                                                    25.4s
+	=> => extracting sha256:54f7e8ac135a5f502a6ee9537ef3d64b1cd2fa570dc0a40b4d3b6f7ac81e7486                                                                                                                                                              1.8s
+	=> => sha256:1ab3bd3c12a61e2f3ee6b0074150e96fd6bde9dc20330dd872c0208bb75aadf2 89.06MB / 89.06MB                                                                                                                                                      51.2s
+	=> => extracting sha256:d6341e30912f12f56e18564a3b582853f65376766f5f9d641a68a724ed6db88f                                                                                                                                                              0.5s
+	=> => extracting sha256:087a57faf9491b1b82a83e26bc8cc90c90c30e4a4d858b57ddd5b4c2c90095f6                                                                                                                                                              0.2s
+	=> => sha256:ef87bdedb4658c411c3a4c38ca3f4381a0b5751b128fe5916a42a54c7233e676 12.14kB / 12.14kB                                                                                                                                                      27.7s
+	=> => extracting sha256:5d71636fb824265e30ff34bf20737c9cdc4f5af28b6bce86f08215c55b89bfab                                                                                                                                                              2.1s
+	=> => sha256:ad35dc85509d9552f0b7f235e131e7dc6444447ace2a7ea78566b196d4d60a87 2.17kB / 2.17kB                                                                                                                                                        28.4s
+	=> => extracting sha256:0c1db95989906f161007d8ef2a6ef6e0ec64bc15bf2c993fd002edbdfc7aa7df                                                                                                                                                              7.5s
+	=> => extracting sha256:e9bc960296a9ebcb7d39cf27093838319dadd90872013bef7c953ec53affb3fb                                                                                                                                                              0.0s
+	=> => extracting sha256:1ab3bd3c12a61e2f3ee6b0074150e96fd6bde9dc20330dd872c0208bb75aadf2                                                                                                                                                              3.2s
+	=> => extracting sha256:ef87bdedb4658c411c3a4c38ca3f4381a0b5751b128fe5916a42a54c7233e676                                                                                                                                                              0.0s
+	=> => extracting sha256:ad35dc85509d9552f0b7f235e131e7dc6444447ace2a7ea78566b196d4d60a87                                                                                                                                                              0.0s
+	=> [2/6] RUN apt-get -qq update                                                                                                                                                                                                                       5.9s
+	=> [3/6] RUN apt-get -qq upgrade                                                                                                                                                                                                                     97.9s
+	=> [4/6] RUN apt-get -qq install cmake                                                                                                                                                                                                                3.5s
+	=> [5/6] RUN apt-get -qq install libboost-all-dev=1.62.0.1                                                                                                                                                                                           29.7s 
+	=> [6/6] RUN apt-get -qq install build-essential libtcmalloc-minimal4 &&   ln -s /usr/lib/libtcmalloc_minimal.so.4 /usr/lib/libtcmalloc_minimal.so                                                                                                    1.6s 
+	=> exporting to image                                                                                                                                                                                                                                 3.0s 
+	=> => exporting layers                                                                                                                                                                                                                                3.0s 
+	=> => writing image sha256:9f76ff1b16f49feaf01912b87a03a15348155d62cd5c985dc8fd09bb8eeee1f7                                                                                                                                                           0.0s 
+	=> => naming to docker.io/library/cppbox                                                                                                                                                                                                              0.0s 
+																																																																
+	Use 'docker scan' to run Snyk tests against images to find vulnerabilities and learn how to fix them                                                                                                                                                        
+
+Running Latest continer image:
+	mpatel@blr-mpd67 cppbox % docker run -ti cppbox:latest bash
+	root@acf9fb393551:/# df   
+	Filesystem     1K-blocks    Used Available Use% Mounted on
+	overlay         61202244 3855500  54205420   7% /
+	tmpfs              65536       0     65536   0% /dev
+	shm                65536       0     65536   0% /dev/shm
+	/dev/vda1       61202244 3855500  54205420   7% /etc/hosts
+	tmpfs            4024248       0   4024248   0% /proc/acpi
+	tmpfs            4024248       0   4024248   0% /sys/firmware
+	root@acf9fb393551:/# find /usr/ -name libboost*.* | head
+	/usr/lib/x86_64-linux-gnu/libboost_signals.a
+	/usr/lib/x86_64-linux-gnu/libboost_mpi_python-py27.a
+	/usr/lib/x86_64-linux-gnu/libboost_python-py27.so.1.62.0
+	/usr/lib/x86_64-linux-gnu/libboost_graph.so.1.62.0
+	/usr/lib/x86_64-linux-gnu/libboost_atomic.a
+	/usr/lib/x86_64-linux-gnu/libboost_locale.so.1.62.0
+	/usr/lib/x86_64-linux-gnu/libboost_wserialization.so
+	/usr/lib/x86_64-linux-gnu/libboost_math_tr1.a
+	/usr/lib/x86_64-linux-gnu/libboost_filesystem.a
+	/usr/lib/x86_64-linux-gnu/libboost_thread.a
+	root@acf9fb393551:/# exit
+	exit
+	mpatel@blr-mpd67 cppbox % 
+
+Make a volume to save files. 
+	mpatel@blr-mpd67 cppweb % docker run -v /Users/mpatel/git/PycharmProjects/CPP_LinkdinLearning/Ex_Files_Web_Servers_APIs_C_PlusPlus/ExerciseFiles/Ch01/01_03/end/cppweb:/usr/src/cppweb -ti cppbox:latest bash
+	root@4093f7fc711f:/# cd /usr/src/cppweb
+	root@4093f7fc711f:/usr/src/cppweb# touch MY_FILE.txt
+	root@4093f7fc711f:/usr/src/cppweb# ls
+	MY_FILE.txt  cppbox
+
+	#We can see that in out Desktop Path as well.
+	mpatel@blr-mpd67 cppweb % ls
+	MY_FILE.txt cppbox
+
+Now Create binary with makefile on continer
+	mpatel@blr-mpd67 hello_crow % docker run -v /Users/mpatel/git/PycharmProjects/CPP_LinkdinLearning/Ex_Files_Web_Servers_APIs_C_PlusPlus/ExerciseFiles/Ch01/01_03/end/cppweb:/usr/src/cppweb -ti cppbox:latest bash
+	root@0cfb1bdab67b:/# cd /usr/src/cppweb
+	root@0cfb1bdab67b:/usr/src/cppweb# cd hello_crow/
+	root@0cfb1bdab67b:/usr/src/cppweb/hello_crow# cd build/
+	root@0cfb1bdab67b:/usr/src/cppweb/hello_crow/build# cmake ..
+	-- The C compiler identification is GNU 7.3.0
+	-- The CXX compiler identification is GNU 7.3.0
+	-- Check for working C compiler: /usr/bin/cc
+	-- Check for working C compiler: /usr/bin/cc -- works
+	-- Detecting C compiler ABI info
+	-- Detecting C compiler ABI info - done
+	-- Detecting C compile features
+	-- Detecting C compile features - done
+	-- Check for working CXX compiler: /usr/local/bin/c++
+	-- Check for working CXX compiler: /usr/local/bin/c++ -- works
+	-- Detecting CXX compiler ABI info
+	-- Detecting CXX compiler ABI info - done
+	-- Detecting CXX compile features
+	-- Detecting CXX compile features - done
+	-- Boost version: 1.62.0
+	-- Found the following Boost libraries:
+	--   system
+	--   filesystem
+	-- Looking for pthread.h
+	-- Looking for pthread.h - found
+	-- Looking for pthread_create
+	-- Looking for pthread_create - not found
+	-- Check if compiler accepts -pthread
+	-- Check if compiler accepts -pthread - yes
+	-- Found Threads: TRUE  
+	-- Configuring done
+	-- Generating done
+	-- Build files have been written to: /usr/src/cppweb/hello_crow/build
+	root@0cfb1bdab67b:/usr/src/cppweb/hello_crow/build# make 
+	[ 50%] Building CXX object CMakeFiles/hello_crow.dir/main.cpp.o
+	[100%] Linking CXX executable hello_crow
+	[100%] Built target hello_crow
+	root@0cfb1bdab67b:/usr/src/cppweb/hello_crow/build# ls
+	CMakeCache.txt	CMakeFiles  Makefile  cmake_install.cmake  hello_crow
+	
+	root@0cfb1bdab67b:/usr/src/cppweb/hello_crow# cat main.cpp 
+	#include "crow/crow.h"
+	using namespace std;
+
+	int main(int argc, char* argv[]) {
+	crow::SimpleApp app;
+
+	CROW_ROUTE(app, "/")
+		([](){
+		return "<div><h1>Hello, Crow.</h1></div>";
+		});
+
+	char* port = getenv("PORT");
+	uint16_t iPort = static_cast<uint16_t>(port != NULL? stoi(port): 18080);
+	cout << "PORT = " << iPort << "\n";
+	app.port(iPort).multithreaded().run();
+	}
+	
+	root@0cfb1bdab67b:/usr/src/cppweb/hello_crow# cat CMakeLists.txt 
+	cmake_minimum_required(VERSION 3.7)
+
+	project(hello_crow)
+
+	set(CMAKE_CXX_STANDARD 11)
+	set(THREADS_PREFER_PTHREAD_FLAG ON)
+
+	find_package(Boost COMPONENTS system filesystem REQUIRED)
+	find_package(Threads)
+
+	include_directories(${Boost_INCLUDE_DIRS})
+	add_executable(hello_crow main.cpp)
+	target_link_libraries(hello_crow ${Boost_LIBRARIES} Threads::Threads)
+	root@0cfb1bdab67b:/usr/src/cppweb/hello_crow# 
+
+Binary looks good 
+	root@0cfb1bdab67b:/usr/src/cppweb/hello_crow/build# ./hello_crow 
+	PORT = 18080
+	(2022-10-14 09:42:16) [INFO    ] Crow/0.1 server is running at 0.0.0.0:18080 using 6 threads
+	(2022-10-14 09:42:16) [INFO    ] Call `app.loglevel(crow::LogLevel::Warning)` to hide Info level logs.
+
+Now open port from machine. 
+	mpatel@blr-mpd67 hello_crow % docker run -v /Users/mpatel/git/PycharmProjects/CPP_LinkdinLearning/Ex_Files_Web_Servers_APIs_C_PlusPlus/ExerciseFiles/Ch01/01_03/end/cppweb:/usr/src/cppweb -p 8080:18080 -e PORT=18080 cppbox:latest /usr/src/cppweb/hello_crow/build/hello_crow
+	PORT = 18080
+	(2022-10-14 09:49:13) [INFO    ] Crow/0.1 server is running at 0.0.0.0:18080 using 6 threads
+	(2022-10-14 09:49:13) [INFO    ] Call `app.loglevel(crow::LogLevel::Warning)` to hide Info level logs.
+	(2022-10-14 09:49:20) [INFO    ] Request: 172.17.0.1:65126 0x7efd3c000960 HTTP/1.1 GET /
+	(2022-10-14 09:49:20) [INFO    ] Response: 0x7efd3c000960 / 200 0
+	^C(2022-10-14 09:49:32) [INFO    ] Exiting.
