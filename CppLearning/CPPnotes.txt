@@ -1705,3 +1705,308 @@ Now open port from machine.
 	(2022-10-14 09:49:20) [INFO    ] Request: 172.17.0.1:65126 0x7efd3c000960 HTTP/1.1 GET /
 	(2022-10-14 09:49:20) [INFO    ] Response: 0x7efd3c000960 / 200 0
 	^C(2022-10-14 09:49:32) [INFO    ] Exiting.
+
+Deploying on Heroku.
+	Create Heroku sign up https://signup.heroku.com/
+	
+	1. "Containerize" our app
+	2. Heroku login 
+	3. Create a Heroku app
+	4. Push the container and release it
+	5. test in browser
+
+	#1. Open One tab a login into latest image.
+
+		mpatel@blr-mpd67 DockerizedWebServer % pwd
+		/Users/mpatel/git/mitul19/python-scripts/CppLearning/DockerizedWebServer
+
+		mpatel@blr-mpd67 DockerizedWebServer % docker run -ti cppbox:latest
+
+		root@84534c32ccba:/usr/src/cppweb# ls -l
+		total 24
+		-rw-r--r-- 1 503 dialout  352 Oct 14 08:56 CMakeLists.txt
+		-rw-r--r-- 1 503 dialout   67 Oct 17 08:24 Dockerfile
+		-rwxrwxrwx 1 503 dialout  284 Jun  5  2018 Dockerfile.tmp
+		drwxr-xr-x 3 503 dialout 4096 Oct 14 10:03 build
+		drwxr-xr-x 3 503 dialout 4096 Oct 14 09:29 crow
+		-rw-r--r-- 1 503 dialout  383 Oct 14 09:20 main.cpp
+
+		root@84534c32ccba:/usr/src/cppweb# cat Dockerfile
+		FROM hello_crow
+		WORKDIR /usr/src/cppweb/build
+		CMD ["./hello_crow"]
+		root@84534c32ccba:/usr/src/cppweb# cd build/
+		root@84534c32ccba:/usr/src/cppweb/build# ls
+		CMakeCache.txt	CMakeFiles  Makefile  cmake_install.cmake  hello_crow
+
+
+	#2. Open another tab create heroku contianer, push app image and test web app.
+
+		mpatel@blr-mpd67 DockerizedWebServer % docker cp . 84534c32ccba:/usr/src/cppweb/
+
+		mpatel@blr-mpd67 DockerizedWebServer % docker commit 84534c32ccba hello_crow:latest
+		sha256:f2eab19674073ad9123e3f1095d4b1bb27d68ed64bb35d234ef18e4e6524b268
+
+		mpatel@blr-mpd67 DockerizedWebServer % heroku login
+
+		mpatel@blr-mpd67 DockerizedWebServer % heroku container:login
+
+		mpatel@blr-mpd67 DockerizedWebServer % heroku create
+		Creating app... done, ⬢ obscure-forest-41395
+		https://obscure-forest-41395.herokuapp.com/ | https://git.heroku.com/obscure-forest-41395.git
+
+		mpatel@blr-mpd67 DockerizedWebServer % docker build -t hello_crow .
+		[+] Building 0.2s (6/6) FINISHED                                                                                                                                                                                                                            
+		=> [internal] load build definition from Dockerfile                                                                                                                                                                                                   0.0s
+		=> => transferring dockerfile: 36B                                                                                                                                                                                                                    0.0s
+		=> [internal] load .dockerignore                                                                                                                                                                                                                      0.0s
+		=> => transferring context: 2B                                                                                                                                                                                                                        0.0s
+		=> [internal] load metadata for docker.io/library/hello_crow:latest                                                                                                                                                                                   0.0s
+		=> [1/2] FROM docker.io/library/hello_crow                                                                                                                                                                                                            0.0s
+		=> [2/2] WORKDIR /usr/src/cppweb/build                                                                                                                                                                                                                0.0s
+		=> exporting to image                                                                                                                                                                                                                                 0.0s
+		=> => exporting layers                                                                                                                                                                                                                                0.0s
+		=> => writing image sha256:d8e704435b6520d870d34302a5875e64459b0a5244f5c78469b377f59dee019b                                                                                                                                                           0.0s
+		=> => naming to docker.io/library/hello_crow                                                                                                                                                                                                          0.0s
+
+		Use 'docker scan' to run Snyk tests against images to find vulnerabilities and learn how to fix them
+
+		mpatel@blr-mpd67 DockerizedWebServer % heroku container:push web -a obscure-forest-41395
+		=== Building web (/Users/mpatel/git/mitul19/python-scripts/CppLearning/DockerizedWebServer/Dockerfile)
+		[+] Building 0.1s (6/6) FINISHED                                                                                                                                                                                                                            
+		=> [internal] load build definition from Dockerfile                                                                                                                                                                                                   0.0s
+		=> => transferring dockerfile: 36B                                                                                                                                                                                                                    0.0s
+		=> [internal] load .dockerignore                                                                                                                                                                                                                      0.0s
+		=> => transferring context: 2B                                                                                                                                                                                                                        0.0s
+		=> [internal] load metadata for docker.io/library/hello_crow:latest                                                                                                                                                                                   0.0s
+		=> [1/2] FROM docker.io/library/hello_crow                                                                                                                                                                                                            0.0s
+		=> [2/2] WORKDIR /usr/src/cppweb/build                                                                                                                                                                                                                0.0s
+		=> exporting to image                                                                                                                                                                                                                                 0.0s
+		=> => exporting layers                                                                                                                                                                                                                                0.0s
+		=> => writing image sha256:0764dc65c1bb20d14fbc4d65e8cb9603d643688046b5b8c2e85ca3fcf070b0bf                                                                                                                                                           0.0s
+		=> => naming to registry.heroku.com/obscure-forest-41395/web                                                                                                                                                                                          0.0s
+		Use 'docker scan' to run Snyk tests against images to find vulnerabilities and learn how to fix them
+		=== Pushing web (/Users/mpatel/git/mitul19/python-scripts/CppLearning/DockerizedWebServer/Dockerfile)
+		Using default tag: latest
+		The push refers to repository [registry.heroku.com/obscure-forest-41395/web]
+		5f70bf18a086: Mounted from quiet-reef-29558/web 
+		4d99f68b51b6: Pushed 
+		b31cecd674af: Mounted from quiet-reef-29558/web 
+		ca110e4b933f: Mounted from quiet-reef-29558/web 
+		d48e177a9a21: Mounted from quiet-reef-29558/web 
+		cd3af5c34a0d: Mounted from quiet-reef-29558/web 
+		842d54faff53: Mounted from quiet-reef-29558/web 
+		b003325e95db: Mounted from quiet-reef-29558/web 
+		3cfedeb19614: Mounted from quiet-reef-29558/web 
+		9e0f305a3f23: Mounted from quiet-reef-29558/web 
+		39606564e8a4: Mounted from quiet-reef-29558/web 
+		e02b32b1ff99: Mounted from quiet-reef-29558/web 
+		f75e64f96dbc: Mounted from quiet-reef-29558/web 
+		8f7ee6d76fd9: Mounted from quiet-reef-29558/web 
+		c23711a84ad4: Mounted from quiet-reef-29558/web 
+		90d1009ce6fe: Mounted from quiet-reef-29558/web 
+		latest: digest: sha256:18dd81ae222588dcebce5d004fdf40816e9a1c6e57989a54d673a672f08bf03c size: 3897
+		Your image has been successfully pushed. You can now release it with the 'container:release' command.
+
+		mpatel@blr-mpd67 DockerizedWebServer % heroku container:release web -a obscure-forest-41395
+		Releasing images web to obscure-forest-41395... done
+
+		mpatel@blr-mpd67 DockerizedWebServer % heroku open -a obscure-forest-41395
+
+	Pushing Image to dockerhub.
+
+		mpatel@blr-mpd67 DockerizedWebServer % docker login        
+		Authenticating with existing credentials...
+		Login Succeeded
+
+		mpatel@blr-mpd67 DockerizedWebServer % docker images
+		REPOSITORY                                     TAG       IMAGE ID       CREATED          SIZE
+		registry.heroku.com/obscure-forest-41395/web   latest    0764dc65c1bb   19 minutes ago   2GB
+		hello_crow                                     latest    d8e704435b65   20 minutes ago   2GB
+		<none>                                         <none>    f2eab1967407   23 minutes ago   2GB
+		cppbox                                         latest    9f76ff1b16f4   3 days ago       2GB
+
+		mpatel@blr-mpd67 DockerizedWebServer % docker tag d8e704435b65 patelmitul87/hello_crow:latest
+
+		mpatel@blr-mpd67 DockerizedWebServer % docker images                                         
+		REPOSITORY                                     TAG       IMAGE ID       CREATED          SIZE
+		registry.heroku.com/obscure-forest-41395/web   latest    0764dc65c1bb   21 minutes ago   2GB
+		patelmitul87/hello_crow                        latest    d8e704435b65   21 minutes ago   2GB
+		hello_crow                                     latest    d8e704435b65   21 minutes ago   2GB
+		<none>                                         <none>    f2eab1967407   25 minutes ago   2GB
+		cppbox                                         latest    9f76ff1b16f4   3 days ago       2GB
+
+		mpatel@blr-mpd67 DockerizedWebServer % docker push patelmitul87/hello_crow
+		Using default tag: latest
+		The push refers to repository [docker.io/patelmitul87/hello_crow]
+		5f70bf18a086: Pushed 
+		4d99f68b51b6: Pushed 
+		b31cecd674af: Pushed 
+		ca110e4b933f: Pushed 
+		d48e177a9a21: Pushed 
+		cd3af5c34a0d: Pushed 
+		842d54faff53: Pushed 
+		b003325e95db: Mounted from library/gcc 
+		3cfedeb19614: Mounted from library/gcc 
+		9e0f305a3f23: Mounted from library/gcc 
+		39606564e8a4: Mounted from library/gcc 
+		e02b32b1ff99: Mounted from library/gcc 
+		f75e64f96dbc: Mounted from library/gcc 
+		8f7ee6d76fd9: Mounted from library/gcc 
+		c23711a84ad4: Mounted from library/gcc 
+		90d1009ce6fe: Mounted from library/gcc 
+		latest: digest: sha256:77a191fbd51a09de176be94c9c1e9d607151b05d0dacd879ab2202d14d378a5c size: 3691
+		mpatel@blr-mpd67 DockerizedWebServer % 
+
+	check https://hub.docker.com/repositories
+
+Building Website
+
+	Serving HTML index page.
+	
+		mpatel@blr-mpd67 DockerizedWebServer % docker run -v /Users/mpatel/git/mitul19/python-scripts/CppLearning/DockerizedWebServer:/usr/src/cppweb -ti hello_crow:latest bash
+
+		root@8b8dc597d4e3:/usr/src/cppweb# cat main.cpp 
+		#include "crow/crow.h"
+		using namespace std;
+		using namespace crow;
+
+		int main(int argc, char* argv[]) {
+		crow::SimpleApp app;
+
+		// Simple write to any base route.
+		// CROW_ROUTE(app, "/")
+		//   ([](){
+		//     return "<div><h1>Hello, Crow.</h1></div>";
+		//   });
+
+		// Simple index.html serving example.
+		CROW_ROUTE(app, "/")
+		([](const request &req, response &res){
+			ifstream in("public/index.html", ifstream::in);
+			if(in){
+			ostringstream contents;
+			contents << in.rdbuf();
+			in.close();
+			res.write(contents.str());
+			} else {
+			res.write("Not Found");
+			}
+			res.end();
+		});
+
+		char* port = getenv("PORT");
+		uint16_t iPort = static_cast<uint16_t>(port != NULL? stoi(port): 18080);
+		cout << "PORT = " << iPort << "\n";
+		app.port(iPort).multithreaded().run();
+		}
+
+		root@8b8dc597d4e3:/usr/src/cppweb# cd build/
+		root@8b8dc597d4e3:/usr/src/cppweb/build# make
+		Scanning dependencies of target hello_crow
+		[ 50%] Building CXX object CMakeFiles/hello_crow.dir/main.cpp.o
+		[100%] Linking CXX executable hello_crow
+		[100%] Built target hello_crow
+
+	Running Server.
+		mpatel@blr-mpd67 DockerizedWebServer % docker run -v /Users/mpatel/git/mitul19/python-scripts/CppLearning/DockerizedWebServer:/usr/src/cppweb -p 8080:8080 -e PORT=8080 hello_crow:latest /usr/src/cppweb/build/hello_crow
+		PORT = 8080
+
+		(2022-10-17 09:56:08) [INFO    ] Crow/0.1 server is running at 0.0.0.0:8080 using 6 threads
+		(2022-10-17 09:56:08) [INFO    ] Call `app.loglevel(crow::LogLevel::Warning)` to hide Info level logs.
+		PORT = 8080
+		(2022-10-17 09:56:17) [INFO    ] Request: 172.17.0.1:55684 0x25701f0 HTTP/1.1 GET /
+		(2022-10-17 09:56:17) [INFO    ] Response: 0x25701f0 / 200 0
+
+	Checking it via local CURL we see not found for index.html which is due to running it from build folder so we need to come one level up to access.
+		mpatel@blr-mpd67 DockerizedWebServer % curl -D - http://localhost:8080/;echo
+		HTTP/1.1 200 OK
+		Content-Length: 9
+		Server: Crow/0.1
+		Date: Mon, 17 Oct 2022 09:56:35 GMT
+
+		Not Found
+		mpatel@blr-mpd67 DockerizedWebServer % 
+	
+	Modify main.cpp and MAKE it.
+
+		//     ifstream in("../public/index.html", ifstream::in);
+
+		root@a57f390236b2:/usr/src/cppweb/build# make
+		Scanning dependencies of target hello_crow
+		[ 50%] Building CXX object CMakeFiles/hello_crow.dir/main.cpp.o
+		[100%] Linking CXX executable hello_crow
+		[100%] Built target hello_crow
+
+	Re run app and we can see it serving index.html
+
+		mpatel@blr-mpd67 DockerizedWebServer % docker run -v /Users/mpatel/git/mitul19/python-scripts/CppLearning/DockerizedWebServer:/usr/src/cppweb -p 8080:8080 -e PORT=8080 hello_crow:latest /usr/src/cppweb/build/hello_crow
+		PORT = 8080
+		PORT = 8080
+		(2022-10-17 10:00:44) [INFO    ] Crow/0.1 server is running at 0.0.0.0:8080 using 6 threads
+		(2022-10-17 10:00:44) [INFO    ] Call `app.loglevel(crow::LogLevel::Warning)` to hide Info level logs.
+		(2022-10-17 10:00:49) [INFO    ] Request: 172.17.0.1:62836 0xc701f0 HTTP/1.1 GET /
+		(2022-10-17 10:00:49) [INFO    ] Response: 0xc701f0 / 200 0
+		mpatel@blr-mpd67 DockerizedWebServer % curl -D - http://localhost:8080/;echo
+		HTTP/1.1 200 OK
+		Content-Length: 182
+		Server: Crow/0.1
+		Date: Mon, 17 Oct 2022 10:00:49 GMT
+
+		<!DOCTYPE html>
+		<html lang="en">
+		<head>
+			<meta charset="utf-8">
+			<title>Crow C++</title>
+		</head>
+		<body>
+			<div><h1>Hello, Crow, its your webpage !!</h1></div>
+		</body>
+		</html>
+	
+	Static content serving via better route functions and CSS, JS and Image inside public folder
+	update main.cpp which should include sendHtml(), sendImage(), sendScript(), sendStyle() which refers sendFile() to fetch appropriate files.
+
+		mpatel@blr-mpd67 DockerizedWebServer % docker run -v /Users/mpatel/git/mitul19/python-scripts/CppLearning/DockerizedWebServer:/usr/src/cppweb -ti hello_crow:latest bash
+		root@5332183b5f83:/usr/src/cppweb/build# make
+		Scanning dependencies of target hello_crow
+		[ 50%] Building CXX object CMakeFiles/hello_crow.dir/main.cpp.o
+		[100%] Linking CXX executable hello_crow
+		[100%] Built target hello_crow
+
+		mpatel@blr-mpd67 DockerizedWebServer % docker run -v /Users/mpatel/git/mitul19/python-scripts/CppLearning/DockerizedWebServer:/usr/src/cppweb -p 8080:8080 -e PORT=8080 hello_crow:latest /usr/src/cppweb/build/hello_crow
+		PORT = 8080
+		(2022-10-17 10:51:30) [INFO    ] Crow/0.1 server is running at 0.0.0.0:8080 using 6 threads
+		(2022-10-17 10:51:30) [INFO    ] Call `app.loglevel(crow::LogLevel::Warning)` to hide Info level logs.
+		PORT = 8080
+		(2022-10-17 10:51:36) [INFO    ] Request: 172.17.0.1:64202 0x7f86bc000960 HTTP/1.1 GET /
+		(2022-10-17 10:51:36) [INFO    ] Response: 0x7f86bc000960 / 200 0
+		(2022-10-17 10:51:36) [INFO    ] Request: 172.17.0.1:64202 0x7f86bc000960 HTTP/1.1 GET /styles/styles.css
+		(2022-10-17 10:51:36) [INFO    ] Request: 172.17.0.1:64200 0xf54520 HTTP/1.1 GET /scripts/test.js
+		(2022-10-17 10:51:36) [INFO    ] Response: 0xf54520 /scripts/test.js 200 0
+		(2022-10-17 10:51:36) [INFO    ] Response: 0x7f86bc000960 /styles/styles.css 200 0
+		(2022-10-17 10:51:36) [INFO    ] Request: 172.17.0.1:64200 0xf54520 HTTP/1.1 GET /images/test.jpg
+		(2022-10-17 10:51:36) [INFO    ] Response: 0xf54520 /images/test.jpg 200 0
+	
+		mpatel@blr-mpd67 DockerizedWebServer % curl -D - http://localhost:8080/;echo
+		HTTP/1.1 200 OK
+		Content-Type: text/html
+		Content-Length: 285
+		Server: Crow/0.1
+		Date: Mon, 17 Oct 2022 10:51:47 GMT
+
+		<!DOCTYPE html>
+		<html lang="en">
+		<head>
+		<meta charset="utf-8">
+		<title>Crow C++</title>
+		<link rel="stylesheet" href="styles/styles.css">
+		<script src="scripts/test.js"></script>
+		</head>
+		<body>
+		<div><h1>Greeting, Crow.</h1></div>
+		<img src="images/test.jpg" />
+		</body>
+		</html>
+
+
