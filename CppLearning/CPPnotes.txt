@@ -2009,4 +2009,51 @@ Building Website
 		</body>
 		</html>
 
+Create mongo db set up and upload JSON file.
+	
+	installation guide --> https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x/
 
+		mpatel@blr-mpd67 ~ % brew update
+
+		mpatel@blr-mpd67 ~ % brew install mongodb-community@6.0
+
+		mpatel@blr-mpd67 ~ % which mongoimport
+		/usr/local/bin/mongoimport
+
+		mpatel@blr-mpd67 ~ % which mongod     
+		/usr/local/bin/mongod
+
+		mpatel@blr-mpd67 ~ % brew services start mongodb-community@6.0
+		==> Tapping homebrew/services
+		Cloning into '/usr/local/Homebrew/Library/Taps/homebrew/homebrew-services'...
+		remote: Enumerating objects: 2139, done.
+		remote: Counting objects: 100% (33/33), done.
+		remote: Compressing objects: 100% (25/25), done.
+		remote: Total 2139 (delta 11), reused 25 (delta 8), pack-reused 2106
+		Receiving objects: 100% (2139/2139), 600.69 KiB | 4.20 MiB/s, done.
+		Resolving deltas: 100% (948/948), done.
+		Tapped 1 command (45 files, 756.7KB).
+		==> Successfully started `mongodb-community` (label: homebrew.mxcl.mongodb-community)
+
+		mpatel@blr-mpd67 ~ % brew services list
+		Name              Status  User   File
+		mongodb-community started mpatel ~/Library/LaunchAgents/homebrew.mxcl.mongodb-community.plist
+		unbound           none 
+
+		Mongo import work:
+		mpatel@blr-mpd67 04_02 % mongoimport --host 127.0.0.1:27017 --db=test --collection=contacts --file=contacts.json --jsonArray
+		2022-10-21T15:27:14.576+0530	connected to: mongodb://127.0.0.1:27017/
+		2022-10-21T15:27:14.710+0530	100 document(s) imported successfully. 0 document(s) failed to import.
+		mpatel@blr-mpd67 04_02 % ls 
+		contacts.json
+
+		mpatel@blr-mpd67 ~ % mongosh
+		Current Mongosh Log ID:	63526a90676ca23bb13ff3f3
+		Connecting to:		mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.6.0
+		Using MongoDB:		6.0.1
+		Using Mongosh:		1.6.0
+		test> db
+		test
+		test> show collections
+		contacts
+		test>
