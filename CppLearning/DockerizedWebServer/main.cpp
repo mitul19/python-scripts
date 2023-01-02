@@ -67,10 +67,13 @@ int main(int argc, char* argv[]) {
   crow::SimpleApp app;
 
   // Mongo DB connection
-  mongocxx::instance inst{};
-  string mongoConnect = std::string(getenv("MONGODB_URI"));
-  mongocxx::client conn{mongocxx::uri{mongoConnect}};
-  auto collection = conn["test"]["contacts"];
+  mongocxx::instance instance{};
+  // string mongoConnect = std::string(getenv("MONGODB_URI"));
+  // mongocxx::client conn{mongocxx::uri{"mongodb://localhost:27017"}};
+  mongocxx::client client(mongocxx::uri{"mongodb://localhost:27017"});
+  // auto collection = conn["test"]["contacts"];
+  mongocxx::database db = client["test"];
+  mongocxx::collection collection = db["contacts"];
 
   // Simple write to any base route: uncomment and build it.
   // CROW_ROUTE(app, "/")
