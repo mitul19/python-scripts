@@ -2057,3 +2057,181 @@ Create mongo db set up and upload JSON file.
 		test> show collections
 		contacts
 		test>
+
+
+-----------------------------------------------------
+C++ Best Practices for Developers : Troy Miles
+-----------------------------------------------------
+Dont ignore Warning those may be generally bugs.
+Always set highest level of warnings 
+static analyzers (Eclipse and Visual Studio IDEs have built in tools and plugings, cppcheck, clang-static analyzer included with compiler, coverity, IKOS)
+
+See static analyzer in use.
+	clang generated only warning and made code
+		mpatel@blr-mpd67 02_04 % clang++ -std=c++17 -Wall main.cpp
+		main.cpp:5:7: warning: unused variable 'j' [-Wunused-variable]
+		int j = *p;
+			^
+		main.cpp:11:21: warning: explicitly assigning value of variable of type 'int' to itself [-Wself-assign]
+		if (uninitialized = uninitialized) {
+			~~~~~~~~~~~~~ ^ ~~~~~~~~~~~~~
+		main.cpp:11:21: warning: using the result of an assignment as a condition without parentheses [-Wparentheses]
+		if (uninitialized = uninitialized) {
+			~~~~~~~~~~~~~~^~~~~~~~~~~~~~~
+		main.cpp:11:21: note: place parentheses around the assignment to silence this warning
+		if (uninitialized = uninitialized) {
+							^
+			(                            )
+		main.cpp:11:21: note: use '==' to turn this assignment into an equality comparison
+		if (uninitialized = uninitialized) {
+							^
+							==
+		main.cpp:9:7: warning: unused variable 'j' [-Wunused-variable]
+		int j = 42;
+			^
+		main.cpp:11:23: warning: variable 'uninitialized' is uninitialized when used here [-Wuninitialized]
+		if (uninitialized = uninitialized) {
+							^~~~~~~~~~~~~
+		main.cpp:10:20: note: initialize the variable 'uninitialized' to silence this warning
+		int uninitialized;
+						^
+							= 0
+		main.cpp:20:3: warning: array index 3 is past the end of the array (which contains 3 elements) [-Warray-bounds]
+		ages[3] = 35;
+		^    ~
+		main.cpp:17:3: note: array 'ages' declared here
+		int ages[3];
+		^
+		6 warnings generated.
+		mpatel@blr-mpd67 02_04 %
+		mpatel@blr-mpd67 02_04 % ls 
+		a.out    main.cpp
+	
+	cppcheck did good job in finding all bad errors and code checks.
+		mpatel@blr-mpd67 02_04 % cppcheck --enable=all --inconclusive --library=posix main.cpp
+		Checking main.cpp ...
+		main.cpp:20:7: error: Array 'ages[3]' accessed at index 3, which is out of bounds. [arrayIndexOutOfBounds]
+		ages[3] = 35;
+			^
+		main.cpp:5:12: error: Dereferencing 'p' after it is deallocated / released [deallocuse]
+		int j = *p;
+				^
+		main.cpp:11:21: warning: Redundant assignment of 'uninitialized' to itself. [selfAssignment]
+		if (uninitialized = uninitialized) {
+							^
+		main.cpp:24:11: style: Consider using std::accumulate algorithm instead of a raw loop. [useStlAlgorithm]
+			total += age;
+				^
+		main.cpp:11:23: error: Uninitialized variable: uninitialized [uninitvar]
+		if (uninitialized = uninitialized) {
+							^
+		main.cpp:5:9: style: Variable 'j' is assigned a value that is never used. [unreadVariable]
+		int j = *p;
+				^
+		main.cpp:9:9: style: Variable 'j' is assigned a value that is never used. [unreadVariable]
+		int j = 42;
+				^
+		main.cpp:11:21: style: Variable 'uninitialized' is assigned a value that is never used. [unreadVariable]
+		if (uninitialized = uninitialized) {
+							^
+		nofile:0:0: information: Cppcheck cannot find all the include files (use --check-config for details) [missingIncludeSystem]
+
+		mpatel@blr-mpd67 02_04 % 	
+	
+	One more example.
+	we can see errors via cppcheck and its showm mem leak on buffer, buffer gettion out of bounds, arrayIndexOutOfBounds, and invalidContainer
+	but with clang it was compiled and worked with junk outputs. 
+		mpatel@blr-mpd67 02_06 % cppcheck --enable=all --inconclusive --library=posix bad.cpp               
+		Checking bad.cpp ...
+		bad.cpp:17:25: error: Array 'houseCats[2]' accessed at index 2, which is out of bounds. [arrayIndexOutOfBounds]
+		std::cout << houseCats[2].name << std::endl;
+								^
+		bad.cpp:22:10: error: Buffer is accessed out of bounds: buff [bufferAccessOutOfBounds]
+		strcpy(buff, str);
+				^
+		bad.cpp:21:14: note: Assign buff, buffer with size 8
+		char *buff = new char[8];
+					^
+		bad.cpp:22:10: note: Buffer overrun
+		strcpy(buff, str);
+				^
+		bad.cpp:26:5: error: Memory leak: buff [memleak]
+			return;
+			^
+		bad.cpp:40:30: error: inconclusive: Using iterator to local container 'items' that may be invalid. [invalidContainer]
+		for (iter = items.begin(); iter != items.end(); ++iter) {
+									^
+		bad.cpp:40:26: note: Iterator to container is created here.
+		for (iter = items.begin(); iter != items.end(); ++iter) {
+								^
+		bad.cpp:41:15: note: Assuming condition is true.
+			if (*iter == 2) {
+					^
+		bad.cpp:41:15: note: Assuming condition is true.
+			if (*iter == 2) {
+					^
+		bad.cpp:40:35: note: Assuming condition is true.
+		for (iter = items.begin(); iter != items.end(); ++iter) {
+										^
+		bad.cpp:42:13: note: After calling 'erase', iterators or references to the container's data may be invalid .
+			items.erase(iter);
+					^
+		bad.cpp:35:20: note: Variable created here.
+		std::vector<int> items;
+						^
+		bad.cpp:40:30: note: Using iterator to local container 'items' that may be invalid.
+		for (iter = items.begin(); iter != items.end(); ++iter) {
+									^
+		nofile:0:0: information: Cppcheck cannot find all the include files (use --check-config for details) [missingIncludeSystem]
+
+		mpatel@blr-mpd67 02_06 % clang++ -std=c++17 -Wall bad.cpp 
+		bad.cpp:17:16: warning: array index 2 is past the end of the array (which contains 2 elements) [-Warray-bounds]
+		std::cout << houseCats[2].name << std::endl;
+					^         ~
+		bad.cpp:14:3: note: array 'houseCats' declared here
+		Cat houseCats[] = {{"Meowmix",    "black", 9, 12},
+		^
+		1 warning generated.
+		mpatel@blr-mpd67 02_06 % ls
+		a.out   bad.cpp
+		mpatel@blr-mpd67 02_06 % ./a.out 
+		Meowmix
+		IN??+A]?l?0IN???
+		mpatel@blr-mpd67 02_06 % ls
+		a.out   bad.cpp out.txt
+		mpatel@blr-mpd67 02_06 % cat out.txt 
+		Hello World%                                                                                                                                                                                                                                               
+		mpatel@blr-mpd67 02_06 %
+	
+	auto tells compiler to deduce the type of a variable
+	auto forces initialization of Variables
+	C++ will loop a range of values
+	can iterate over all STL containers, Strings and arrays
+	you can add support of range based for loops to your own types by supporting the iterator interface
+	Less reason to use bug prone for loop with indexes
+	ENUMs
+		Must use scope resolution operator
+		Enums no longer exported to the surrounding scope
+		redefination of type is no longer an issue 
+		implicit conversion is no longer allowed
+		prefer strongly typed enums to enums
+	Lambdas
+		A Lambdas expression is an unnamed function object
+		Use a Lambdas to write local function of limited use
+		Use a lambda for complex initialization
+		prefer a lambda expression to std::bind 
+	variadic template function
+		template<typename T typename ... Args>
+		typename.. Ts - template parameter pack
+		Type of each parameter can be different
+		Must have a base case to accept one parameter
+		Prefer variadic template function to variadic functions 
+	map, filter and reduce
+		c++ seems to lack them, but STL does have something closer 
+		std::transform, std::for_each -- replace map
+		std::copy_if, std::remove_if -- replace filter
+		std::accumulate -- replaces reduce
+	size_t 
+		it is basic unsigned integer; size depends on system
+		it can improve code's portability and efficiency
+		For indexing containers, you should use size_type also known as size_t
