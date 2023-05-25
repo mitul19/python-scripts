@@ -16,6 +16,10 @@ CTestTestfile.cmake
 _deps
 build
 
+# ignore output folders.
+collab/momentumScripts/OutputMonthly
+pass.py
+
 #https://raw.githubusercontent.com/github/gitignore/main/Python.gitignore
 # Byte-compiled / optimized / DLL files
 __pycache__/

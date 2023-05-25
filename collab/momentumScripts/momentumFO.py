@@ -24,7 +24,7 @@ saveResults = True
 saveExcel = True
 debug = False
 
-topDecile = 25 # Sort by Sharpe
+topDecile = 25 # Sort by sharpe6M
 pickStocks = 10 # Sort by FIP
 
 # Double ranking method
@@ -120,9 +120,33 @@ dfStats['Close'] = round(data12M.iloc[-1], 2)
 dfStats['ema100d'] = round(data12M.ewm(span=100).mean().iloc[-1], 2)
 if debug: print(dfStats)
 
-# Sort using Sharpe
-stocksBuy = dfStats.sort_values(rm[0], ascending = False)[:topDecile]
-stocksSell = dfStats.sort_values(rm[0], ascending = True)[:topDecile]
+# Apply filters: for buy and sell condition creation
+cond1 = dfStats['Close'] > dfStats['ema100d']
+cond2 = dfStats['sharpe6M'] > 0 
+cond3 = dfStats['FIP12M'] > 0
+cond4 = dfStats['sharpe12M'] > 0
+cond5 = dfStats['FIP6M'] > 0
+buyList = cond1 & cond2 & cond3 & cond4 & cond5
+
+sellcond1 = dfStats['Close'] < dfStats['ema100d']
+sellcond2 = dfStats['sharpe6M'] < 0 
+sellcond3 = dfStats['FIP12M'] < 0
+sellcond4 = dfStats['sharpe12M'] < 0
+sellcond5 = dfStats['FIP6M'] < 0
+sellList = sellcond1 & sellcond2 & sellcond3 & sellcond4 & sellcond5
+# Sort using sharpe6M
+print()
+print("Total buylist: ")
+print(dfStats[buyList]["Close"].count())
+print(dfStats[buyList]['Close'].index)
+print()
+print("Total SellList: ")
+print(dfStats[sellList]["Close"].count())
+print(dfStats[sellList]['Close'].index)
+print()
+
+stocksBuy = dfStats[buyList].sort_values(rm[0], ascending = False)[:topDecile]
+stocksSell = dfStats[sellList].sort_values(rm[0], ascending = True)[:topDecile]
 
 # Sort using FIP
 outputBuy = stocksBuy.sort_values(rm[1], ascending = False)[:pickStocks].reset_index().rename(columns = {'index':'symbol'})
