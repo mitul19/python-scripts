@@ -2235,3 +2235,38 @@ See static analyzer in use.
 		it is basic unsigned integer; size depends on system
 		it can improve code's portability and efficiency
 		For indexing containers, you should use size_type also known as size_t
+	Auto
+		since c++14, you can use auto as retrun type
+		With auto, all returns must have the same type
+	The Filesystem Library
+		based on Boost library filesystem
+
+	Which Pointer ?
+		std::shared_ptr  --> overhead is higher. reference counter associated, each copy makes reference go up. count goes down when it goes out of scope. give automatic lifetime management
+		std::unique_ptr --> single ownership, no copying allowed but does support move_semantics. 
+		std::weak_ptr --> rarely used 
+	rule of zero,Three, and five 
+		There are 5 special functions
+			copy constructor, copy assignment constructor, move constructor, move assignment constructor and destructor
+			Rule of 0 -> dont create any of these functions, complier's implementaion is usually correct and exactly what you need 
+			Rule of 5 -> if you create create them all, not creating all is source of very subtle bugs
+			Rule of 3 -> move semantics added in c++ 11 onwards
+	Const
+		Any variable which is not going to change should be made const
+		it helps compiler, make your intentions clear, can result in less bugs and cleaner code and we may get performance boost.
+		Best Practices: make every variable const if you can.
+	
+	Resource Acquisition is initialization(RAII)
+		RAII is about writing safer C++ code
+		The destructors of the stack objects are always called
+		Stack objects are thrased in reverse order of their Creation
+		So, Any critical resources, should be created on stack.
+		they should be written to destroy themselves properly
+
+------------------------------------------------------
+Introducing Functional Programming in C++ : Troy Miles
+------------------------------------------------------
+	mpatel@blr-mpd67 IntroducingFunctionalProgramminginC++ % clang++ -std=c++17 -Wall demo.cpp
+	mpatel@blr-mpd67 IntroducingFunctionalProgramminginC++ % ./a.out 
+	===============================================================================
+	All tests passed (7 assertions in 1 test case)
