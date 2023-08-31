@@ -19,6 +19,8 @@ build
 # ignore output folders.
 collab/momentumScripts/OutputMonthly
 pass.py
+*.dSYM/
+*.out
 
 #https://raw.githubusercontent.com/github/gitignore/main/Python.gitignore
 # Byte-compiled / optimized / DLL files
