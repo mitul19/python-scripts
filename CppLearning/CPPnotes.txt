@@ -2270,3 +2270,7 @@ Introducing Functional Programming in C++ : Troy Miles
 	mpatel@blr-mpd67 IntroducingFunctionalProgramminginC++ % ./a.out 
 	===============================================================================
 	All tests passed (7 assertions in 1 test case)
+
+------------------------------------------------------
+Code Clinic: C++ : Olivia Chiu Stone
+------------------------------------------------------

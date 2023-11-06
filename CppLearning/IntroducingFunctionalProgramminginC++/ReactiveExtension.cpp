@@ -41,5 +41,11 @@ int main() {
         [](int count){std::cout << "Numbbers over 21 = " << count << std::endl;},
         [](){std::cout << "OnCompleted" << std::endl;}
         );
+  auto values_1 = rxcpp::observable<>::iterate(ages).
+    filter([](int age){return age >= 13 && age <= 19;}).
+    subscribe(
+      [](int age){std::cout << age << std::endl;},
+      [](){std::cout << "OnCompleted" << std::endl;}
+    );
   return 0;
 }
