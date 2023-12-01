@@ -1,0 +1,103 @@
+A:
+ACE – Advanced Computing Environment
+ACM – Association for Computing Machinery
+ADB – Apple Desktop Bus
+AM – Allied Master Computer
+
+B:
+BINAC – Binary Automatic Computer
+BOINC – Berkeley Open Infrastructure for Network Computing
+
+C:
+CA – Computer Accountancy
+CAD – Computer Aided Design
+CAE – Computer Aided Engineering
+CAID – Computer-Aided Industrial Design
+CAI – Computer – Aided Instruction
+CAM – Computer – Aided Manufacturing
+CAPTCHA – Completely Automated Public Turing Test to tell Computers and Humans Apart
+CAT – Computer – Aided Translation
+CAQ – Computer – Aided Quality Assurance
+CASE – Computer – Aided Software Engineering
+CC – Computer Cleaning
+CDE – Common Desktop Environment
+CERT – Computer Emergency Response Team
+CG – Computer Graphics
+CGI – Computer – Generated Imagery
+CISC – Complex Instruction Set Computer
+CNC – Computer Numerical Control
+CRS – Computer Reservations System
+CS – Computer Science
+CSE – Computer Science and Engineering
+CT – Computerized Tomography
+CTI – Computer Telephony Integration
+
+D:
+DTP – Desktop Publishing
+
+E:
+ECMA – European Computer Manufacturers
+EDVAC – Electronic Discrete Variable Automatic Computer
+ENIAC – Electronic Numerical Integrator And Computer
+EPIC – Explicitly Parallel Instruction Computing
+
+F:
+FOLDOC – Free Online Dictionary of Computing
+FIFO - First in First out
+
+G:
+GPGPU – General-Purpose Computing on Graphics Processing Units
+
+H:
+HCI – Human Computer Interaction
+HPC – High-Performance Computing
+HTC – High-Throughput Computing
+
+I:
+iSCSI – Internet Small Computer System Interface
+
+J:
+JDS – Java Desktop System
+
+K:
+KDE – K Desktop Environment
+
+M:
+MCDST – Microsoft Certified Desktop Support
+
+N:
+NCSA – National Center for Supercomputing Applications
+NGSCB – Next – Generation Secure Computing Base
+
+P:
+PC – Personal Computer
+PC DOS – Personal Computer Disc Operating
+PCMCIA – Personal Computer Memory Card
+PL/M – Programming Language for Microcomputers
+
+R:
+RD – Remote Desktop
+RDC – Remote Desktop Connection
+RDP – Remote Desktop Protocol
+RISC – Reduced Instruction Set Computer
+RISC OS – Reduced Instruction Set Computer
+
+S:
+SLED – SUSE Linux Enterprise Desktop
+SCSI – Small Computer System Interface
+
+U:
+UMPC – Ultra – Mobile Personal Computer
+UNIVAC – Universal Automatic Computer (By MKS)
+UVC – Universal Virtual Computer
+
+V:
+VDI – Virtual Desktop Infrastructure
+VNC – Virtual Network Computing
+
+Z:
+ZISC – Zero Instruction Set Computer
+
+
+LIFO - Last In First Out
+ML - Machine Learning

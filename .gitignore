@@ -19,6 +19,10 @@ build
 # ignore output folders.
 collab/momentumScripts/OutputMonthly
 pass.py
+passwords.py
+api.py
+apifile.py
+input.txt
 *.dSYM/
 *.out
 
