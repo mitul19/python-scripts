@@ -199,7 +199,6 @@ Python performances Notes
         http://127.0.0.1:8080/snakeviz/%2FUsers%2Fmpatel%2Fgit%2FPycharmProjects%2FpluralSightDoc%2Fpython-3-performance%2F02%2Fdemos%2Fsum_loop.prof
 
 
-
 2. Using right Data structures
     Big O Notation
         #Constant O(1)
@@ -246,7 +245,7 @@ Python performances Notes
         print(f'Duration double: {double_duration}')
         print(f'Duration sum: {sum_duration}')
         print(f'Ratio of durations: {sum_duration/double_duration:.2f}')
-    
+
     List and Arrays are for holding more values.
         List
             Ordered Collections
@@ -290,7 +289,7 @@ Python performances Notes
             ^C
             Bye!
             mpatel@blr-mpd67 demos %
-    
+
     Sets and tuples
         Sets
             unordered collections of unique immutable items however sets are mutable like adding new items to set.
@@ -377,7 +376,7 @@ Python performances Notes
 
         main()
         mpatel@blr-mpd67 demos %
-    
+
     Queues and Deques
         Queue
             From queue module, simple queue data structure - FIFO, Specialized for multithreading and few operations
@@ -448,7 +447,7 @@ Python performances Notes
                 22    100000      31233.0      0.3      2.8          big_queue.popleft()
 
             mpatel@blr-mpd67 demos % 
-    
+
     Dictionaries
         collections of key-value pair
         mutable (add, remove or update possible)
@@ -557,13 +556,881 @@ Python performances Notes
             20000000 loops, best of 5: 14 nsec per loop
             mpatel@blr-mpd67 demos %
 
+
 3. Optimizing python code
+    Caching
+        Computing bottlenecks goes
+        Network bottlenecks goes
+        It will require Extra memory and data used will be old (storing stock market data)
+        1. Basic approach for caching is with storing data dictionaries but it doesn't provide boundry check
+        2. Use @lru_cache()
+        3. Use third party module (joblib)
+
+        # Demo to see usage of lru_cache and it speed up functions
+            mpatel@blr-mpd67 demos % kernprof -lv caching.py 
+            Wrote profile results to caching.py.lprof
+            Timer unit: 1e-06 s
+
+            Total time: 12.3601 s
+            File: caching.py
+            Function: main at line 10
+
+            Line #      Hits         Time  Per Hit   % Time  Line Contents
+            ==============================================================
+                10                                           @profile
+                11                                           def main():
+                12         1       3516.0   3516.0      0.0      orders_to_search = [random.randint(0, 100) for _ in range(1000)]
+                13      1001        455.0      0.5      0.0      for order in orders_to_search:
+                14      1000   12356122.0  12356.1    100.0          get_order_details(order)
+
+            mpatel@blr-mpd67 demos % vim caching.py         
+            mpatel@blr-mpd67 demos % cat caching.py
+            from functools import lru_cache
+            import random
+
+            @lru_cache
+            def get_order_details(order_id):
+                for i in range(100_000):
+                    pass
+                return 100 * order_id
+
+            @profile
+            def main():
+                orders_to_search = [random.randint(0, 100) for _ in range(1000)]
+                for order in orders_to_search:
+                    get_order_details(order)
+
+            main()
+            mpatel@blr-mpd67 demos % kernprof -lv caching.py
+            Wrote profile results to caching.py.lprof
+            Timer unit: 1e-06 s
+
+            Total time: 1.11511 s
+            File: caching.py
+            Function: main at line 10
+
+            Line #      Hits         Time  Per Hit   % Time  Line Contents
+            ==============================================================
+                10                                           @profile
+                11                                           def main():
+                12         1       2996.0   2996.0      0.3      orders_to_search = [random.randint(0, 100) for _ in range(1000)]
+                13      1001        279.0      0.3      0.0      for order in orders_to_search:
+                14      1000    1111832.0   1111.8     99.7          get_order_details(order)
+
+            mpatel@blr-mpd67 demos % 
+
+    For vs List comprehension
+        For loops offer more flexibity, better for more logic, lengthy and slower for simple logic
+        List comprehensions are only for new list, great for simple logic, consice and fast.
+        There are set and dict comprehensions as well
+
+        # Demo
+            mpatel@blr-mpd67 demos % kernprof -lv comprehension.py 
+            Wrote profile results to comprehension.py.lprof
+            Timer unit: 1e-06 s
+
+            Total time: 0.32645 s
+            File: comprehension.py
+            Function: main at line 14
+
+            Line #      Hits         Time  Per Hit   % Time  Line Contents
+            ==============================================================
+                14                                           @profile
+                15                                           def main():
+                16         1     280721.0 280721.0     86.0      orders = [random.randint(0, 100) for _ in range(100_000)]
+                17         1      27829.0  27829.0      8.5      loop(orders)
+                18         1      17900.0  17900.0      5.5      comprehension(orders)
+
+            mpatel@blr-mpd67 demos % cat comprehension.py
+            import random
+
+
+            def loop(orders):
+                result = []
+                for amount in orders:
+                    if amount > 50:
+                        result.append(2 * amount)
+                return result
+
+            def comprehension(orders):
+                return [2 * amount for amount in orders if amount > 50]
+
+            @profile
+            def main():
+                orders = [random.randint(0, 100) for _ in range(100_000)]
+                loop(orders)
+                comprehension(orders)
+
+            main()%                                                                                                                                                                                                                                                     
+            mpatel@blr-mpd67 demos %
+
+    Efficient iterations with generator
+        Lazy version of comprehensions - less flexibity
+        Avoid upfornt full creation 
+        "Just in time" values - access only next item
+        Example : Read lines from very large files
+        generator expression allows no random access and iteration is only once.
+        Example: (p * 2 for p in orders if p > 100)
+
+        # Demo to see Time and memory performance - generator are lazy so it takes less time and memory but operation takes time
+
+            mpatel@blr-mpd67 demos % cat generator.py 
+            import random
+
+
+            @profile
+            def main():
+                orders = [random.randint(0, 100) for _ in range(100_000)]
+
+                comprehension = [2 * amount for amount in orders if amount > 50]
+                generator = (2 * amount for amount in orders if amount > 50)
+
+                sum(comprehension)
+                sum(generator)
+
+
+            main()%                                                                                                                                                                                                                                                     
+            mpatel@blr-mpd67 demos % kernprof -lv generator.py 
+            Wrote profile results to generator.py.lprof
+            Timer unit: 1e-06 s
+
+            Total time: 0.285665 s
+            File: generator.py
+            Function: main at line 4
+
+            Line #      Hits         Time  Per Hit   % Time  Line Contents
+            ==============================================================
+                4                                           @profile
+                5                                           def main():
+                6         1     252972.0 252972.0     88.6      orders = [random.randint(0, 100) for _ in range(100_000)]
+                7                                           
+                8         1      14099.0  14099.0      4.9      comprehension = [2 * amount for amount in orders if amount > 50]
+                9         1          2.0      2.0      0.0      generator = (2 * amount for amount in orders if amount > 50)
+                10                                           
+                11         1        237.0    237.0      0.1      sum(comprehension)
+                12         1      18355.0  18355.0      6.4      sum(generator)
+
+
+            mpatel@blr-mpd67 demos % python3 -m memory_profiler generator.py
+            Filename: generator.py
+
+            Line #    Mem usage    Increment  Occurrences   Line Contents
+            =============================================================
+                4   42.852 MiB   42.852 MiB           1   @profile
+                5                                         def main():
+                6   43.699 MiB    0.848 MiB      100003       orders = [random.randint(0, 100) for _ in range(100_000)]
+                7                                         
+                8   43.809 MiB    0.109 MiB      100003       comprehension = [2 * amount for amount in orders if amount > 50]
+                9   43.809 MiB    0.000 MiB      149154       generator = (2 * amount for amount in orders if amount > 50)
+                10                                         
+                11   43.809 MiB    0.000 MiB           1       sum(comprehension)
+                12   43.809 MiB    0.000 MiB           1       sum(generator)
+
+
+            mpatel@blr-mpd67 demos % 
+
+    Fast concatenation of strings
+        Examples: items = ['hello','world']
+            item[0] + item[1]       -> + operator is slow , very friendly and scalable.
+            f'{item[0]}{item[1]}'   -> fstring is high in perfornce and friendly but no scalable as you need to know put items
+            ''.join(items)          -> join high performance, less friendly but scalable and memory efficient
+        use + only for basic work else use join only
+
+        # Demo to check time and memory profile
+            mpatel@blr-mpd67 demos % cat concatenation.py 
+            import random
+
+
+            @profile
+            def main():
+                orders = [str(random.randint(0, 100)) for _ in range(50_000)]
+
+                report = ''
+                for o in orders:
+                    report += o
+                
+                ''.join(orders)
+
+
+            main()%
+            mpatel@blr-mpd67 demos % kernprof -lv concatenation.py 
+            Wrote profile results to concatenation.py.lprof
+            Timer unit: 1e-06 s
+
+            Total time: 0.279477 s
+            File: concatenation.py
+            Function: main at line 4
+
+            Line #      Hits         Time  Per Hit   % Time  Line Contents
+            ==============================================================
+                4                                           @profile
+                5                                           def main():
+                6         1     155684.0 155684.0     55.7      orders = [str(random.randint(0, 100)) for _ in range(50_000)]
+                7                                           
+                8         1          0.0      0.0      0.0      report = ''
+                9     50001      15033.0      0.3      5.4      for o in orders:
+                10     50000     107873.0      2.2     38.6          report += o
+                11                                               
+                12         1        887.0    887.0      0.3      ''.join(orders)
+
+            mpatel@blr-mpd67 demos % python3 -m memory_profiler concatenation.py
+            Filename: concatenation.py
+
+            Line #    Mem usage    Increment  Occurrences   Line Contents
+            =============================================================
+                4   42.859 MiB   42.859 MiB           1   @profile
+                5                                         def main():
+                6   45.977 MiB    3.117 MiB       50003       orders = [str(random.randint(0, 100)) for _ in range(50_000)]
+                7                                         
+                8   45.977 MiB    0.000 MiB           1       report = ''
+                9   47.777 MiB    0.000 MiB       50001       for o in orders:
+                10   47.777 MiB    1.801 MiB       50000           report += o
+                11                                             
+                12   47.777 MiB    0.000 MiB           1       ''.join(orders)
+
+
+            mpatel@blr-mpd67 demos % 
+
+    Permission or forgiveness?
+        If lot of bad data expected use Permission approach otherwise use forgiveness approach
+        Permission approach checks with IF statements wheres as in forgiveness you use try except block 
+
+        # Demo to see less bad data profile and so many bad data profile for both approach
+            mpatel@blr-mpd67 demos % cat permission.py 
+            import random
+
+
+            def permission(orders):
+                result = []
+                for amount in orders:
+                    if type(amount) == int:
+                        if amount > 50:
+                            result.append(2 * amount)
+                return result
+
+
+            def forgiveness(orders):
+                result = []
+                for amount in orders:
+                    try:
+                        if amount > 50:
+                            result.append(2 * amount)
+                    except TypeError:
+                        pass
+                return result
+
+
+            @profile
+            def main():
+                orders = [random.randint(0, 100) for _ in range(100_000)]
+
+                for i in range(10):
+                    orders[i] = 'bad data'
+                permission(orders)
+                forgiveness(orders)
+
+                for i in range(90_000):
+                    orders[i] = 'bad data'
+                permission(orders)
+                forgiveness(orders)
+
+                
+            main()%
+            mpatel@blr-mpd67 demos % kernprof -lv permission.py 
+            Wrote profile results to permission.py.lprof
+            Timer unit: 1e-06 s
+
+            Total time: 0.492114 s
+            File: permission.py
+            Function: main at line 24
+
+            Line #      Hits         Time  Per Hit   % Time  Line Contents
+            ==============================================================
+                24                                           @profile
+                25                                           def main():
+                26         1     262630.0 262630.0     53.4      orders = [random.randint(0, 100) for _ in range(100_000)]
+                27                                           
+                28        11          3.0      0.3      0.0      for i in range(10):
+                29        10          4.0      0.4      0.0          orders[i] = 'bad data'
+                30         1      44008.0  44008.0      8.9      permission(orders)
+                31         1      32544.0  32544.0      6.6      forgiveness(orders)
+                32                                           
+                33     90001      23234.0      0.3      4.7      for i in range(90_000):
+                34     90000      23921.0      0.3      4.9          orders[i] = 'bad data'
+                35         1      27049.0  27049.0      5.5      permission(orders)
+                36         1      78721.0  78721.0     16.0      forgiveness(orders)
+
+            mpatel@blr-mpd67 demos %
+
+    Faster functions
+        calling function so many time can create some performance but it gives reusable, well maintainable code.
+        # Demo
+            mpatel@blr-mpd67 demos % cat functions.py 
+            import random
+
+            def get_random_integer():
+                return random.randint(0, 100)
+
+
+            @profile
+            def main():
+                [random.randint(0, 100) for _ in range(100_000)]
+                [get_random_integer() for _ in range(100_000)]
+                [(lambda: random.randint(0, 100))() for _ in range(100_000)]
+
+                
+            main()%
+            mpatel@blr-mpd67 demos % kernprof -lv functions.py 
+            Wrote profile results to functions.py.lprof
+            Timer unit: 1e-06 s
+
+            Total time: 0.868221 s
+            File: functions.py
+            Function: main at line 7
+
+            Line #      Hits         Time  Per Hit   % Time  Line Contents
+            ==============================================================
+                7                                           @profile
+                8                                           def main():
+                9         1     270714.0 270714.0     31.2      [random.randint(0, 100) for _ in range(100_000)]
+                10         1     289860.0 289860.0     33.4      [get_random_integer() for _ in range(100_000)]
+                11         1     307647.0 307647.0     35.4      [(lambda: random.randint(0, 100))() for _ in range(100_000)]
+
+            mpatel@blr-mpd67 demos %
+
+    Optimizing numerical calculations
+        Numpy - pupular, unofficial standard for scientific Computing, large ecosystem, optimized high performance 
+        Pandas - relies on Numpy, data analysis and manipulation, good for tabular data, good for export, high performance
+        # Demo to see how fast Numpy is. 
+            mpatel@blr-mpd67 demos % cat numerical.py 
+            import random
+            import numpy as np
+
+            def loop_approach(orders):
+                result = 0
+                for o in orders:
+                    result += o * o
+                return result
+
+            def numpy_approach(orders):
+                numpy_orders = np.array(orders)
+                return np.sum(numpy_orders * numpy_orders)
+
+            @profile
+            def main():
+                orders = [random.randint(0, 100) for _ in range(100_000)]
+                loop_approach(orders)
+                numpy_approach(orders)    
+                
+            main()%
+            mpatel@blr-mpd67 demos % kernprof -lv numerical.py 
+            Wrote profile results to numerical.py.lprof
+            Timer unit: 1e-06 s
+
+            Total time: 0.299079 s
+            File: numerical.py
+            Function: main at line 14
+
+            Line #      Hits         Time  Per Hit   % Time  Line Contents
+            ==============================================================
+                14                                           @profile
+                15                                           def main():
+                16         1     272177.0 272177.0     91.0      orders = [random.randint(0, 100) for _ in range(100_000)]
+                17         1      20994.0  20994.0      7.0      loop_approach(orders)
+                18         1       5908.0   5908.0      2.0      numpy_approach(orders)    
+
+            mpatel@blr-mpd67 demos %
+
+    Interperter-based Optimizations
+        Many interpreters 
+            Running python code on hardware
+            CPython - official interpreter
+            PyPy - performance boost but not latest liek CPython
+            Cython - C base interpreter for performance but not all features
+            Jython - Java based
+            Pyston - 
+        
+        # Demo to check diff on performance.
+            # Install PyPy
+            mpatel@blr-mpd67 demos % brew install pypy3
+            mpatel@blr-mpd67 demos % cat sum_loop.py 
+            import time
+
+
+            def heavy_work():
+                for _ in range(100_000_000):
+                    do_stuff()
+
+
+            def do_stuff():
+                return 1 + 2
+
+            start_time = time.time()
+            heavy_work()
+            end_time = time.time()
+            print(f'Duration: {end_time - start_time: .2f} seconds')
+            mpatel@blr-mpd67 demos % python3 sum_loop.py 
+            Duration:  7.01 seconds
+            mpatel@blr-mpd67 demos % pypy3 sum_loop.py 
+            Duration:  0.11 seconds
+
+    Risky Optimizations
+        Tradeoffs
+        Less maintainable code
+        New bugs
+        Much efforts, small gains
+
+        # Examples to avoid
+            Large, Self-sufficient function
+            Alternative Python interpreter
+            Multiple assignment
+
+        # Demo to see multiple assignment but it shows not much benefit but clumsy code.
+            mpatel@blr-mpd67 demos % kernprof -lv assignments.py 
+            Wrote profile results to assignments.py.lprof
+            Timer unit: 1e-06 s
+
+            Total time: 0.97946 s
+            File: assignments.py
+            Function: main at line 11
+
+            Line #      Hits         Time  Per Hit   % Time  Line Contents
+            ==============================================================
+                11                                           @profile
+                12                                           def main():
+                13         2     828823.0 414411.5     84.6      orders = [(random.randint(0, 100),
+                14                                                          random.randint(0, 100),
+                15         1          1.0      1.0      0.0                 random.randint(0, 100)) for _ in range(100_000)]
+                16                                               
+                17    100001      25454.0      0.3      2.6      for o in orders:
+                18    100000      55789.0      0.6      5.7          multiple_assignments(o)
+                19    100000      69393.0      0.7      7.1          individual_assignments(o)
+
+            mpatel@blr-mpd67 demos % cat assignments.py
+            import random
+
+            def multiple_assignments(order):
+                order_subtotal, order_tax, order_shipping = order
+
+            def individual_assignments(order):
+                order_subtotal = order[0]
+                order_tax = order[1]
+                order_shipping = order[2]
+
+            @profile
+            def main():
+                orders = [(random.randint(0, 100),
+                        random.randint(0, 100),
+                        random.randint(0, 100)) for _ in range(100_000)]
+                
+                for o in orders:
+                    multiple_assignments(o)
+                    individual_assignments(o)
+
+                
+            main()%
+            mpatel@blr-mpd67 demos %
 
 
 4. Using more threads
+    What are threads?
+        Separate execution flows, Part of process, adds concurrency. but python have global interpreter lock but it can still improve performance
+        Threads are Lightweight, have shared memory, potential for bugs to writes on variable and GIL (global interpreter lock) contraints 
+        Processes are Heavyweight, Separate memory and low potential for bugs and no GIL constraint
+
+            # Demo code with threads
+            mpatel@blr-mpd67 demos % kernprof -lv more_threads.py 
+            Processing order with id=10
+            Processing order with id=20
+            Wrote profile results to more_threads.py.lprof
+            Timer unit: 1e-06 s
+
+            Finished processing order with id=10
+            Finished processing order with id=20
+            mpatel@blr-mpd67 demos % cat more_threads.py
+            import threading
+            from time import sleep
+
+            def process_order(order_id):
+                print(f'Processing order with id={order_id}')
+                sleep(1)
+                print(f'Finished processing order with id={order_id}')
+
+            first_thread = threading.Thread(target=process_order, args=(10,))
+            second_thread = threading.Thread(target=process_order, args=(20,))
+
+            first_thread.start()
+            second_thread.start()
+            mpatel@blr-mpd67 demos %
+    
+    Challenges
+        Synchronizing threads
+            Race conditions
+            Deadlocks
+            Starvation
+            Livelocks
+        Troubleshooting - Reproduction is difficult 
+        GIL (global interpreter lock)
+            Only one thread is allowed 
+            Most impact on CPU intensive task so no much benefit if task are CPU intensive
+        Usage: 
+            Tasks that wait for external events
+            Blocking I/O 
+            Simple logic
+        Dont Use:
+            No waiting for external events
+            Avoid for CPU intensive task
+            complex task should not be used in threads
+
+        # Demo
+            mpatel@blr-mpd67 demos % kernprof -lv download_threads.py 
+            Wrote profile results to download_threads.py.lprof
+            Timer unit: 1e-06 s
+
+            Total time: 2.93224 s
+            File: download_threads.py
+            Function: main at line 21
+
+            Line #      Hits         Time  Per Hit   % Time  Line Contents
+            ==============================================================
+                21                                           @profile
+                22                                           def main():
+                23         1    2167637.0    2e+06     73.9      single_thread()
+                24         1     764599.0 764599.0     26.1      multiple_threads()
+
+            mpatel@blr-mpd67 demos % cat download_threads.py
+            import threading
+            from urllib import request
+
+
+            def download():
+                return request.urlopen('https://google.com').read()
+
+            def single_thread():
+                for _ in range(5):
+                    download()
+
+            def multiple_threads():
+                threads = []
+                for _ in range(5):
+                    threads.append(threading.Thread(target=download))
+                for t in threads:
+                    t.start()
+                for t in threads:
+                    t.join()
+
+            @profile
+            def main():
+                single_thread()
+                multiple_threads()
+
+            main()
+            mpatel@blr-mpd67 demos % 
 
 
 5. Using Asynchronous code
+    Asynchronous code 
+        Inspired from other langauge
+        Reduce potential for bugs
+        Maximize core utilization
+        It have new syntax, concepts, tools
+        only one thread is used so blocking code can stall everything
+        Async code
+            Low overhead
+            Low potential for bugs
+            Learning curve
+            Compatibility constraint
 
+    Challenges
+        Learning Curve -> Async, await etc (new concept coroutine, event loop and new libraries aiohttp, aiomysql)
+        Debugging 
+        Compatibility
+            need third party libraries
+            blocking code not allowed
+    
+    When to use
+        I/O operation, many small tasks, Avoid Synchronizing threads, 
+        Examples : Data processing pipelines, network application
+
+        # Demo to see perf improvement
+            mpatel@blr-mpd67 demos % kernprof -lv download_asyncio.py 
+            Wrote profile results to download_asyncio.py.lprof
+            Timer unit: 1e-06 s
+
+            Total time: 2.90191 s
+            File: download_asyncio.py
+            Function: main at line 23
+
+            Line #      Hits         Time  Per Hit   % Time  Line Contents
+            ==============================================================
+                23                                           @profile
+                24                                           def main():
+                25         1    2539902.0    3e+06     87.5      synchronous()
+                26         1     362007.0 362007.0     12.5      asyncio.run(asynchronous())
+
+            mpatel@blr-mpd67 demos % cat download_asyncio.py
+            import asyncio
+            import aiohttp
+            from urllib import request
+
+
+            def download():
+                return request.urlopen('https://google.com').read()
+
+            def synchronous():
+                for _ in range(5):
+                    download()
+
+            async def async_download(session, url):
+                async with session.get(url) as response:
+                    return await response.text()
+
+            async def asynchronous():
+                async with aiohttp.ClientSession() as session:
+                    coroutines = [async_download(session, 'https://google.com') for _ in range(5)]
+                    await asyncio.gather(*coroutines)
+
+
+            @profile
+            def main():
+                synchronous()
+                asyncio.run(asynchronous())
+
+            main()%
+            mpatel@blr-mpd67 demos %
 
 6. Using more processes 
+    Basics
+        Separate memory spaces
+        No GIL for process
+        Utilize all CPU cores 
+        Increased memory overhead
+        Harder to share resources
+
+    # Demo
+        mpatel@blr-mpd67 demos % cat hello_dask.py 
+        from dask.distributed import Client
+
+
+        def clean_order(order_id):
+            for _ in range(500_000_000):
+                pass
+            print(f"Finished cleaning order with id={order_id}")
+
+
+        if __name__ == '__main__':
+            client = Client()
+            client.map(clean_order, [10, 20])    
+            # first = Process(target=clean_order, args=(10,))
+            # second = Process(target=clean_order, args=(20,))
+
+            # first.start()
+            # second.start()
+
+            # first.join()
+            # second.join()
+        mpatel@blr-mpd67 demos % cat more_processes.py 
+        from multiprocessing import Process
+
+
+        def clean_order():
+            for _ in range(500_000_000):
+                pass
+            print('Finished cleaning')
+
+        if __name__ == '__main__':
+            p1 = Process(target=clean_order)
+            p2 = Process(target=clean_order)
+
+            p1.start()
+            p2.start()
+
+            p1.join()
+            p2.join()
+        mpatel@blr-mpd67 demos % time python3 hello_dask.py
+        python3 hello_dask.py  4.05s user 1.15s system 284% cpu 1.831 total
+        mpatel@blr-mpd67 demos % time python3 more_processes.py 
+        Finished cleaning
+        Finished cleaning
+        python3 more_processes.py  22.22s user 0.20s system 197% cpu 11.375 total
+        mpatel@blr-mpd67 demos %
+
+
+----------------------------
+Q&A Python Notes
+----------------------------
+
+1. Given the following representation of a phone:
+    class Phone:
+        def __init__(self, memory):
+            self.memory = memory
+    What happens when you run the following code?
+    pear = Phone(256)
+    plum = pear
+    pear.memory += plum.memory
+    print(plum.memory)
+
+    It prints 512.
+
+2. What is the role of the __init__.py file in a package?
+    It imports the directory as a package and lets the interpreter know about Python code.
+
+3. You mention the location of your XYZ file in the path variable. You now must display the file path on the console so you write the following code:
+    path = "The file is saved in the directory located at C:\Users\XYZ"
+    print(path)
+    When you run the code, you receive a SyntaxError: truncated \UXXXXXXXX escape. How can you resolve it?
+
+    By prefixing the path string with r
+
+4. How many iterations does the following while loop perform?
+    counter = 0
+    for i in range(4):
+        counter += 1
+
+    while(1):
+        counter -= 1
+        print(counter)
+
+    Infinite
+
+5. Which function can replace range(len(sequence)) in a for loop?
+    enumerate()
+
+6. A product in your inventory sold more than 10,000 units last year and more than 20,000 units this year. How can you find similar products from your inventory?
+    inventory = ['ZKFL0', 'OJG5', 'JN4', 'FHTK3', 'XYRH2']
+    lastYearSalesProdWise = [5000, 7000, 80000, 120000, 60000]
+    thisYearSalesProdWise = [20000, 80000, 6000, 90000, 70000]
+
+    # Expected output: 
+    # FHTK3
+    # XYRH2
+
+    for i in range(len(lastYearSalesProdWise)):
+        if lastYearSalesProdWise[i] > 10000 and \
+        thisYearSalesProdWise[i] > 20000:
+            print(inventory[i])
+
+7. You have two strings saved in the variables previous and current. Both strings are saved using double quotes. How can you merge the strings in a single string by separating them with a colon :?
+    previous + ':' + current
+
+8. What would you add to the following code to raise an exception if the file is empty?
+    try:
+        f = open('path/file.txt')
+    except FileNotFoundError as e:
+        print(e)
+
+    try:
+        f = open('path/file.txt')
+            if f.read() == '':
+                raise Exception
+    except FileNotFoundError as e:
+        print(e)
+    except  Exception:
+        print('File is empty')
+
+9. Which keyword makes a generator?
+    yield
+
+10. Given the following function: 
+    def quadratic(a, b, c, *args, **kwargs):
+    # ...
+    What values end up in args for the following call?
+    quadratic(31, 93, 62, 13, e=42)
+
+    [13]
+
+11. For a list, what is the difference between the extend() and append() methods?
+    extend() adds multiple elements, whereas append() adds only one element.
+
+12. What is a coroutine?
+    A variant of functions that you use for cooperative multi-tasking
+
+13. How many numbers are printed on the console using the following code?
+    mySeq = [20, 88, 40, 99, 60, 11, 100]
+    for i in range(-4, -2, 7):
+        print(mySeq[i])
+    1
+
+14. What is the difference between the import and from import statements?
+    from import binds members of the main module, whereas import binds the main module.
+
+15. You have a sequence with string and integer elements. You find the sum of all the integers using the following method:
+    seq = ['price', 'sales', 300, 400, 500, 'turnover']
+    mySum = 0
+    for i in seq:
+        if isinstance(i, int):
+            mySum += i
+    print(mySum)                 # 1200
+    Later, you use list comprehension to modify the code print(sum([i if isinstance(i, int) for i in seq])) which results in a syntax error. How can you change the comprehension to resolve the error?
+
+    print(sum([i for i in seq if isinstance(i, int)]))
+
+16. For a 2D video game the hero can walk or ride a horse. When encountering an obstacle, the game engine calls hero.jump(). If the hero is riding, they pass the command to the horse. You have the following horse implementation:
+    class Horse(Sprite):
+        def __init__(self, color, speed):
+            self.color = color
+            self.speed = speed
+        def render(self):
+            # ... implementation ...
+            pass
+    What must you add to make the horse obey the hero?
+
+        def jump(self): 
+            # ...
+
+17. Which is a valid function definition?
+    def m4m4_m14(self):
+        pass
+
+18. For a game room, you receive orders such as:
+    o1 = {
+        'bowling': 3,
+        'pool': 4,
+        'air-hockey': 2
+    }
+    This means that first there will be three players for bowling, then another one joins and they play pool, and finally two leave and the remaining want to play air-hockey. You want to check if two orders are the same so you can optimize resource allocation:
+    if o1 == o2:
+        # propose that players wait a bit
+        ...
+    This does not work because it marks the following as equivalent to o1:
+    o2 = {
+        'air-hockey': 2,
+        'bowling': 3,
+        'pool': 4,
+    }
+    How would you solve it?
+
+    Use OrderedDictionary instead of dict to keep track of the orders.
+
+19. The following function splits a list of integers into even numbers and odd numbers:
+    def split_even_odd(iter):
+        evens = []
+        odds = []
+        for item in iter:
+            if item % 2 == 0:
+                evens.append(item)
+            else:
+                odds.append(item)
+        return evens, odds
+    What is the result of the following line of code?
+    a, _ = split_even_odd([1,2,3])
+
+    The variable a contains [2].
+
+20. You must accept an integer input limit from a user and print all the squares of the numbers ranging from 0 to the number that the user specifies. During the operation, you do not perform the square operation on the number 2 and delete the variable limit when the operation is complete. How would you write its logic?
+    Incorrect -
+    limit = int(input("Your number"))
+    for i in range(limit):
+        print( i**2 )
+    else:
+        del limit
+
+
+    limit = int(input("Your number: "))
+    for i in range(limit):
+        if i == 2:
+            pass
+        else:
+            print( i**2 )
+    else:
+        del limit

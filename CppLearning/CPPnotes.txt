@@ -422,6 +422,16 @@ Which class can be used to read from a text file?
 Which of the following is NOT an advantage of using the insertion operator for writing into a file?
 	It's safe to use when the file is not open, or it doesn't exist.
 
+----------------------------------------------------- 
+Nail Your C++ Interview
+----------------------------------------------------- 
+
+Differences between cpp and c 
+c 					| cpp
+Procedural			| object oriented and also procedural 
+Manual if/else		| built in exception handling
+static members		| Encapsulation via classes 
+
 
 ----------------------------------------------------- 
 Older notes 
@@ -505,7 +515,7 @@ CH3 - Flow of Control
 		You are correct!
 
 CH4 - Functions 
-	Added in notesChap4.cpp and challange solutions
+	Added in Chap4notes.cpp and challange solutions
 
 	Quiz:
 		Question 1 of 3
@@ -2139,7 +2149,7 @@ See static analyzer in use.
 		mpatel@blr-mpd67 02_04 % 	
 	
 	One more example.
-	we can see errors via cppcheck and its showm mem leak on buffer, buffer gettion out of bounds, arrayIndexOutOfBounds, and invalidContainer
+	we can see errors via cppcheck and its showm mem leak on buffer, buffer getting out of bounds, arrayIndexOutOfBounds, and invalidContainer
 	but with clang it was compiled and worked with junk outputs. 
 		mpatel@blr-mpd67 02_06 % cppcheck --enable=all --inconclusive --library=posix bad.cpp               
 		Checking bad.cpp ...
@@ -2274,3 +2284,222 @@ Introducing Functional Programming in C++ : Troy Miles
 ------------------------------------------------------
 Code Clinic: C++ : Olivia Chiu Stone
 ------------------------------------------------------
+
+
+------------------------------------------------------
+PluralSight Questions
+------------------------------------------------------
+
+1. What is the definition of the Liskov substitution principle?
+Objects of a superclass should be replaceable with objects of its subclasses without breaking the application.
+
+2. A C++ programmer successfully uses the following syntax to instantiate square: Square square = Square(1.0f); The following syntax fails to compile: Square square = 1.0f; Why?
+The constructor Square(float x) is marked explicit.
+
+3. You want to implement the dependency inversion principle (DIP) so it offers the greatest mobility in terms of code reutilization at the most layers of abstraction. How would you do so?
+By extracting the abstract components into several packages/libraries
+
+4. What can you add to the bottom of the following catch block to throw the original exception again?
+catch (const std::exception& e) {
+    std::cout << "exception caught!" << std::endl;
+}
+throw;
+throw &e;
+throw e;
+throw std::exception(&e);
+
+Answer is throw;
+
+5. What does it mean when the capture clause is [=]?
+Everything from the local scope that the lambda uses is copied into the member variables of a function object.
+
+6. You want to allow the user of class X to chain (concatenate) calls for a member function as follows:
+// x is an instance of class X
+x.DoSomething().DoSomething()...
+How would you specify *this as the value being returned?
+By reference (X& X::DoSomething())
+
+7. What is the difference between implementing the open-closed principle (OCP) using inheritance and implementing it using polymorphism?
+Inheritance is less versatile because you must reuse the implementation, whereas polymorphism only reuses the API, which allows new implementations without modifying the rest of the code.
+
+8. What is true of the Liskov substitution principle (LSP)?
+The subclasses of a parent class can only implement validation rules that are equal or less restrictive than the parent.
+
+9. What happens if a catch handler executes a throw without specifying an object?
+The object that was caught will automatically be rethrown.
+
+10. When using initializer lists, in what order are member variables initialized?
+The order of declaration
+
+11. A C++ programmer is working on a class Example. Its header file is Example.hpp and its implementation file is Example.cpp. The programmer can instantiate Example in main.cpp and use some of its methods. When they try to use a certain method, however, this link error occurs: undefined reference to `Example::exampleMethod()` How might the programmer have caused this error?
+They declared exampleMethod in Example.hpp but did not implement it in Example.cpp.
+They implemented exampleMethod in Example.cpp, but never declared it in Example.hpp.
+They compiled Example.cpp, but never compiled main.cpp.
+They declared exampleMethod as private, so it is inaccessible from main.cpp.
+
+Answer Is : They declared exampleMethod in Example.hpp but did not implement it in Example.cpp.
+
+12. Which is the correct syntax for a lambda returning a double?
+[](int i) -> double  { /* body */ }
+
+13. What happens if a noexcept(true) function throws an exception that isn't caught inside the function?
+std::terminate is called immediately
+
+14. What is true about catch (exception e)?
+catch (exception e) triggers for derived exceptions, but it will actually be catching the base class, losing information.
+catch (exception e) is not legal C++. The compiler emits an error when exceptions are caught by value.
+catch (exception e) will not catch derived exceptions, only base exception objects.
+catch (exception e) triggers for derived exceptions and will be catching the derived class.
+
+Answer is : catch (exception e) triggers for derived exceptions, but it will actually be catching the base class, losing information.
+
+15. A C++ program uses a C-style array a. The vector size is always static and known at compile-time. How would you quickly improve this program? 
+Change a to std::array.
+Change a to be dynamically allocated using malloc.
+Change a to be dynamically allocated using calloc.
+Change a to std::vector.
+
+Answer is : Change a to std::array.
+
+16. When applied to a built-in array or a std::array, what does the non-member function end() return?
+A pointer to the last element
+A pointer to the element just beyond the last element
+A pointer to the element before the last element
+nullptr
+
+Answer is : A pointer to the element just beyond the last element
+
+17. Which is true of the test expression used with switch statements?
+It can be a std::string.
+It cannot be a char value.
+It cannot be a std::string.
+It cannot be an integer value.
+
+Answer is : It cannot be a std::string.
+
+18. For the following code, the expression on Line-3 is equivalent to which expression?
+Line-1: std::vector<int> v{11, 12};
+Line-2: auto pbeg = v.begin();
+Line-3: auto j = *pbeg++;
+
+pbeg++; 
+j = *pbeg;
+
+++pbeg;
+j = *pbeg
+
+j = *(pbeg+1);
+
+j = *pbeg; 
+++pbeg;
+
+Answer is : 
+j = *pbeg; 
+++pbeg;
+
+19. An object of type MyClass is defined as: MyClass ob1; What is the correct declaration of a reference rOb1 that refers to ob1 object?
+MyClass& rOb1 = ob1;
+
+20. What is the difference between calling lock_guard and try_lock for a C++ mutex?
+lock_guard is blocking, whereas try_lock is non-blocking.
+
+
+1. Consider a multithreaded program in which each thread is in charge of replying to requests from remote servers. To implement a real-time monitoring visualization, you run an extra thread that polls whether the thread is active using a mutex per job. Which call is most useful to this thread?
+try_lock
+
+2. What is the output of the following code that implements stream precision and width?
+double x = 1.0 / 9.0;
+cout.precision(4);
+cout.width(7);
+cout << x;
+" 0.1111"
+
+3. Class A has a subclass B that implements more restrictive validation rules. Which problem does this introduce into the code base?
+A violation to the Liskov substitution principle
+
+4. What does unique_ptr's reset method do?
+Deletes the owned object and optionally assumes ownership of a new object
+
+5. In the following variadic template code, how would you retrieve the student's city?
+auto student = std::make_tuple("Student", "Name", "Seattle", "WA", 2005, 92.3 );
+std::get<2>(student)
+
+6. What does the explicit keyword do if you place it before the following conversion operator? operator int() const;
+Prevents the object from being implicitly cast to an int
+
+7. Consider the Liskov substitution principle (LSP). When modeling several kettle models, the current interface of the parent class Kettle has a addWater(float liters). If the children classes you're designing are :
+PremiumKettle (can connect to the mains)
+ BasicKettle (needs water to function)
+What changes would you make to the Kettle interface to make it LSP compatible?
+Move the addWater method to the BasicKettle subclass.
+
+8. What problem can occur when a C++ header file lacks include guards?
+The preprocessor may insert the header's contents into the same file more than once, which can result in redefinition errors.
+
+9. If you declare a member function to be const, what can it call?
+Member functions marked const and static member functions
+
+10. With a legacy code base, fixing one bug or issue commonly requires refactoring more than 10 of the classes in the entire project. What principle was likely ignored when planning the code?
+Single responsibility principle
+
+11. What is an example of following the SOLID principles when you must add a new behavior to the code base?
+Creating a new class that is responsible for this behavior
+
+12. How would you pass the content of a std::string to a legacy C function that needs read-only access to the input string present in your code base?
+Invoke the c_str method on the given std::string.
+
+13. Given the following enum class code, which variables are initialized properly (for example, code will compile correctly)?
+enum class direction { LEFT, RIGHT, UP, DOWN };
+int d1 = int(direction::LEFT);
+direction d2 = direction::UP;
+direction d3 = direction(direction::RIGHT);
+
+All variables are initialized properly
+d3
+d2
+d1
+
+Answer is : All variables are initialized properly
+
+14. When overloading a unary operator as a non-member function, how many explicit operands does the function take?
+One, but post-increment would take two to disambiguate
+
+15. How would you print an integer number 1044 in hexadecimal on console using std::cout?
+std::hex << 1044;
+std::cout << std::hex << 1044;
+std::cout << std::num_with_base16(1044);
+std::cout << std::hex(1044);
+
+Answer is : std::cout << std::hex << 1044;
+
+16. How could you replace this const float with a #define, maintaining the same value and type? const float pi = 3.14159;
+#define PI 3.14159f
+
+17. When overloading a binary operator as a member function, what number of explicit operands will the function take?
+1
+
+18. For the following integer val, which will compile without error? int val = 10;
+int &r = val;
+int r = &val;
+int &r;r = val;
+int &r = 10;
+
+Answer is : int &r = val;
+
+19. You are writing a program in C++ that will target multiple systems. How do you determine if the version of the standard library on a particular computer has a feature or not?
+Check the values of the library feature macros.
+
+20. Which member function of std::cin can you use to get the current internal error state flags of the std::cin object?
+std::cin.rdstate()
+
+
+
+
+
+
+
+
+
+
+
+
