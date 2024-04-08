@@ -1434,3 +1434,31 @@ Q&A Python Notes
             print( i**2 )
     else:
         del limit
+
+----------------------------
+Advanced Python: Build Hands-On Projects with Design Patterns
+----------------------------
+1. Design patterns are _____.
+Design patterns are language-neutral.
+
+2.Which object-oriented mechanism does polymorphism rely on?
+Inheritance allows child classes instantiated and treated as the same type as their parent.
+
+3.Which of these patterns is a Creational pattern?
+The Builder pattern is for creating a complex object.
+
+4.Which of the following is a functional requirement?
+Drawing a circle is what software does.
+
+5.Behavioral patterns focus on _____.
+Protocols dictate how interactions work.
+
+6.Which of these is a characteristic of an architectural pattern?
+Architectural patterns address global concerns affecting the quality of the entire software.
+
+
+1.What pattern type does the Adapter pattern belong to?
+Structural
+Adapter is a structural pattern.
+
+

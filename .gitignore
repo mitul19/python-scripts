@@ -61,6 +61,20 @@ MANIFEST
 *.manifest
 *.spec
 
+#nse_fo ignore list
+nse_fo/csvs/
+nse_fo/charts/
+nse_fo/csv_par/
+nse_fo/csvs_yf_old/
+nse_fo/*.csv
+nse_fo/drawdown_charts/
+nse_fo/yf_api/
+nse_fo/yf_csvs/
+nse_fo/yf_charts/
+nse_fo/TechWeekDemo/
+nse_fo/archive/
+
+
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt

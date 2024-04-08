@@ -1,0 +1,73 @@
+mpatel@blr-mpd67 nse_fo % ipython3      
+Python 3.11.3 (main, Apr  7 2023, 19:25:52) [Clang 14.0.0 (clang-1400.0.29.202)]
+Type 'copyright', 'credits' or 'license' for more information
+IPython 8.13.2 -- An enhanced Interactive Python. Type '?' for help.
+
+In [1]: from bs4 import BeautifulSoup
+
+In [2]: import requests
+
+In [3]: urls = [line.strip() for line in open("match_list", "r")]
+
+In [4]: urls
+Out[4]: 
+['https://www.cricbuzz.com/live-cricket-scorecard/89654/rcb-vs-csk-1st-match-indian-premier-league-2024',
+ 'https://www.cricbuzz.com/live-cricket-scorecard/89661/dc-vs-pbks-2nd-match-indian-premier-league-2024',
+ 'https://www.cricbuzz.com/live-cricket-scorecard/89665/kkr-vs-srh-3rd-match-indian-premier-league-2024',
+ 'https://www.cricbuzz.com/live-cricket-scorecard/89668/rr-vs-lsg-4th-match-indian-premier-league-2024',
+ 'https://www.cricbuzz.com/live-cricket-scorecard/89675/gt-vs-mi-5th-match-indian-premier-league-2024',
+ 'https://www.cricbuzz.com/live-cricket-scorecard/89682/pbks-vs-rcb-6th-match-indian-premier-league-2024',
+ 'https://www.cricbuzz.com/live-cricket-scorecard/89689/csk-vs-gt-7th-match-indian-premier-league-2024',
+ 'https://www.cricbuzz.com/live-cricket-scorecard/89693/srh-vs-mi-8th-match-indian-premier-league-2024',
+ 'https://www.cricbuzz.com/live-cricket-scorecard/89700/rr-vs-dc-9th-match-indian-premier-league-2024',
+ 'https://www.cricbuzz.com/live-cricket-scorecard/89703/rcb-vs-kkr-10th-match-indian-premier-league-2024',
+ 'https://www.cricbuzz.com/live-cricket-scorecard/89710/lsg-vs-pbks-11th-match-indian-premier-league-2024',
+ 'https://www.cricbuzz.com/live-cricket-scorecard/89717/srh-vs-gt-12th-match-indian-premier-league-2024',
+ 'https://www.cricbuzz.com/live-cricket-scorecard/89724/dc-vs-csk-13th-match-indian-premier-league-2024',
+ 'https://www.cricbuzz.com/live-cricket-scorecard/89731/mi-vs-rr-14th-match-indian-premier-league-2024',
+ 'https://www.cricbuzz.com/live-cricket-scorecard/89738/lsg-vs-rcb-15th-match-indian-premier-league-2024',
+ 'https://www.cricbuzz.com/live-cricket-scorecard/89745/kkr-vs-dc-16th-match-indian-premier-league-2024',
+ 'https://www.cricbuzz.com/live-cricket-scorecard/89749/gt-vs-pbks-17th-match-indian-premier-league-2024']
+
+In [8]: for url in urls:
+   ...:     print(url)
+   ...:     response = requests.get(url)
+   ...:     if response.status_code == 200:
+   ...:         parsed_html = BeautifulSoup(response.content, features="lxml")
+   ...:         items = parsed_html.find_all('div', attrs={'class':'cb-col cb-col-8 text-right text-bold'})
+   ...:         for item in items:
+   ...:             print(item.string)
+   ...: 
+https://www.cricbuzz.com/live-cricket-scorecard/89654/rcb-vs-csk-1st-match-indian-premier-league-2024
+R
+21
+35
+0
+0
+18
+48
+38
+1
+0
+0
+4
+0
+R
+15
+37
+27
+22
+34
+25
+0
+1
+0
+1
+0
+2
+0
+https://www.cricbuzz.com/live-cricket-scorecard/89661/dc-vs-pbks-2nd-match-indian-premier-league-2024
+R
+29
+20
+
