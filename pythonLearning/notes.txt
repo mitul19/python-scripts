@@ -1462,3 +1462,6 @@ Structural
 Adapter is a structural pattern.
 
 
+----------------------------
+Hands-On Advanced Python: Data Exploration and Manipulation
+----------------------------
