@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fragment Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #fragments {
+            white-space: pre-wrap; /* Preserve whitespace for newline characters */
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>Fragment Display</h1>
+    <label for="fragSizeInput">Enter Fragment Size: </label>
+    <input type="number" id="fragSizeInput">
+    <br>
+    <label for="iterationCountInput">Enter Iteration Count (default 1000): </label>
+    <input type="number" id="iterationCountInput" placeholder="1000">
+    <br>
+    <button onclick="createFragments()">Create Fragments</button>
+    <div id="fragments"></div>
+
+    <script>
+        function createFragments() {
+            const fragSize = parseInt(document.getElementById('fragSizeInput').value);
+            const iterationCount = parseInt(document.getElementById('iterationCountInput').value) || 1000;
+            const fragmentContainer = document.getElementById('fragments');
+            fragmentContainer.innerHTML = ''; // Clear previous fragments
+
+            for (let i = 0; i < iterationCount; i++) {
+                const start = fragSize * i;
+                const end = start + fragSize - 1;
+                const line = `${i + 1}: ${start} - ${end}\n`;
+                fragmentContainer.append(line);
+            }
+        }
+    </script>
+</body>
+</html>
+
