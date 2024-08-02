@@ -1257,7 +1257,7 @@ Python performances Notes
 
 
 ----------------------------
-Q&A Python Notes
+Python 3: Proficient Average
 ----------------------------
 
 1. Given the following representation of a phone:
@@ -1434,6 +1434,985 @@ Q&A Python Notes
             print( i**2 )
     else:
         del limit
+
+## Date Taken : 17-July-2024
+1. How many direct ancestors can a class have?
+
+    As many as needed
+
+2. When should you use a generator expression rather than a list comprehension?
+
+    When you want the system to prefer lazy evaluation
+
+3. You expect the output of the arithmetic operation in the following code to be 5.0 but it comes out to be 1:
+var1 = 25
+var2 = 2
+var3 = var1 ** (var2 // 4)
+print(var3)
+What fixes must you make in the code to arrive at 5.0?
+
+    Change // to /.
+
+4. The following dictionary represents animals and their counts:
+sequence = {"animals": ["panda", "deer", "lion", "eagle"], 
+            "counts": ["10", "5.23", "8.0", 12]}
+Because of a glitch, two of the four animal counts have decimal numbers appended to them. How can you convert each count from a string to an integer type and remove any available decimal numbers?
+
+    l = []
+    for k, v in sequence.items():
+        if k == "counts":
+            for i in v:
+                l.append(int(float(i)))
+
+    sequence["counts"] = l
+
+    In [10]: int(float("2.1"))
+    Out[10]: 2
+    In [11]: int("2.1")
+    ValueError: invalid literal for int() with base 10: '2.1'
+
+5. You create a context manager for connecting to a MySQL database:
+    from contextlib import contextmanager
+    import mysql.connector
+    import pandas as pd
+
+    @contextmanager
+    def mySQLDB(db):
+    conn = mysql.connector.connect(user='user', 
+                                    password='password', database=db)
+    yield conn
+    conn.close()
+
+    How can you use the context manager to retrieve all records from a table named Test from a database TestDB?
+    
+    with mySQLDB(db = 'TestDB') as conn:
+    data = pd.read_sql('SELECT * FROM Test', conn)
+
+6. A dictionary holds the grades as percentages of five students as follows:
+    myDict = {"percentages": [50, 88, 61, 98, 78]}
+How can you extract each percentage and store them in five separate variables?
+
+    s1, s2, s3, s4, s5 = myDict["percentages"]
+
+
+7. A string holds the information about the radius of a circle and the side of a square respectively as follows:
+    target = "Circle radius=2 Square side=4"
+You must extract the values of both these parameters in a tuple format [('radius', '2'), ('side', '4')]. To do so, you use the code re.findall(r'(\W+)=(\d+)', target) which results in an empty list. 
+What changes must you make in the regular expression to arrive at the output you expect?
+
+    re.findall(r'(\w+)=(\d+)', target)
+    # CAP W cant work
+
+8. What is the benefit of using a context manager while connecting to different databases in Python?
+    You can assure the connections of databases are closed after performing the required operations.
+
+
+9. What is true for relative import?
+    It can turn long import statements into short statements depending on its current location.
+
+
+10. In a class, how do you make a method that takes the class as the first parameter instead of self ?
+    @classmethod
+
+11. You are developing a package called x1 in Python 3 which has a sub package called x2. Which is a correct directory tree for package x1?
+
+    x1
+    --__init__.py
+    x2
+    --__init__.py
+    --x2.py
+    --x1.py
+
+
+12. You have a sequence with duplicate numbers. You write the following code to find the number of occurrences for each integer:
+    import numpy as np
+    sequence = [7, 8, 8, 8, 7, 7, 2, 2, 2, 2, 2, 10]
+    foo = np.unique(sequence, return_counts=True)
+    print(foo)
+
+    # Output
+    # (array([ 2,  7,  8, 10]), array([5, 3, 3, 1]))
+The output stored inside the variable foo is in the form of a tuple. What changes can you make to the code to retrieve the duplicate numbers and their counts in separate variables with the least effort?
+
+    Change the foo assignment to:
+    foo, bar = np.unique(sequence, return_counts=True)
+
+
+13. How do you collect all keyword arguments passed to a function?
+    By prefixing the last parameter with **
+
+
+14. You have a list of 20 elements in myList. Each element is of type float. You must print the first item from the list without checking any conditions and print the rest of the items that are divisible by 4.2. How would you write the code?
+    length = len(myList)
+    idx = 0
+    print(myList[idx])
+
+    while(idx < length-1):
+        idx += 1    
+        if myList[idx] % 4.2 == 0:
+            print(myList[idx])
+
+
+15. Which if conditions are true in the following code?
+if 8:
+    if -9:
+        if '.':
+            if '0':
+                if 0:
+                    print("Pass")
+
+    if 8, if -9, if '.', and if '0'
+
+
+16. Given a list of 10 elements, which operation always results in exactly one element?
+    functools.reduce()
+
+17. When should you use a lambda function instead of a named function?
+    When you only need a short one-line function 
+
+18. Given a set s, what is the difference between s.remove(x) and s.discard(x)?
+    s.remove(x) can raise an error, whereas s.discard(x) always works.
+
+19. The if and elif statements have two conditions each. Which conditions must be false to arrive at the output Que?
+    if (5 == 4 and 8 < 80) and (3 == 3 and 4 == 4):
+        print("Foo")
+    elif (isinstance("hi", str) or 8) and (9 and 1):
+        print("Baz")
+    else:
+        print("Que")
+
+    Any condition in the if statement and any condition in the elif statement
+
+
+20. How can you save the following text with its current format in a string variable?
+I am working on a Python script.
+I don't feel tired even if I work eight hours straight.
+
+    myVar = '''I am working on a Python script.
+    I don't feel tired even if I work eight hours straight.'''
+
+
+### Date taken : 2 Aug 2024
+1. You try to run an asynchronous function. You try to call it, but it is not working. How can you call an asynchronous function?
+asyncio.run(functionName())
+functionName.run()
+asyncIO(functionName())
+thread.FunctionName()
+
+    asyncio.run(functionName())
+
+2. You write the following code to print three numbers, 1, 2, and 3, on one line:
+i = 1
+while i < 4:
+    print(i)
+    i += 1
+
+# Expected output: 1 2 3
+The code returns the numbers you want but on separate lines. What fixes must you make to the code?
+Update print(i) to print(i, " ").
+Update print(i) to print(i, end=" ").
+Update print(i) to pprint.PrettyPrinter(i).
+Update print(i) to pprint.PrettyPrinter().pprint(i).
+
+    ANS: Update print(i) to print(i, end=" ").
+
+3. What is an example of list comprehension?
+Incorrect -
+a = []
+for s in 'MON TUE WED'.split():
+    a.append(s)
+Incorrect -
+a = list(map(int, [0.1, 1.5, 2.0, 3.0]))
+Your choice: correct -
+a = [s.lower() for s in 'MON TUE WED'.split()]
+Incorrect -
+a = filter(lambda x: x < 42, [10, 44, 50, 41, 4])
+
+4. You write code to accept a number from your users and to check if the number belongs within the range 0-100, both inclusive as follows:
+myInput = input("Enter a decimal number")
+if myInput in range(100):
+    print("Success")
+else:
+    print("Failure")
+On testing, you input a number 5.6 and you receive a failure on the console. What fixes must you make in the code?
+Incorrect -
+Change the input statement:
+
+myInput = input("Enter a decimal number", dtype=numpy.float32)
+Incorrect -
+Change the if statement:
+
+if float(myInput) in range(100):
+Incorrect -
+Change the input statement:
+
+myInput = input("Enter a decimal number", dtype=float)
+Your choice: correct -
+Change the if statement:
+
+if float(myInput) >= 0 and float(myInput) <= 100:
+
+
+5. A base Cake class takes care of assembling a cake:
+class Cake(ABC):
+    def __init__(self, layers, filling):
+        self.layers = layers
+        self.filling = filling
+ 
+    def assemble(self):
+        self.base = filling.join(layers)
+        return self.base
+
+    @abstractmethod
+    def decorate(self):
+        return 'cherry'
+Given the following BlackForest specialization of Cake, what is the next step to ensure you can build a BlackForest object?
+def BlackForest(Cake):
+    # ...
+Incorrect -
+Implement the assemble() method.
+
+Your choice: incorrect -
+Declare the layers and filling.
+
+Incorrect -
+Declare an @abstractmethod with the name decorate().
+
+Correct -
+Implement the decorate() method.
+
+
+
+6. A class displays the statistics of your business for an analyst:
+class Stats:
+    locale = 'en_US'
+    def __init__(self, sales, costs):
+        self.profit = sales - costs
+
+    def show(self):
+        if self.locale == 'en_US':
+            print(f'USD {self.profit}')
+        elif self.locale == 'en_GB':
+            print(f'GBP {self.profit * 0.8}')
+January was a bad month:
+jan = Stats(7, 10)
+jan.show() 
+# USD -3
+To make up for it, you hire an analyst in London to boost sales. When the February stats come in, the analyst chooses to display the currency in GBP:
+feb = Stats(14, 10)
+feb.locale = 'en_GB'
+jan.show()
+feb.show()
+jan is still in USD. Why does this happen, even though locale is a class variable?
+Incorrect -
+The locale variable is not decorated with @classproperty.
+
+Incorrect -
+The feb object was created after the jan object.
+
+Your choice: correct -
+The locale is set as a new instance attribute for feb.
+
+Incorrect -
+The jan value is cached.
+
+7. How many elements does the following indexing operation extract?
+seq = [5, 6, 9, 1, 5, 1, 1, 3, 0]
+print(seq[:2:])
+Your choice: incorrect -
+4
+
+Incorrect -
+7
+
+Incorrect -
+5
+
+Correct -
+2
+
+8. In the following class Person, _age is a private attribute.
+class Person:
+    def __init__(self, age, say_age=True):
+        self._age = age
+        self.say_age = say_age
+
+    @property
+    def age(self):
+        if self.say_age:
+            return self._age
+        return None
+Why does the following code snippet print 42 and not throw an error?
+p = Person(42, say_age=False)
+print(p._age)
+Incorrect -
+It does not use the @property decorator correctly and leaks the underlying value.
+
+Your choice: incorrect -
+_age stops being private when you assign a value to it in __init__().
+
+Correct -
+The variable _age is private by convention, not enforced by the interpreter.
+
+Incorrect -
+It does not use the attribute say_age correctly in the code.
+
+Incorrect -
+I don't know yet.
+
+
+9. Which function of the timeit module returns the time it takes for Python code to run?
+Your choice: correct -
+timeit()
+
+Incorrect -
+test()
+
+Incorrect -
+print_exec()
+
+Incorrect -
+timer()
+
+Incorrect -
+I don't know yet.
+
+10. You manually stop the iterations that the following code generates:
+mySeq = [96, 8, 10, 98, 45, 32, 101]
+idx = 0
+while(idx < 7):    
+    if mySeq[idx] == 32:
+        break
+    else:
+        continue
+print(idx)
+What is the value of the variable idx?
+Incorrect -
+6
+
+Incorrect -
+7
+
+Correct -
+0
+
+Incorrect -
+5
+
+
+11. How would you create a context manager generator for a MySQL database on the same system with user = 'user1' and password = 'test'?
+Incorrect -
+from contextlib import contextmanager
+import mysql.connector
+@contextmanager
+def mySQLDB(db):
+  conn = mysql.connector.connect(user = 'user1', password = 'test')
+  yield conn
+  conn.close()
+Your choice: correct -
+from contextlib import contextmanager
+import mysql.connector
+@contextmanager
+def mySQLDB(db):
+  conn = mysql.connector.connect(user = 'user1', password = 'test', database = db)
+  yield conn
+  conn.close()
+Incorrect -
+from contextlib import contextmanager
+@contextmanager
+def mySQLDB(db):
+  conn = connect(user = 'user1', password = 'test', database = 'db')
+  yield conn
+  conn.close()
+Incorrect -
+import contextmanager
+import connector
+@contextmanager
+def mySQLDB(db):
+  conn = connect(user = 'user1', password = 'test', database = 'db')
+  yield conn
+  conn.close()
+Incorrect -
+I don't know yet.
+
+
+12. You create all unit test cases for your code to test its functionality in a file named test_mod1.py. When you try to run your test cases using the command py test_mod1.py, nothing happens. You then try another command: py -m unittest test_mod1.py. All test cases run, showing results. What kind of update can you make to run the test cases using the first command?
+Incorrect -
+Add test_mod1.py in the main module directory.
+
+Incorrect -
+Remove test_mod1.py from the main module directory.
+
+Incorrect -
+Include the following code in test_mod1.py: 
+
+unittest.setUpModule():
+ createConnection()
+Your choice: correct -
+Include the following code in test_mod1.py:
+
+if __name__ == '__main__':
+ unittest.main()
+Incorrect -
+I don't know yet.
+
+13. What is multithreading in Python?
+Your choice: correct -
+A way of adding concurrency to a program using multiple lightweight execution paths
+
+Incorrect -
+The technique of running multiple programs at the same time, each in its own memory space
+
+Incorrect -
+A coding convention that developers must follow to have consistency in projects
+
+Incorrect -
+A set of Python commands you run to generate a wheel for a module
+
+Incorrect -
+I don't know yet.
+
+
+14. Which code snippet returns how long it takes the following code to run?
+x = 0
+while  x<= 100000:
+    x  += 1
+Incorrect -
+import timeit
+print(timeit.timer(stmt = 'while  x<= 100000:    x  += 1', setup = 'x = 0', number = 100000))
+Incorrect -
+import timeit
+print(timeit.time(stmt = 'while  x<= 100000:    x  += 1',  number = 100000))
+Incorrect -
+import timeit
+print(timeit.printexec(stmt = 'x = 0  while  x<= 100000:    x  += 1',  number = 1))
+Your choice: correct -
+import timeit
+print(timeit.timeit(stmt = 'while  x<= 100000:    x  += 1', setup = 'x = 0', number = 1))
+Incorrect -
+I don't know yet.
+
+
+
+15. Given the following class:
+class A:
+    @classmethod
+    def inspect(x):
+        print(x.__name__)
+What does this code produce?
+a = A()
+a.inspect()
+Correct -
+A
+Incorrect -
+x
+Incorrect -
+None
+Your choice: incorrect -
+a
+Incorrect -
+I don't know yet.
+
+
+16. How many functions with the same name can you define in the same scope?
+Your choice: incorrect -
+Up to two, one with positional arguments and one with keyword arguments
+
+Incorrect -
+As many as you need, as long as the names of the arguments are different
+
+Correct -
+Only one, with any mix of positional and keyword arguments
+
+Incorrect -
+As many as you need, as long as the arguments have different type annotations
+
+Incorrect -
+I don't know yet.
+
+17. When would there be multiple tracebacks?
+Correct -
+When multiple exceptions are raised during execution
+
+Your choice: incorrect -
+When imported modules have raised exceptions
+
+Incorrect -
+When exception chains are not implemented correctly
+
+Incorrect -
+When modules are not available
+
+Incorrect -
+I don't know yet.
+
+
+18. Given the following representation of a phone:
+class Phone:
+    def __init__(self, memory):
+        self.memory = memory
+What happens when you run the following code?
+pear = Phone(256)
+plum = pear
+pear.memory += plum.memory
+print(plum.memory)
+Incorrect -
+It prints 0.
+
+Your choice: incorrect -
+It prints 256.
+
+Correct -
+It prints 512.
+
+Incorrect -
+It throws an error.
+
+Incorrect -
+I don't know yet.
+
+
+19. An artificial intelligence (AI) model takes a pair of clothing items and returns whether they are formal or informal wear:
+def formal(clothing, shoes):
+    # ...
+    # complex AI model
+    # ...
+    return True
+Because this calculation takes a long time, you want to store the results in a mapping for the following common pairings:
+styles = [
+    ['red dress', 'stiletto'],
+    ['jeans', 'moccasin'],
+    ['tuxedo', 'brogue'],
+    ['shorts', 'sandals'],
+]
+You write the following code for this, but it throws an error about "Unhashable types". Why could this be?
+is_formal = {style: formal(*style) for style in styles}
+Incorrect -
+You cannot store the return type from formal() in the dictionary. Convert it to string.
+
+Correct -
+The dictionary cannot store lists as keys. Convert style to tuple.
+
+Your choice: incorrect -
+The dictionary comprehension does not allow you to expand style into arguments for formal().
+
+Incorrect -
+The key and the value are in the wrong order. Use formal(..): style in the comprehension.
+
+Incorrect -
+I don't know yet.
+
+
+20. Besides the () operator, which operator has a higher precedence than the / operator to perform a mathematical operation?
+Your choice: incorrect -
+//
+
+Incorrect -
++
+
+Correct -
+**
+
+Incorrect -
+*
+
+Incorrect -
+I don't know yet.
+
+
+Python 3: Proficient Above Average  # Date taken: 2 Aug 2024
+----------------------------
+
+1. A function takes a string and prints it if it fulfills a condition that a user provides:
+def print_if(string, cond):
+    if cond(string):
+        print(string)
+The user wants to display the word that starts with the lowercase letter v. How would you call the print_if() function to display the string vikings?
+Your choice: correct -
+print_if("vikings", lambda w: w.startswith('v'))
+Incorrect -
+print_if.__code__ = "return s.startswith('v')"
+print_if("vikings", the_filter)
+Incorrect -
+def the_filter(s):
+    return s.startswith(r'V|v')
+print_if("vikings", the_filter)
+Incorrect -
+def the_filter(s):
+    return s.init('v')
+print_if("vikings", the_filter)
+Incorrect -
+I don't know yet.
+
+
+2. Which class are all built-in exceptions derived from?
+Incorrect -
+Traceback
+
+Incorrect -
+Exception
+
+Your choice: correct -
+BaseException
+
+Incorrect -
+Eaccess
+
+Incorrect -
+I don't know yet.
+
+
+3. Which decorator implements a getter in Python?
+Incorrect -
+@get
+Incorrect -
+@getter
+Incorrect -
+@property.get
+Your choice: correct -
+@property
+Incorrect -
+I don't know yet.
+
+
+4. What is true about running code using threading in Python?
+Your choice: correct -
+All programs run concurrently with improved CPU usage.
+
+Incorrect -
+All programs run faster.
+
+Incorrect -
+After one thread finishes running, other threads can run at the same time.
+
+Incorrect -
+All threads run consecutively.
+
+Incorrect -
+I don't know yet.
+
+
+5. In a Python class, how do you access a class instance variable with the syntax __foo?
+Incorrect -
+_Classname__foo
+Correct -
+Classname._Classname__foo
+Your choice: incorrect -
+Classname.__foo
+Incorrect -
+Classname.Classname__foo
+Incorrect -
+I don't know yet.
+
+
+6. A program must ask users the number of integers they want to feed to the system and later request those numbers. Once accepted, the program must display the numbers as a list after multiplying each number by 10. To do so, you write the following program:
+totNumbers = int(input("How many numbers you want to feed? "))
+myNums = []
+for i in range(totNumbers):    
+    userNumber = int(input("Enter a number: "))
+    userNumber *= 10
+    myNums.append(userNumber)
+ 
+for i in myNums:
+    print(i)
+The program results in the correct answer but not in a single list format. What changes would you make to the code to resolve the issue?
+Your choice: incorrect -
+Wrap the variable i within square brackets [].
+
+Correct -
+Add a comma after myNums in the for loop definition.
+
+Incorrect -
+Remove int() type casting from both the input streams.
+
+Incorrect -
+Change print(i) to print(myNums.append(i)).
+
+Incorrect -
+I don't know yet.
+
+
+7. Given the following lists:
+m = [3, 5, 7, 9, 11]
+n = [2, 4, 6 ]
+What is the output of the following code?
+for i, (j, k) in enumerate(zip(m, n), 1):
+    print(i + j + k)
+Incorrect -
+6
+10
+14
+Incorrect -
+6
+10
+14
+10
+12
+Incorrect -
+10
+15
+Correct -
+6
+11
+16
+Incorrect -
+
+8. Which relational operation returns a logical True value? (ASCII comparison happens)
+Your choice: incorrect -
+print("10" >= "5")
+Correct -
+print("A" < "b")
+Incorrect -
+print("10" > "b")
+Incorrect -
+print("Z" > "b")
+Incorrect -
+I don't know yet.
+
+
+9. The following if/else logic should display the body of the first print statement but instead, it returns a syntax error. Why?
+if 8 > 4 & 8 != None:
+    if 9:
+        if isinstance("foo", str):
+            print('Inner ifs reached!')
+    else 8:
+        print("Second if condition negated")
+else 2 < 80:
+    print("First if condition negated.")
+Incorrect -
+The if 9 condition is false and the interpreter also negates the else 8 condition.
+
+Correct -
+You passed conditions to the else statements.
+
+Your choice: incorrect -
+You used the & operator instead of the && operator.
+
+Incorrect -
+You passed str without round brackets () at its end.
+
+Incorrect -
+I don't know yet.
+
+
+10. You have a list called l of pairs of numbers such as [(1, 2), (2, 2), (1, 2)]. How would you check if l has duplicated pairs?
+Your choice: correct -
+len(l) == len(set(l))
+Incorrect -
+any(p in l for p in l)
+Incorrect -
+all(p in l for p in l)
+Incorrect -
+len(l) == len(tuple(l))
+Incorrect -
+I don't know yet.
+
+
+11. You have an integer 16. You must find its square root so that the result, when passed in the following expression, results in the integer 54:
+initialNumber = 16
+print(expectedSqRoot | 50) # Expected output: 54
+How would you write the code for the variable expectedSqRoot?
+Incorrect -
+import math
+expectedSqRoot = math.sqrt(initialNumber, dtype=int)
+Incorrect -
+import math
+expectedSqRoot = math.isqrt(initialNumber, dtype = int)
+Correct -
+import math
+expectedSqRoot = math.isqrt(initialNumber)
+Your choice: incorrect -
+import math
+expectedSqRoot = math.sqrt(initialNumber)
+
+isqrt give int so you can do binary or (|) on it.
+
+
+12. The following function has an incomplete type annotation. What would you add so you have correct annotations?
+def get_notifs(account_name: str = None):
+    if account_name is None:
+        account_name = 'Admin'
+    res = requests.get(f'{base_url}/{account_name}/notifs')
+    if res.status == 200:
+        return res.json()
+Incorrect -
+def get_notifs(account_name: str = None) -> Optional[dict]:
+    # ...
+Your choice: incorrect -
+def get_notifs(account_name: Optional[str] = None) -> Optional[str]:
+    # ...
+Correct -
+def get_notifs(account_name: Optional[str] = None) -> Optional[dict]:
+    # ...
+Incorrect -
+def get_notifs(account_name: Optional[str] = None) -> dict:
+    # ...
+Incorrect -
+I don't know yet.
+
+Return type json will fit into Optional[dict]
+
+
+13. The following code should transpose matrix m using list comprehension. It does not generate a matrix, however. Which comprehension is the correct way to do this?
+[row[i] for i in range(len(m[0])) for row in m]
+Incorrect -
+[col for row in m for col in row]
+Incorrect -
+[ row[i] for row in m for i in range(len(m[0])) ]
+Your choice: correct -
+[ [row[i] for row in m] for i in range(len(m[0])) ]
+Incorrect -
+[ [row[i] for i in range(len(m[0]))] for row in m ]
+Incorrect -
+I don't know yet.
+
+
+14. What is the difference between aggregation and composition in object-oriented programming (OOP)?
+Incorrect -
+Aggregation represents a one-to-one relationship. Composition represents a one-to-many relationship. 
+
+Correct -
+In aggregation, the objects' life cycles are independent. In composition, the life cycle of one object depends on the life cycle of the other object.
+
+Your choice: incorrect -
+In aggregation, the life cycle of one object depends on the life cycle of the other object. In composition, the objects' life cycles are independent. 
+
+Incorrect -
+Aggregation represents a one-to-many relationship. Composition represents a one-to-one relationship.
+
+Incorrect -
+I don't know yet.
+
+15. Given the following set:
+s = {'blue', 'yellow', 'orange'}
+And the following operations on it:
+s.add('red')
+s.update({'blue', 'green', 'yellow'})
+s.remove('yellow')
+How many times can you call s.pop() without an error?
+Incorrect -
+3
+
+Correct -
+4
+
+Incorrect -
+5
+
+Your choice: incorrect -
+6
+
+Incorrect -
+I don't know yet.
+
+    s.add() and s.update() can add or update if item doesnt exits
+
+
+16. A piece of code is wrapped in a try/except block. If the code raises no exception, then you want to print the message "Successful Execution". How would you do that?
+Incorrect -
+Add a pass statement, then print the message.
+
+Correct -
+Add an else clause with the print statement.
+
+Your choice: incorrect -
+Add a print statement after the try/except block.
+
+Incorrect -
+Add an except clause with the print statement.
+
+Incorrect -
+I don't know yet.
+
+
+17. Given the following lists, which line adds all elements of a at the end of b ?
+a = ['apple', 'banana', 'cherry']
+b = ['jackfruit']
+Incorrect -
+a.append(b)
+Your choice: correct -
+b.extend(a)
+Incorrect -
+a.extend(b)
+Incorrect -
+b.append(a)
+Incorrect -
+I don't know yet.
+
+
+18. Which function uses f as a callback?
+Correct -
+def use(l, f):
+    for i in l:
+        if len(i) > 5:
+            f('found')
+Your choice: incorrect -
+def use(l):
+    def f():
+        if l < 0:
+            return True
+        return False
+    return f
+Incorrect -
+def use(l, f):
+    if random.random() < 0.5:
+        return f
+    return l
+Incorrect -
+def use(l, f):
+    if l == 'DEBUG':
+        print(f.__annotations__)
+Incorrect -
+I don't know yet.
+
+
+19. The following function returns True if the items in sequence b add up to a larger total than the sum of even items in sequence a:
+def larger_evens(a, b):
+    sum = 0
+    for num in a:
+        if num % 2 == 0:
+            sum += num
+ 
+    total_b = sum(b)
+    return total_b > sum
+Calling this function results in an error 'int' object is not callable, however. Why?
+Incorrect -
+Sequence b is a tuple, not a list.
+
+Correct -
+You redefined the built-in sum() function.
+
+Incorrect -
+One of the sequences contains non-integer items.
+
+Your choice: incorrect -
+Sequence a is a tuple, not a list.
+
+Incorrect -
+I don't know yet.
+
+
+
+20. You expect the output of the arithmetic operation in the following code to be 5.0 but it comes out to be 1:
+var1 = 25
+var2 = 2
+var3 = var1 ** (var2 // 4)
+print(var3)
+ What fixes must you make in the code to arrive at 5.0?
+Incorrect -
+Change // to %.
+
+Your choice: correct -
+Change // to /.
+
+Incorrect -
+Change ** to *.
+
+Incorrect -
+Change ** to -.
+
+Incorrect -
+I don't know yet.
 
 ----------------------------
 Advanced Python: Build Hands-On Projects with Design Patterns

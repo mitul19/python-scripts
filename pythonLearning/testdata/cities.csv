@@ -1,0 +1,36 @@
+City,Year,Population
+Charlotte,2015,825668	
+Charlotte,2016,843117	
+Charlotte,2017,860002	
+Charlotte,2018,872514	
+Charlotte,2019,885708							
+San Francisco,2015,863010
+San Francisco,2016,871512
+San Francisco,2017,878040
+San Francisco,2018,880696
+San Francisco,2019,881549
+Indianapolis,2015,853714
+Indianapolis,2016,859049
+Indianapolis,2017,863478
+Indianapolis,2018,870960
+Indianapolis,2019,876384
+Seattle,2015,687386
+Seattle,2016,709631
+Seattle,2017,728661
+Seattle,2018,742235
+Seattle,2019,753675
+Denver,2015,683285
+Denver,2016,696159
+Denver,2017,704961
+Denver,2018,716265
+Denver,2019,727211
+Washington DC,2015,675400
+Washington DC,2016,685815
+Washington DC,2017,694906
+Washington DC,2018,701547
+Washington DC,2019,705749
+Boston,2015,670491
+Boston,2016,679848
+Boston,2017,687788
+Boston,2018,691147
+Boston,2019,692600

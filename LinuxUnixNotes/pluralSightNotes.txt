@@ -1,0 +1,1205 @@
+# 
+# Pluralsight Notes
+#
+
+Linux Administration: Proficient Above Average
+-----------------------------------------------
+1. What file must you edit to enable quotas per filesystem?
+    /etc/fstab
+
+2. You have two text files, foo.txt and baz.txt, each of which contains just two letters in two separate lines (the letters in foo.txt are A and C: and the letters in baz.txt are B and D. 
+You run the command join foo.txt baz.txt in a terminal but receive no output. Why?
+    There is no common field between the files.
+
+3. You must reset your network in your machine. To do so, you run the commands: sudo systemctl networking off; sudo systemctl networking on. 
+This results in two similar errors, "Unknown operation networking". Which action will most likely fix the errors?
+    Run the commands: sudo nmcli networking off; sudo nmcli networking on. 
+
+4. You want to change the local time zone on your machine to Mexico City by creating a symbolic link to the zone information for Mexico City from the file /etc/localtime. How would you do this?
+    ln -s /usr/share/zoneinfo/America/Mexico_City /etc/localtime
+
+5. You are managing a server and set PermitRootLogin to yes when configuring OpenSSH. What effect will this have on your company's server?
+    It increases the risk of the use of unauthorized excessive privileges.
+
+6. You are creating a tar file from a text file foo.txt using the command tar -c myFoo.tar foo.txt in your current working directory. When you run the command, you receive the following error:
+tar: Refusing to write archive contents to terminal
+tar: Error is not recoverable: exiting now
+What fixes must you make in the tar command to resolve the error?
+    Add the mandatory -f option.
+
+7. You must view journal entries between December 11, 2020 and December 5, 2021. How will you do it using the journalctl command?
+    journalctl --since "2020-12-11" --until "2021-12-05"
+
+8. The command sudo lshw -class network results in the following information among other details:
+  *-network
+       description: Ethernet interface
+       bus info: pci@0004:01:00.0
+       logical name: enp0s3
+       version: b0
+       ...
+Based on the above information, how would you set up the link in your Linux machine?
+    sudo ip link set dev enp0s3 up
+
+9. You must run a cron job at 4:20 on the 16th day of August as well as on Fridays during the month. 
+To do so, you write the code 6 8 16 4 20 root /myDir/cronjob.sh which is invalid as per the requirements. 
+What changes must you make in the cron syntax?
+    20 4 16 8 5 root /myDir/cronjob.sh
+
+10. You run the command journalctl --list-boots which results in the following output:
+0 bed718b17a73415fade0 Sun 2022-01-03 2:02:12 UTC—Tue 2022-01-03 06:01:01 UTC
+You now run the command journalctl -b -1 to view the journal of the boot, but it results in an error. What fixes must you make in the command to resolve the error?
+    Replace -1 with -0.
+
+11. You wrote This is a sample line. on a new line using the vi insert mode. 
+Now you are back to command mode in vi. The cursor is at the letter s. How can you delete the words sample line.?
+    Use the command d$.
+
+12. What process starts a scheduled cron job?
+    /usr/sbin/cron
+
+13. How should you write the bash shebang to maximize portability?
+    #!/usr/bin/env bash
+
+14. Which path shows the location of the time zone information on your machine?
+    /usr/share/zoneinfo
+
+15. You're adding text to a file in vi and input the following command: e!. Why might you decide to apply this command?
+    You must discard changes and reload the current document.
+
+16. The umask value is 077 and the file base permissions are 666 for a new file. Which permissions would the file have?
+    600
+
+17. Consider the following two Bash files: foo.sh
+#!/bin/bash
+
+if [ -t 0 ]; then
+  echo Que
+else
+  echo Baz
+fi
+bar.sh
+#!/bin/bash
+
+echo "Hi"
+What command would you write in the Linux terminal to receive the output Que?
+Ans:    bash foo.sh
+Hint: To receive the output "Que" from the foo.sh script, you need to ensure that the script is run with an interactive terminal attached. The [ -t 0 ] condition checks if the script is being run from an interactive terminal.
+
+18. What is the difference between Common Internet File System (CIFS) and Network File System (NFS)?
+    Windows clients mostly use CIFS, whereas Linux clients mostly use NFS.
+
+19. You run the following command in your Linux terminal to retrieve Python files:
+ls /usr/bin | grep python3
+It lists four files starting with the name python3. You only need the top two files, however, so you change the command to ls /usr/bin | grep python3 | top 2. 
+This results in the error "top: unknown option '2'". What command will replace top 2 to receive only the first two Python files from the list?
+    head -2
+
+20. You must display the SELinux context information for handful of running processes. Which command should you use?
+    ps -eZ
+
+
+
+Linux Fundamentals: Proficient Above Average
+-----------------------------------------------
+
+1. What command displays all processes in a tree format?
+pstree
+
+2. You just installed a new Peripheral Component Interconnect (PCI) network card and Linux did not immediately recognize it. What tool do you need to enable the kernel module to run the card?
+modprobe module-name
+
+3. You plan to build your own Ubuntu server image for a private cloud deployment. What is the minimum disk space you will need for the operating system (OS) itself?
+6 GB
+
+4. What file contains a list of all network-accessible services and their related ports?
+/etc/services
+
+5. You are reviewing the output from running netstat and notice a port 21 is active and listening. What would you deduce from this information?
+A File Transfer Protocol (FTP) daemon is running on the local host.
+
+6. On a Debian/Ubuntu system, how would you delete a package along with any configuration settings?
+sudo apt purge packagename
+
+7. What file contains the system and user created groups?
+/etc/group
+
+8. What setting must you edit on the server-side machine to allow remote graphic sessions over Secure Shell (SSH)?
+The X11Forwarding line in the /etc/ssh/sshd_config file
+
+9. Which flag would you add to a useradd command in a CentOS system if you wanted to add new users to one or more additional groups?
+-G
+
+10. On most modern Linux systems, what file contains the list of users and encrypted versions of their passwords?
+/etc/shadow
+
+11. What is firmware?
+Software embedded into the system hardware
+
+12. What command would you use to encrypt a single file?
+gpg
+
+13. What would you type in Bash to view your shell's current environment variables?
+env
+
+14. Which Linux desktop is best suited for older, slower, or low-powered hardware?
+XForms Common Environment (Xfce)
+
+15. When using Debian or Red Hat systems, which package must you install and configure to allow for incoming Secure Shell (SSH) connections to Linux systems?
+openssh-server
+
+16. What command would you use to change a file's group to root for a file named users.txt?
+sudo chgrp root users.txt
+
+17. What command dumps socket connection statistics?
+ss 
+
+18. What command clears the local repositories of retrieved package files on a Debian/Ubuntu system?
+sudo apt-get clean
+
+19. How would you adjust the display resolution in distributions using the GNOME 3 desktop (but not the Wayland compositor) to 1366x768 using the command line?
+xrandr --size 1366x768
+
+20. Which statement best explains what happens when you use a USB device to run a live image of Linux on your computer?
+You can run a single session using a USB or optical drive without modifying your local system.
+
+
+Shell Scripting with Bash: Novice
+-----------------------------------------------
+1. An alias has been created in Bash that allows two values to be printed. They currently print on multiple lines but you would prefer the values on one line and tab separated using two spaces for each tab. 
+How do you change the current alias:
+alias report="printf 'User: %s\nDirectory: %s\n'"
+    alias report="tabs 2;printf 'User: %s\tDirectory: %s\n'"
+
+2. After reviewing variables returned in a subshell which variable should you use to access the Process ID (PID) of a Bash subshell?
+    $BASHPID
+
+3. In the context of parsing parameters in a shell script using the "getopts" command, what advantage does employing short options have over long options?
+    Ease of typing
+
+4. What can using the ELIF (ELSE IF) statement allow you to do ?
+    Place multiple conditional blocks when there are more than two conditions which can not be solved by using the IF-ELSE statement.
+
+5. As a Linux administrator you are creating a script that will prompt the user for input using the echo command. 
+You would like the the prompt to remain on the same line as the user inputs data. How might you best achieve this?
+    echo -n "Enter data: "
+
+6. What two characters start a shebang line in a shell script?
+    #!
+
+7. Which variable in Bash is used to represents the executing script's name?
+    $0
+
+8. Which is a valid Bash variable name? _var1, var#, var?, 1var
+    _var1
+
+9. Which octal value sets the following symbolic permissions?
+rwxr-xr-x
+    755
+
+10. Consider a situation where you have a shell script named "test" in your current working directory and an executable program with the same name "test" in the /usr/local/bin directory. 
+Your PATH environment variable includes both the current working directory (.) and /usr/local/bin. 
+You can investigate the "test" command/program with either the type or which commands? Which would be better suited for this task ?
+    The type command would be more appropriate for inspecting the "test" command/program because it provides more comprehensive information about the command, indicating its type and location.
+
+11. You are tasked with writing a bash function called combine_strings that takes in two arguments, s1 and s2, concatenates them together with a space in between, and returns the combined string. 
+How would you complete this task?
+
+    combine_strings() {
+    s1="$1"
+    s2="$2"
+    combined="${s1} ${s2}"
+    echo "$combined"
+    }
+
+12. Which is a preferred alternative to the which command when using Bash? 
+    command -v
+
+13. You have a Bash script that sets a variable called VAR to a value of 255. 
+You want to make this variable available to any child processes that the script spawns. How might you modify the script to achieve this task?
+    export VAR
+
+14. You want to check if the name of the current user is listed as student and output the message "The current user is named student" if the condition is true. What would be suitable for this task?
+    [ "$USER" = "student" ] && echo "The current user is named student" 
+
+
+15. You need to write a Bash script to monitor disk usage on multiple servers. The script should prompt the user to enter the names or IP addresses of the servers to monitor, store them in an array, and then run the df -h command on each one, storing the results in the file "output". What script would best achieve this?
+    echo "Please enter the names or IP addresses of the servers to monitor (separate each with a space):"
+    read -a servers
+
+    for server in "${servers[@]}"; do
+        ssh "$server" 'df -h' >> output
+    done
+
+16. Why is it recommended to avoid the which command within Bash?
+    The which command may lead to unexpected results or may not provide complete information about a command.
+
+17. Which option used with declare will print the value of a variable?
+    -p
+
+18. Which Bash variable is used to read the return status of the last command?
+    $?
+
+19. What is the expected behavior of the following script? 
+[[ $(id -u) -eq 0 ]] && user="yes" || user="no"
+
+echo "$user"
+
+    Checks if the UID of the current user is equal to 0 and outputs "yes" if the UID is equal to 0 or "no" if it is not equal to 0. 
+
+20. What is process substitution in the Bash shell?
+    Piping of the stdout of one or more processes to the stdin of another.
+
+SQL Essentials: Proficient Above Average
+-----------------------------------------------
+1. You need to find any City in the Address table that begins with “C” and is at least two characters in length. What is one way you could do this? 
+    SELECT City FROM Address WHERE City LIKE ‘C_%’;
+
+2. What is true about the FROM clause of a subquery used by the SQL ANY operator?
+    It can reference any number of tables. 
+
+3. What is true about statements using the ANY operator?
+    ANY must always be preceded by an operator like <,>, <>, or =.
+
+4. What happens if you include a value of NULL in an IN operator, such as in the following query?  SELECT * FROM Product WHERE Quantity IN (0, NULL); 
+    Records with NULL values are not included in the result set.  
+
+5.  What happens when you execute the following query? 
+SELECT Price + 1 * 3 from Product; 
+    The Price value has 3 added.
+
+6. You are combining two result sets using this query: 
+SELECT Employee_Name FROM table_1 
+UNION ALL 
+SELECT Customer_Name FROM table_2 
+ORDER BY Customer_Name;  
+Why does this result in an error
+     The ORDER BY must include column names or aliases from the first SELECT statement.
+
+7. You have two tables with a column called EmployeeName. In table_1 it is defined as an nvarchar(20), in table_2 as a varchar(30). What will be the datatype of the combined dataset for the following query?
+SELECT EmployeeName FROM table_1
+UNION
+SELECT EmployeeName FROM table_2  
+    nvarchar(30)
+
+8. You try to get a list of all the products that have been ordered by customers using the following query, which returns an error.
+
+SELECT ProductName FROM Products
+WHERE ProductID ANY (SELECT ProductID FROM OrderDetails);
+
+How can you fix this query?
+    SELECT ProductName FROM Products WHERE ProductID = ANY (SELECT ProductID FROM OrderDetails);
+
+9. You have a recursive CTE called BOMCTE that contains all your finished goods, including the raw materials required to manufacture them.
+Which query will allow you to delete all raw materials that are not used?
+    DELETE FROM raw_materials WHERE NOT material_id in (SELECT material_id FROM BOMCTE);
+
+10. You are trying to retrieve the number of orders by the customer using the following query, but it results in an error.
+
+SELECT Customer,City,COUNT(*) FROM ORDERS GROUP BY Customer;
+How can you fix this?
+    Use an aggregate function on the City column.
+
+11. You try to CROSS JOIN a CTE with itself, but your query results in an error. What is the probable cause for this?
+    You must provide a table alias for the second usage of the CTE.
+
+12. Which wildcard can be used with the NOT LIKE operator? _, &, *, <>
+    _ 
+
+13. You have two tables with a column letters.
+
+Table_1 contains
+A
+B
+C
+
+Table_2 contains
+B
+A
+
+You join table_1 on table_2 through a RIGHT JOIN. What is the output of that query? 
+
+    A A
+    B B
+
+14. What is true about using a CTE within an INSERT statement?
+    The CTE can be used to JOIN other tables to determine the result set to be inserted.
+
+15. You are joining two single-column tables using this query:
+
+SELECT * FROM table_A a RIGHT JOIN TABLE_B b on a.Employee = b.Employee;
+
+table_A contains no data. table_B contains Emp1 and Emp2.
+Which result should you expect from this query?
+
+    NULL Emp1
+    NULL Emp2
+
+16. You are tasked to retrieve a list of all customers whose total revenue exceeds 1000 USD. Which query should you use for this? 
+    SELECT * FROM customers WHERE customer = ANY
+    (SELECT customer FROM orders GROUP BY customer HAVING SUM(revenue) > 1000);
+
+17. What is the major difference between using the SUM() function compared to the COUNT() function over a column that only consists of NULL values?
+    SUM() results in NULL, while COUNT() results in 0.
+
+18. What needs to be done to handle NULL values when using SUM, AVG, MIN, or MAX aggregates?
+    NULL values are automatically excluded. 
+
+19. Where do you need to specify the SUM() aggregate function when compiling a list of the TOP 10 customers by revenue, where the result should also include the total revenue?
+    In the SELECT and the ORDER BY statement
+
+20. What will be the difference in the output of the following queries?  SELECT * FROM Products; SELECT ‘*’ FROM Products;  
+    The first query will return all columns for all rows in the Products table, while the second query will return an asterisk for each row in the Products table. 
+
+
+Git: Novice
+-----------------------------------------------
+1. You are setting up a new project. Which files should you store in the version control system?
+The minimum files necessary to rebuild the state of the project at a given point in time
+
+2. What does it mean if HEAD points to the current branch?   
+The active pointer is set to the last commit of the current active branch. 
+
+3. What is the difference between git status and git log?  
+git status provides information about the state of the working directory and the staging area, whereas git log only shows a log of the current committed history.
+
+4. What kind of repository does the git init --bare command create?
+A bare repository that lacks a working directory
+
+5. What is one advantage of rebase over merge?
+Rebase results in a cleaner, more streamlined history than merge.
+
+6. What are some disadvantages to using Git with the Secure Shell (SSH) transport protocol?
+It does not allow anonymous access and involves a more complicated setup process for contributors.
+
+7. A team member pushes to their branch a new form component you would like to use in your own feature without taking the rest of their work. Which command can you run to achieve this? 
+git cherry-pick <desired_commit>
+
+8. Which statement is the best comparison between git log and git blame?
+git blame shows only the latest change in the file, whereas git log can show the entire branch history.
+
+9. What Git tree tracks the added changes in the working directory, to store the changes in the next commit?
+Staging area
+
+10. You want to view the latest changes from the remote repository to view the latest commits. You do not want those changes merged or rebased onto your current local branches. Which command would you use?
+git fetch
+
+11. What is the purpose of the git clean command?
+To delete untracked files from the repository's working directory
+
+12. What does a force push do in Git?
+It causes the remote repository to accept the local repository changes even if it diverges with the remote repository.
+
+13. What is a hook?
+A script that runs when certain important actions occur in a Git repository
+
+14. What does git revert accomplish?
+It creates and applies a new commit with all modifications reversed.
+
+15. From your local repository, how would you compel the remote repository to accept your latest changes regardless of conflicts and regardless of the risk of losing commits and changes?
+git push --force origin master
+
+16. In Git, what is the purpose of staging?
+To prepare objects so they can be committed.
+
+17. When is it safe to delete a remote branch on a repository?
+After you merge the pull request created on the remote branch
+
+18. You are working with the local government on a dashboard to visualize the local vaccine rollout plan for a viral disease. You proceed to commit the new developments using the following command:
+git commit -m "Vaccine rollout plan is set and ready for release".
+However, Git aborts the commit, prompting you that there is nothing to commit. What could be the issue?
+    You have not staged your changes yet.
+
+19. What occurs if you give the command git commit from a directory that does not belong to a Git project?
+    Git exits with a "Not a git repository" error.
+
+20. While on main, you rename branch1 to branch2. What happens to the references that used to point at branch1?
+    They now point to branch2.
+
+
+Wireshark Fundamentals: Expert
+-----------------------------------------------
+1. What actions would you take to identify causes of Previous Packet Not Captured in Wireshark?
+Adjust capture filters, check capture setup, and review network conditions
+
+2. In a Voice over IP (VoIP) analysis, which is the most crucial characteristic of User Datagram Protocol (UDP) packets?
+Inter-arrival time
+
+3. You are examining a Wireshark capture and notice that DNS responses for certain queries are returned from an unexpected authoritative DNS server. What might this indicate?
+A possible DNS hijacking attempt.
+
+4. How would you adjust the Receive Window to improve slow data transfer speeds?
+Increase the Receive Window size to allow more data in flight before requiring an acknowledgment.
+
+5. What do you remember about the purpose of Duplicate Acknowledgments in Transmission Control Protocol?
+Signal packet loss or out-of-order packets
+
+6. How would you use the Stevens Graph to investigate slow Transmission Control Protocol (TCP) start?
+Examine initial sequence number growth and acknowledge response times
+
+7. Why would you choose to install the TShark utility along with Wireshark?
+For enhanced packet capture capabilities in a CLI environment.
+
+8. How would you identify out of order packets in Wireshark?
+By observing relative sequence numbers not in ascending order
+
+9. Capture Filters are applied at what stage of Wireshark's operation?
+Pre-capture filtering
+
+10. How can you use the Window Scaling Graph to identify network congestion?
+Look for reductions in window size corresponding to slow data transfer periods
+
+11. What can you infer from repeated Transmission Control Protocol Window Full messages in Wireshark?
+Possible receiver-side processing delays or bandwidth limitations
+
+12. When a user complains about not being able to access a web service, which HTTP status code should you look for in Wireshark to identify access denial?
+403
+
+13. What does the ring buffer configuration in Wireshark's capture options allow you to do?
+Manages disk space by cycling through multiple capture files
+
+14. A sequence of ICMP Time Exceeded messages in Wireshark suggests what kind of issue?
+A potential routing loop or excessively long route.
+
+15. How does altering the Scale Factor impact Transmission Control Protocol (TCP) throughput?
+Enhances capacity for larger data transfer without additional ACKs
+
+16. When considering the installation of a Packet Capture Driver for use with Wireshark on a network security professional's toolkit in Windows, which feature distinguishes Npcap from WinPcap?
+Support for capturing raw 802.11 packets
+
+17. To investigate a potential Denial of Service (DoS) attack by analyzing IPv4 traffic for unusually high volumes of packets directed to a single destination, which feature in Wireshark would be most valuable?
+Reviewing Conversations under the Statistics menu for detailed connections
+
+18. How would you define the Window Scaling feature in Transmission Control Protocol (TC)?
+Enhances Transmission Control Protocol (TCP) window size beyond 65,535 bytes for higher throughput
+
+19. While analyzing a series of SSL transactions, you observe that the client always initiates a new session rather than resuming a session. What is the outcome?
+The server does not support session resumption.
+
+20. When configuring a network monitoring setup, why would a network engineer prefer a network tap or port mirroring over the other for capturing traffic on a high-volume link?
+Choose a network tap, because port mirroring can drop packets if the network traffic volume exceeds switch capacity
+
+
+Python: Pandas Essentials: Proficient Average
+-----------------------------------------------
+1. Which method can you use on a data frame to find all of the duplicate rows?
+duplicated()
+
+2. You removed all of the rows from your df data frame that contain empty cells:
+df.dropna()
+However, after running this statement, the df still has all of the same rows. How can you fix that?
+    Add the inplace=True argument to the dropna() method.
+
+3. You need to plot two columns from the df data frame: 'column1' and 'column2':
+df[['column1'],['column2']].plot()
+However, the statement above will return a TypeError. What is the correct syntax?
+    df[['column1', 'column2']].plot()
+
+4. Which Pandas method gives you an overview about each column's data type, its overall shape, and total memory usage of a DataFrame?
+    info()
+
+5. You decide to plot the df Pandas data frame as a histogram:
+df.plot.hist()
+How would you achieve the same histogram without using the hist() method?
+    df.plot(kind="hist")
+
+6. What is the index of the following series?
+pd.Series({"a":[34, 12, 34, 22, 45]}).index
+    a
+
+7. Which Python function lets you show the values, index, and column labels of a DataFrame on the console?
+    print()
+
+8. You run the following method on your df data frame:
+df.fillna(200)
+What is the return value of this method call?
+    A new data frame
+
+9. You found duplicated rows inside of the df data frame:
+df[df.duplicated()]
+The first occurrence of this duplicated row is not considered a duplicate, it is considered as the original row. How can you modify this method call to consider the last duplicated row as an original and not a duplicate?
+    df[df.duplicated(keep='last')]
+
+10. You used the following method to fill the empty cells inside of your data frame:
+df.fillna(method='ffill', inplace=True)
+However, the empty cell in one of the columns from the first row is still empty. Why?
+    Because 'ffill' uses the value from the previous row to fill an empty cell
+
+11. You are using Jupyter Notebook to see the visualization of your df data frame plot. How can you configure the notebook to automatically show the plot visualization after the evaluated cell?
+    %matplotlib inline
+    df.plot()
+
+12. Your df data frame has some rows with the same value inside of the 'username' column. How can you remove them from the data frame?
+    df.drop_duplicates(subset="username", inplace=True)
+
+13. You are using the df data frame's plot() method to create a figure:
+df.plot(x='someColumn', y=["Median", "P75th"])
+However, once you compile the Python file, nothing is shown on the screen. What do you need to add inside of the script to actually show the plotted figure?
+
+    Invoke the matplotlib pyplot's show() method:
+
+    import matplotlib.pyplot as plt
+    plt.show()
+
+14. You decide to plot your df data frame on a line chart:
+df.plot()
+However, the method call above will return some kind of an output string. How can you configure the Jupyter Notebook to create a visualization with matplotlib?
+    %matplotlib inline
+
+15. What will happen if you run the following commands in an ipython cell?
+import pandas
+import pandas as pd
+from pandas import *
+    You can access Pandas methods directly, using pandas and its alias pd.
+
+16. Consider the following DataFrame with 10 rows and three columns:
+df = pd.DataFrame({'col1': ['a', 'b', 'h', 'k', 'k', 'a', 'a', 'p', 'r', 'g'],
+                'col2': [4, 7, 7, 8, 3, 1, 2, 7, 8, 1],
+                'col3': [9, 6, 2, 4, 5, 7, 8, 4, 6, 1]}, 
+                index=list('abcdefghij'))
+You must display the second to last row of the DataFrame and run the command df.tail(2). This command results in the last two consecutive rows instead of the second to last row. What changes would you make to the command to rectify the mistake?
+    df.tail(2).iloc[0]
+
+17. What would happen if you pass show_counts=True in the df.info() statement?
+    You will observe the non-null counts corresponding to each column.
+
+18. Which string can you pass to the Pandas plot() function as a kind parameter to create a horizontal bar chart?, bar, barh, horizontal-bar, hbar
+    barh
+
+19. Which is the correct syntax to feed data in the pandas.Series method with index starting from 0?
+    [item1, item2, ..., itemN]
+
+20. Which package is based on the Matplotlib library?
+    Seaborn
+
+
+Python: NumPy
+-----------------------------------------------
+1. You have a NumPy array, a, and a scalar value, k. How can you calculate the element-wise product of array a and the scalar k and store the result in a new array, b?
+b = numpy.multiply(a, k)
+
+2. You created matrix A and you want to check if it is symmetric with the following statement:
+np.symmetric(A)
+The statement raises an error. How can you fix the error to output the result you expect?
+    np.allclose(A, A.T)
+
+3. You must install Python version 3.5 in a new environment named spr4. You run the following command in Anaconda terminal, conda create -n spr4 py3.5. 
+After running the command, you verify the creation of a new environment by running conda info --envs but it lists only base. Why?
+    You ran an invalid command; it must be conda create -n spr4 python=3.5.
+
+4. You create a three-item NumPy array and iterate over it using the for loop as follows:
+arr = np.arange(3)
+with np.nditer(arr, op_flags=['readonly']) as temp:
+    for i in temp:
+        try:
+            i[...] = 5 * i
+        except:
+            break
+What is the final value of the array, arr, after running the above operation?
+    [0, 1, 2]
+
+5. You have an array with eight items as follows:
+arr = np.array([[5+8j, 9, 3, 2], [9, 0, 8, 3]])
+You must figure out the data type of the array without using the dtype attribute. 
+The only information you have is that the data type is either int, float, complex128, or str. What other attribute can you use to figure out the data type of the array?
+    Use arr.itemsize so the result is 16 for a complex128 array data type.
+
+6. You have an existing array: arr = np.array([[5+8j, 9, 3, 2], [9, 0, 8, 3]]).
+You must create another array, [ 10.,  40.,  70., 100.] using linspace.
+How would you specify the number of samples in linspace using arr attributes?
+    np.linspace(10, 100, arr.shape[1])
+
+7. You create the code to build a user-specified shape matrix and extract all the items of the first column as follows:
+n = 9
+arr = np.arange(n).reshape(int(np.sqrt(n)), -1)
+print(arr[0][0], arr[1][0], arr[2][0])
+The operation works successfully but is not scalable when the value of n increases. Which code would you write to improve the operation?
+    print(arr[:, 0])
+
+8. You use the following code to calculate the correlation coefficient between two arrays, x and y:
+import numpy as np
+x = np.array([1, 2, 3, 4, 5])
+y = np.array([5, 4, 3, 2, 1])
+result = np.corrcoef(x, y)
+The calculation results in a matrix, however:
+[[ 1. -1.]
+ [-1.  1.]]
+How can you extract the correlation coefficient value itself?
+    Extract the off-diagonal element from the result matrix with result[0, 1].
+
+9. You have three NumPy arrays, arr1, arr2 and arr3. Your colleague defined their data types as float, float32, and float64, respectively. 
+How would you verify that each of the three arrays falls under the floating data type?
+    Run np.issubdtype(<arr>, np.floating) on each array expecting the result to be True.
+
+10. Why would you need to swap bytes in a NumPy array?
+    To convert the byte order of the array's elements between little-endian and big-endian
+
+11. How can you compute the Kronecker product of matrices A and B?
+    np.kron(A, B)
+
+12. You wrote the following code to read little-endian 4-byte integers from a binary file into an array data:
+import numpy as np
+
+filename = 'data.bin'
+data = np.fromfile(filename, dtype=np.int32)
+The code runs without errors, but the values in the data array are incorrect. How can you fix it?
+    Specify the little-endian byte order in the np.fromfile call using dtype='<i4'.
+
+13. You have two arrays, arr1 and arr2, as follows:
+arr1 = np.array([[5, 9, 3, 210], [9, 0, 8, 3]])
+arr2 = np.array([[5], [9], [10], [3]])
+arr = arr1 * arr2.T
+You perform a multiplication operation on these arrays and save the result into a new array that consumes 32 bytes in total (arr.nbytes). 
+The array exceeds the memory limit set in your project. What changes would you make to the code to decrease the memory that the array occupies without affecting the arr result?
+    Use the command arr = arr.astype(np.int16).
+
+14. You must construct an array of six items from 50 to 0, both numbers inclusive. How would you use a NumPy method for this array construction?
+    np.linspace(50, 0, 6)
+
+15. Which NumPy function can you use to create a deep copy of an array?
+    numpy.copy
+
+16. You have a square matrix A. How can you compute the trace of the matrix?
+    np.trace(A)
+
+17. You write the following code:
+import numpy as np
+
+A = np.array([[1, 2],
+              [2, 4]])
+
+A_inv = np.linalg.inv(A)
+When you run it, Python raises the LinAlgError. How can you fix it to avoid raising any errors?
+
+    Change np.linalg.inv to np.linalg.pinv.
+
+18. Which pip command provides package index information based on a keyword?
+    pip search
+
+19. You create a matrix and pass values to its diagonal. You pass this matrix to the tril() method and in the process, obtain the sum along axis=1. What is the final output?
+np.tril(np.diagflat([50, 150], 2)).sum(axis=1)
+    [0, 0, 0, 0]
+
+20. You have a NumPy array with three float items ,78.5, 45.8, and 12.2. How would you iterate over this array, multiply each item by 85, and store the result back to the original array?
+arr = np.array([78.5, 45.8, 12.2])
+    for i in np.nditer(arr, op_flags=['readwrite']):
+        i[...] = i * 85
+
+
+Importing Data with Python: Proficient Average
+-----------------------------------------------
+1. You have a CSV file vroot.csv with no header and two corrupted rows as shown:
+9,9,9
+-,+,*
+/,/,-
+7,8,9
+7,5,8
+2,4,5
+How can you read this CSV file without reading the corrupted rows?
+    pd.read_csv("vroot.csv", skiprows=range(1, 3), header=None)
+
+2. You have a CSV file with eight rows, three columns, and a header. You pass your CSV file in the given function:
+def readFile(file):
+    return pd.read_csv(file, skiprows=lambda x: x in [0, 1])
+What is returned from the readFile(file) function?
+    A DataFrame of shape (6,3), with the header replaced by the second row
+
+3. You imported an MP3 audio file with the following code: y, sr = librosa.load(file) 
+When you check the value of sr, you find that the audio file is 22KHz. You want to change the frequency to 10 KHz. Which command can you use to do so?
+    librosa.resample(y, sr, 10000)
+
+4. You read a PDF file with code pdf = PdfFileReader(filepath). Which function will provide information about the PDF file?
+    pdf.getDocumentInfo()
+
+5. What is the proper syntax for reading in a MATLAB file?
+    dict = scipy.loadmat('filepath')
+
+6. You are working with some data files. You can open the files, but don't know the file types. How would you identify a PDF file?
+    The first line of a PDF file would start with %PDF
+
+7. You have a set of data that needs to be stored. You figure that you need a storage solution that is infinitely scalable and supports data slicing. Which file type would be best?
+    HDF5
+
+8. Consider the following JSON object:
+json_obj = '{"foo": 5, "bar": ["baz", 5, 1.0, 2]}'
+How can you read this object into your Python environment and extract the value 1.0?
+    json.loads(json_obj)["bar"][2]
+
+9. You import an Excel file with pandas and need to analyze the data from column 2. What parameter should you use to extract only column 2?
+    usecols=1
+
+10. Which function reads general delimited file data into a pandas DataFrame?
+    read_table()
+
+11. You are reading a number of images and are also showing them in an iterative manner to check the images. To avoid sorting through multiple windows, you close the windows in a loop. How would you bind the function with your keyboard?
+    waitKey
+
+12. You are importing a file with a large number of columns. When querying two of them, all of them are being loaded into memory. Which of the following is necessary for only the required columns to be read into memory when performing a query?
+    Deferred column loading
+
+13. You have a large CSV file with low_memory=False. One of the columns has an integer type, but its last value is set to a random string. What data result should you expect?
+    You will get a column with an object data type.
+
+14. An MP4 file is imported with the given code:
+import ffmpeg 
+file = ffmpeg.input('sample.mp4')
+What will reverse the audio of the MP4 file?
+    file['a'].filter('areverse')
+
+15. You imported an Excel workbook XlBook.xls in your Python environment using:
+import xlrd
+file = xlrd.open_workbook('XlBook.xls')
+The file has 20 different sheets in it. How can you read the sheet Table 31 in a new variable newTable?
+    newTable = file.sheet_by_name('Table 31')
+
+16. You stored the XML data in SQL Server's internal cache and then used the OPENXML function to open the data and read it. You move on to parse another XML document, but get a message that there is no memory available. Which of the following is a reason why this happened?
+    You did not remove the prepared XML document from the cache through the sp_xml_removedocument procedure, using up all the memory.
+
+17. You are parsing XML data with Python's SAX API and encounter the SAXNotRecognizedException message. Which of the following is a reason why this happened?
+    The SAX XMLReader must have confronted an unrecognized feature or property.
+
+18. The Statistical Analysis Software (SAS) file being imported is not .xport or .sas7bdat. What argument must be changed in .read_sas()?
+    format
+
+19. You have a number of frames in the .jpg format. How would you convert them into an MP4 video?
+    ffmpeg.input('*/.jpg',  pattern_type = 'glob', framerate = 25).output('video.mp4').run()
+
+20. A text file has dates in the columns. When you import the file using NumPy's loadtxt() method, the dates are not being imported correctly. Why is this happening?
+    The converter on the columns that are dates must be datestr2num.
+
+
+Applied Data Mining with Python: Proficient Average
+-----------------------------------------------
+
+1. What makes the K-Nearest Neighbor (KNN) algorithm classify as a Lazy Learner?
+    KNN memorizes the training data and compares test observations with the nearest training observation.
+
+2. What is smoothing in time series forecasting?
+    Eliminating noise from a data set.
+
+3. A model gives a bad prediction on train data as well as on test data. Which term represents the current state of the model?
+    Underfit
+
+4. Which practice aims to identify patterns and propose insights with the help of machine learning and deep learning models?
+    Data mining
+
+5. You have a collaborative filtering model where ratings of 3 movies are provided by 5 users. Based on the following data, which user is most similar to the fifth user? First user: (2,1,3)
+Second user : (0,1,0)
+Third user : (5,5,5)
+Fourth user : (2,5,5)
+Fifth user : (2, 2, 3)
+    First user
+
+6. Which method uses given observations to find regression model parameter values that maximize the likelihood of making the observations?
+    Maximum Likelihood Estimation
+
+7. Given that data mining is used to generate rules from existing data, what is the role of machine learning?
+    Machine learning instructs a machine on how to learn based on the rules given from data mining.
+
+8. What is the difference between trend and seasonality?
+    Trend is increasing or decreasing the pattern in a series, while seasonality is short term repeating pattern in a series.
+
+9. You have time series data of the average temperature of month over 5 years with two columns month and temperature imported with the following code:
+import pandas as pd
+data = pd.read_csv('data.csv')
+data.month = pd.to_datetime('month')
+How do you show the trend with a frequency of 6 months?
+    temperature = data.set_index('month', implace = True)
+    temperature.rolling(6).mean().plot()
+
+10. You plan to build a time series forecasting model to estimate the profit of the next quarter for your company. What model can help you generate the forecasting data?
+    Auto regressive integrated moving average (ARIMA)
+
+11. You are validating a link prediction model with two queries. The relevant document precisions are noted as 1.0, 0.67, 0.5, 0.44, and 0.5 in the first query, and 0.5, 0.4 and 0.43 in the second query. What is the mean average precision of the model?
+    0.53
+
+12. What is a bag of words model?
+    A matrix of a number of occurrence of words in a document.
+
+13. If you are cleaning data from a csv file read into the variable csv_data, which line of code would allow you to examine the column data types and non-missing values using the pandas library?
+    csv_data.info()
+
+14. Which steps would you use to find the median price of a Cars data set containing three columns with missing values namely Priceof type object, Year of type integer, and Model of type category?
+    1. Exclude empty Price Values
+    2. Sort the prices into ascending order
+    3. Calculate the middle index by first dividing the number of prices by 2 and then adding 1/2
+    4. Return the median value of the sorted prices
+
+15. Which code uses the pgmpy library to meet the following conditions: -Create a Bayesian Network with data imported from http://testdata.com
+-Divide the data into five columns (A,B,C,D,RESULT)
+-Create and fit a Bayesian model by correlating column A to B, B to C and C to RESULT?
+
+    import pandas as pd
+    from urllib.request import urlopen
+    from pgmpy.models import BayesianModel
+
+    names = "A,B,C,D,RESULT"
+    names = names.split(",")
+    data = pd.read_csv(urlopen("http://testdata.com"),names=names)
+    model = BayesianModel([("A","B"),("B","C"),("C","RESULT")])
+    model.fit(data)
+
+16. Given the following code sample, what would be the output for finding the mean absolute error?
+actual = [1, 2, 3, 4, 5]
+predicted = [1, 3, 4, 5, 6]
+sum_error = 0.0
+    for i in range(len(actual)):
+          sum_error += abs(predicted[i] - actual[i])
+mae = sum_error / float(len(actual))
+print(mae)
+    0.8
+
+17. Which popular machine learning algorithm used in classification and regression builds a prediction model based on inferred data from target variables using a set of rules?
+    Decision Tree
+
+18. Which of the following components is absent in undirected networks?
+    Directed edges
+
+19. What is required to specify the probability of a Bayesian Network?
+    Probability of all root nodes and the conditional probabilities of all nonroot nodes.
+
+20. You are using TextBlob library to extract features from a corpus, and create a textblog object to do POS tagging. What is the output of code considering obj as a textblob object? obj.noun_phrases
+    Noun wordlist
+
+
+MySQL: Proficient Average
+-----------------------------------------------
+
+1. What enables persistent optimizer statistics?
+    innodb_stats_persistent
+
+2. What does BLOB stand for?
+    Binary Large Object
+
+3. Which option for the INSERT statement will cause an existing row to be updated in the event of a duplicate Primary Key value?
+    ON DUPLICATE KEY UPDATE
+
+4. Which function calculates an MD5 128-bit checksum for the string?
+    MD5
+
+5. When you attempt to log in to MySQL, you get the error ERROR 2002 (HY000): Can't connect to local MySQL server through socket.  What would be the reason for the error?
+    The MySQL server is not running or you're using an incorrect host name.
+
+6. Which configures the duration for retaining query analyzer statistics and information about individual queries?
+    Remove Query Analyzer Data Older Than
+
+7. Which range of values is valid for the column type DECIMAL (6,2)?
+    -9999.99 to 9999.99 
+
+8. You are trying to ALTER a table in MySQL, but you are getting a duplicate keys error. You later find that the table is corrupted.  Which command would you use to resolve this issue?
+    REPAIR TABLE
+
+9. Which feature relates to isolation in InnoDB?
+    Locking
+
+10. You want the table data to be cached in the InnoDB buffer pool. Which option would you use to specify the size of the buffer pool?
+    innodb_buffer_pool_size
+
+11. You insert NULL in an auto increment column that is a NOT NULL primary key column. What happens?
+    It generates a new value instead of NULL that is higher than the existing maximum value of the column.
+
+12. Why is the logical backup method slower than the physical backup method?
+    It involves accessing the database and converting it to logical format.
+
+13. Which statement would you execute to check the configuration information of a replica?
+    SHOW REPLICA STATUS;
+
+14. How would you create a trigger that counts the number of rows before it is inserted in the table?
+    CREATE TRIGGER ins_count BEFORE INSERT ON TABLE1
+    FOR EACH ROW SET @count = @count +1;
+
+15. In a multi-instance MySQL setup, parameters and environment variables values used by a given instance can be found using which statement?
+    SHOW VARIABLES
+
+16. How can you create a snapshot of your database using mysqldump?
+    mysqldump --all-databases --master-data > mydump.db
+
+17. In Workbench, what will build an enhanced entity relationship (EER) diagram from the database?
+    Reverse engineering
+
+18. In MySQL, InnoDB handles minor backups and recoveries during runtime, but in the case of an operating system crash or power failure, what extra measures can be taken to minimize data loss?
+    Enable binary logs, periodically take full backups and incremental backups.
+
+19. Which of the following is a Spatial Data Type?
+    GEOMETRY
+
+20. What will happen to triggers if the associated table is dropped?
+    All triggers for that table will also be dropped.
+
+
+Cisco Networking Fundamentals: Proficient Emerging
+-----------------------------------------------
+1. Which command displays the currently leased addresses on a Dynamic Host Configuration Protocol (DHCP) server running the Internetwork Operating System (IOS)?
+show ip dhcp binding 
+
+2. You have a routing problem with the Enhanced Interior Gateway Routing Protocol (EIGRP) in your network where packets are not following the preferred route. You must determine the successor(s) and feasible successor(s) routes. What command should you use to discover these two routes?
+show ip eigrp topology
+
+3. Which type of routing protocol is Enhanced Interior Gateway Routing Protocol (EIGRP)?
+Advanced distance vector
+
+4. A router has several routing processes running: Interior Gateway Routing Protocol (IGRP), Open Shortest Path First (OSPF), and Routing Information Protocol (RIP).
+The routing table contains a route to 192.168.12/24 found by IGRP. The OSPF and RIP processes found routes to the 192.168.12.0/24 network, but these routes are not added to the routing table. What is the most likely cause?
+    The new routes have a higher administrative distance.
+
+5. What can you learn about the status of a link by using the show interfaces command?
+    The status of the physical layer and the status of the data link layer
+
+6. What area is required when using protocol Open Shortest Path First (OSPF)?
+    Area 0
+
+7. What is the difference in network and host bits between Class A and Class B unicast addresses?
+    Class A has eight network and 24 host bits, whereas Class B has 16 network and 16 host bits.
+
+8. In terms of host bits, what is the difference between Class A and Class B unicast addresses?
+    Class A has 24 host bits, whereas Class B has 16 host bits.
+
+9. What command would you use to verify current duplex settings of a switch interface in Cisco Internetwork Operating System (IOS)?
+    show interface fa0/1
+
+10. If you borrow a bit from the host portion of a subnet mask, what is the net result?
+    The number of available networks increases.
+
+11. Which Internet protocol suite (TCP/IP) configuration parameter allows a host to reach hosts on other networks?
+    Default gateway
+
+12. What kind of data-link layer (Layer 2) encapsulation should you use to connect a Cisco router to a non-Cisco router over a point-to-point link? 
+    Point-to-Point Protocol (PPP)
+
+13. At what layer of the Open Systems Interconnection (OSI) model does Cisco Discovery Protocol (CDP) and Link Layer Discovery Protocol (LLDP) operate?
+    Layer 2
+
+14. What must a router know when configuring an IP route apart from the IP address of the destination network?
+    Next hop
+
+15. You were allocated a Class B network address of 135.1.0.0 and must create multiple subnets, each with around 200 hosts. What is the easiest mask to use for a subnet to satisfy the criteria?
+    255.255.255.0
+
+16. In a ring network topology, what happens to the entire network if one of the node fails?
+    The network will fail until the node is repaired.
+
+17. During bootup, a Cisco router cannot find a valid Internetwork Operating System (IOS) image. What happens?
+    It enters ROMMON mode.
+
+18. How does Ethernet half duplex communication work?
+    Only one side of the link can transmit at a time.
+
+19. If an engineer were to take a /24 network and break it into /25 networks, what did the engineer do?
+    Borrowed bits from the host portion of the mask to create more networks
+
+20. Which translation method allows you to represent multiple computers with private IP addresses and their port numbers on the internet using a single IP address?
+    Port Address Translation (PAT)
+
+
+Building Web Applications with Flask: Proficient Emerging
+-----------------------------------------------
+
+1. Users on your application are demanding a Remember Me feature during login. How can you provide this functionality?
+    By setting remember=True on the flask_login.login_user() method
+
+2. You have hundreds of URLs with a specific language code in them. How can you implement URL processors to deal with these codes?
+@app.url_value_preprocessor
+def drop_language_code(endpoint, values):
+    RC.language_code = values.pop('lang_code', None)
+
+3. If a FLASK_ENV is not set up, what will it default to?
+production
+
+4. At what point in your application's flow should you configure the logger so that all logs are captured as per the configuration specified?
+Before creating the application object
+
+5. Why are "blocks" important in how they relate to Flask templates?
+Blocks allow for the creation of specific sections that can be overridden in child templates.
+
+6. In Flask templates, how can you use the if condition to check a given variable?
+To check if the variable is defined, not empty and not false
+
+7. What parameter must you pass inside the relationship() method to have a one-to-one relationship between two classes?
+uselist=False
+
+8. When you define a variable in your route, what must you change to use the passed-in variable?
+Make the function also accept the variable as a parameter.
+
+9. What step should you take before you advance your project to use blueprints?
+Commit your resources to version control.
+
+10. You initialize an extension as part of an application configuration but you get a RunTimeError while accessing the current_app. What can you do to resolve it?
+Use app_context() in a with block
+
+11. You finished setting up your Flask application and it is time for you to select a Web Server Gateway Interface (WSGI) container. The application's server must scale well with demand. You'd also rather not host the server on your own. What would be the best WSGI container in this situation?
+A hosted solution such as AWS Elastic Beanstalk would grow with your application.
+
+12. What should be the format of Python files that hold the test cases?
+test_filename.py
+
+13. What is generally the first step when you want Flask to generate forms?
+Create a class of the form you want to create.
+
+14. You are parsing a form being passed into your Flask application.
+This form has a set of keys. You want to process the values associated with keys when the form contains them. Given a <key>, how do you correctly retrieve the values from the form being passed in?
+Use the request.form.get('<key>') to retrieve the possible key.
+
+15. In Flask-Login, which callback can you use to log in users without using cookies?
+request_loader
+
+16. Using a blueprint, what is required if you want to connect one page to another?
+url_for, ., name of the blueprint, and URL endpoint
+
+17. How do you validate form input within Flask forms?
+Use form validators to validate certain types of input.
+
+18. How can you install a package that is an integration of Flask and WTForms?
+pip install Flask-WTF
+
+19. Your database has four columns ID, USERNAME, CONTACT, EMAIL with 500 records. The database object looks like this:
+from demo_app import my_db
+p = my_db('username1', '+1524859', 'u1@email.com')
+How can you retrieve the contact details of a user with the user name ABR?
+
+user = p.query.filter_by(USERNAME='ABR').first()
+print(user.CONTACT)
+
+20. You have a folder named static and the associated blueprint has the prefix M. What should the static URL be?
+/M/static
+
+
+Docker Fundamentals for Developers: Proficient Emerging
+-----------------------------------------------
+1. Which command correctly specifies the value "Y" to an environment variable named ACCEPT_EULA? 
+docker run -e "ACCEPT_EULA=Y"
+
+2. A multi-container cluster consists of a web application that relies on a database container. The web application periodically issues error messages to customers because it begins serving requests before the database is available. How can you solve this problem?
+Make the web application container depend on the database container.
+
+3. You are developing a containerized application that includes sensitive data in a file called secrets.txt. You want to ensure that this file is not included in the Docker image when it is built. How should you proceed?
+Add secrets.txt to the .dockerignore file.
+
+4. You have a new version (1.1) of your application's Docker image. You must deploy it to Docker Hub. Your username is user01. How would you correctly push this version? 
+docker push user01/my-app:1.1
+
+5. You start working on a new project that uses Docker Compose to orchestrate multiple microservices. After cloning the project repository onto a fresh development machine, you must prepare the environment for the first time. The Docker images specified for the services in the docker-compose.yml file are not present locally. How should you proceed with the docker-compose up command?
+Run docker-compose up directly because Docker Compose automatically pulls the missing images from the registry.
+
+6. An application requires a connection string to a database. The application is connecting to the database through a managed identity instead of credentials in the connection string. Where can you store this information? 
+In either a configuration file or in an environment variable
+
+7. A Docker image is pushed to a registry as part of a continuous integration/continuous deployment (CI/CD) pipeline. What implications does this have for the distribution of the application across different environments?
+It ensures that the same version of the application runs in all environments.
+
+8. Given the following Docker Compose configuration, what happens if a service's container crashes?
+deploy:
+   restart_policy:
+      condition: on-failure
+      max_attempts: 3
+      window: 120s
+The container restarts, making three attempts to recover and waiting 120 seconds between restart attempts.
+
+9. You are creating a Dockerfile for a new application. The application's source code is located in a directory named /app/src within the Dockerfile. How would you ensure that all commands in the Dockerfile run within this directory?
+Add WORKDIR /app/src to the Dockerfile.
+
+10. Which command removes all local volumes that containers do not use?
+docker volume prune
+
+11. You have multiple services that Docker Compose orchestrates. One of the services is unexpectedly accessible from outside the network. Which is the most likely explanation?
+The service has a specific port opened in the Docker Compose configuration that allows outside access.
+
+12. Which command lists the running compose projects?  
+docker compose ls  
+
+13. What does the -p option do in the docker run command?
+Specifies the port mapping between the host and the container
+
+14. How can you start a Docker container in detached mode?
+docker run -d <image_name>
+
+15. You deploy a new application in a Docker container. The container does not start up as you expect. Which Docker command should you use to identify the issue?
+docker logs <container-id>
+
+16. An application has a small read-only dataset that changes weekly. This is the only part of the application that changes more often than quarterly. Which strategy should you use to run multiple containers and keep their data consistent and up to date?
+Place the volatile data in a shared volume.
+
+17. What is the primary purpose of Docker Compose?
+To orchestrate multiple containers
+
+18. An application has many dependencies. You must deploy the app on multiple servers with different operating systems. How could you apply containerization to simplify this process?
+Package the application and all its dependencies into a container.
+
+19. What is something you should include in a Docker image?
+The operating system libraries that the application requires
+
+20. You want to start a container from an image and remove the container once it exits. What command should you use?
+docker run --rm <image>
+
+
+Continuous Integration with Jenkins: Novice
+-----------------------------------------------
+1. You are adding a custom image to an Anchore repository from a private registry. You use the following command:
+docker-compose exec engine-api anchore-cli image add poc.sample.com/java_maven_sc_centos_centos7.6.1810 --dockerfile=/d01/aevolume/dockerfile_testexec
+
+and receive the following error:
+
+"Invalid value for "--dockerfile": Path "/d01/aevolume/dockerfile_testexec" does not exist.".
+
+What is the most likely explanation for this issue?
+
+Since you are executing anchore-cli from the engine-api container, anchore-cli can't access the path on your host.
+
+2. What does the agent section of a Jenkins pipeline specify?
+Where the entire pipeline, or a specific stage, will execute in the Jenkins environment
+
+3. You want to learn more about all the Jenkins plugins you installed and get a list of all your installed plugins. What Groovy script can you use in the Jenkins Script Console to accomplish this?
+Jenkins.instance.pluginManager.plugins.each{
+  plugin -> 
+    println (""${plugin.getDisplayName()} (${plugin.getShortName()}): ${plugin.getVersion()}"")
+}
+
+4. When you need to review the complete text log output of a job, where should you look?
+The Console Output
+
+5. What allows you to get various configuration options for Jenkins?
+Manage Jenkins
+
+6. You are implementing "Pipeline as Code" into your deployment environment and set up your Jenkinsfile for a Multibranch Pipeline project. When choosing a credential type, you want to avoid storing your password in Jenkins and introduce security risks. What can you do to pull your code from Github while still remaining secure?
+Create a GitHub access token.
+
+7. What Jenkins page allows you to add, disable, or enable plugins?
+Manage Plugins
+
+8. What allows you to test the flow of an application from start to finish to see if it is performing as designed?
+End-to-end tests
+
+9. What is one advantage of removing a plugin when it is not needed in a Jenkins environment?
+Reducing memory overhead at boot or runtime
+
+10. What is the function of the Build Failure Analyzer plugin?
+Evaluates the causes of failed builds and presents the causes on a build page
+
+11. What strategy does Kubernetes support to replace old pods with new ones gradually, while continuing to serve clients without incurring downtime?
+RollingUpdate
+
+12. What is a Jenkins node?
+A machine that is part of the Jenkins environment and is capable of executing a pipeline
+
+13. Who can manually mark agents offline or reconnect them?
+Administrators
+
+14. Where are Jenkins directories stored?
+$JENKINS_HOME
+
+15. You are version controlling your Jenkins server configuration with Git. You set up your .gitignore file. What command can you use to start a local git repository in your current directory?
+git init
+
+16. You have a Jenkins installation with 20 agents. Every time you click on "Disconnect agent", the agent is back online within a few minutes. What is the most likely explanation for this issue?
+The "Disconnect agent" option only cuts the connection to the agent and gets triggered to re-initiate the connection.
+
+17. What must Jenkins projects contain to use "Pipeline as Code"?
+A Jenkinsfile
+
+18. When trying to create a job that is connected to source control, what is the function of a multi-configuration project?
+Running the same build job on different environments
+
+19. Why should agents be interchangeable and standardized?
+To make them sharable and to optimize resource usage
+
+20. You are viewing a pull request on a GitHub URL and trying to get tests to run on Jenkins. You determine there were no test failures on your Jenkins environment but your build is still failing. You find the following error on the console log: "The tests ran but on the wrong commit". What is the most likely explanation for this?
+Your branch got rebased.
+

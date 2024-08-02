@@ -12,7 +12,7 @@
 #include<curl/curl.h>
 
 #define BASE_URL "https://www.googleapis.com/geolocation/v1/geolocate?key="
-#define APIKEY "XXXX"
+#define APIKEY "xxx"
 #define REQ_URL BASE_URL APIKEY
 #define DEBUG 1
 

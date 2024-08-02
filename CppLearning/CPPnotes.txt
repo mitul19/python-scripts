@@ -2285,7 +2285,25 @@ Introducing Functional Programming in C++ : Troy Miles
 Code Clinic: C++ : Olivia Chiu Stone
 ------------------------------------------------------
 
+mpatel@blr-mpd67 codeClinic % clang++ -std=c++17 -Wall geolocationWifi.cpp -o geolocationWifi -l cjson -l curl 
+mpatel@blr-mpd67 codeClinic % ./geolocationWifi 
 
+You are within 9052.76449082691m of 12.9728512N 77.7027584E
+{
+        "location":     {
+                "lat":  12.9728512,
+                "lng":  77.7027584
+        },
+        "accuracy":     9052.76449082691
+}
+{
+        "macAddress":   "8c:a3:99:eb:bd:b2",
+        "signalStrength":       -74,
+        "signalToNoiseRatio":   -70,
+        "channel":      157,
+        "age":  0
+}
+mpatel@blr-mpd67 codeClinic % 
 ------------------------------------------------------
 PluralSight Questions
 ------------------------------------------------------
