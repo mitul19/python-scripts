@@ -572,6 +572,330 @@ You must display the second to last row of the DataFrame and run the command df.
     Seaborn
 
 
+Python: Pandas Essentials: Expert
+-----------------------------------------------
+
+
+
+1. What is the default plot chart type used by the Pandas data frame's plot() function?
+Incorrect -
+Pie
+
+Incorrect -
+Histogram
+
+Incorrect -
+Bar
+
+Your choice: correct -
+Line
+
+Incorrect -
+I don't know yet.
+
+
+2. Your df data frame contains some empty cells and you want to fill these up with the value from the last row that had a valid non-empty value in that same column where the empty cell is found. How can you do this?
+Incorrect -
+df.fillna(axis=0, inplace=True)
+Your choice: incorrect -
+df.fillna(method='bfill', inplace=True)
+Correct -
+df.fillna(method='ffill', inplace=True)
+Incorrect -
+df.fillna(value='last', inplace=True)
+
+
+3. Consider the following DataFrame, df:
+Product	   Sales in Region A	Sales in Region B
+    0	ASDF3	   7845	                7898
+    1	RTGD3	   8798	                4442
+    2	SFDF2	   7877	                9858
+    3	SEER3	   8888	                4574
+You need to extract the sales of product SEER3 in region B. To do so, you run the command df[Sales in Region B][3], which results in a SyntaxError. Why?
+Incorrect -
+You have not wrapped the string Sales in Region B and the integer 3 within quotes.
+
+Incorrect -
+You have not used the .iloc attribute after df and before starting the opening bracket [.
+
+Incorrect -
+You have not used the .loc attribute after df and before starting the opening bracket [.
+
+Your choice: correct -
+You have not wrapped the string Sales in Region B within quotes.
+
+
+4. Other than the columns attribute, which Pandas method can display all the names of DataFrame columns?
+Incorrect -
+summary()
+
+Correct -
+info()
+
+Your choice: incorrect -
+describe()
+
+Incorrect -
+columns()
+
+Incorrect -
+
+
+5. Consider the following Series operation:
+d = {'f': 234, 'np.NaN': 2, 'h': 323, 'i': 123, 'j': 10}
+s = pd.Series(data=d, index=['h', np.NaN, 'h', 'f'])
+
+Current Output      Expected Output
+h         323       h         323
+NaN       NaN       np.NaN      2       
+h         323       h         323
+f         234       f         234
+Why does the current output differ from the expected output in the second row?
+Incorrect -
+You cannot use np.NaN as a key in dictionary d, use NaN instead.
+
+Your choice: correct -
+You have not wrapped np.NaN in quotes within the index parameter.
+
+Incorrect -
+You have not used all the key/value pairs in the Series method.
+
+Incorrect -
+You have repeated the key/value pair 'h': 323 in the Series method.
+
+
+6. You have a DataFrame with 100 rows and three columns. You extract a subset DataFrame using the command g = df.iloc[2:10, :], which gives you an eight row and three column DataFrame.  You must display the first three rows of the subset DataFrame g and use the command g.iloc[2:5, :]. This skips a few rows from the start. What changes would you make to the command to resolve the issue?
+Incorrect -
+g.iloc[0:5, :]
+
+Incorrect -
+g.head(4)
+
+Your choice: correct -
+g.head(3)
+
+Incorrect -
+g.loc[0:3, :]
+
+
+7. You want to use the Bokeh package to create interactive plots for the web. This is the first cell of your Jupyter Notebook:
+from bokeh.plotting import figure, show
+%matplotlib inline
+The Bokeh did not successfully load and you cannot see the visualizations. Why?
+Incorrect -
+Because Bokeh does not have the plotting module
+
+Incorrect -
+Because you need to use the show function before anything else
+
+Your choice: correct -
+Because Bokeh is not based on Matplotlib
+
+Incorrect -
+Because Bokeh can only work with the notebook Matplotlib backend
+
+
+8. In the pandas.Series method, which parameter allows you to set a custom index to the Series data if you pass data in a dictionary format?
+Incorrect -
+set_index
+
+Incorrect -
+reindex
+
+Incorrect -
+idx
+
+Your choice: correct -
+index
+
+
+9. What is the first parameter in the Pandas DataFrame's loc attribute?
+Correct -
+Row named index label(s)
+
+Incorrect -
+Column numeric index label(s)
+
+Incorrect -
+Column named index label(s)
+
+Your choice: incorrect -
+Row numeric index label(s)
+
+
+10. Consider the following Series operation:
+import pandas as pd
+d = {"a": 123, "b": 234, "c": 8990}
+s = pd.Series(data=d, 
+           index=list('pqr'))
+When you print the Series s, you receive a Series of three elements with NaN values instead of dictionary values. How would you replace the NaN values with the actual dictionary values?
+Your choice: correct -
+Remove the index parameter from the Series method.
+
+Incorrect -
+Restructure the index parameter value to index=['p', 'q', 'r'].
+
+Incorrect -
+Add the values=d.values() parameter to the Series method.
+
+Incorrect -
+Restructure the index parameter value to index=[123, 234, 8990].
+
+
+11. You generated a hexagonal binning plot from a df data frame:
+df.plot.hexbin(x="col1", y="col2")
+The number of hexagons on the x axis is too large. How can you set it to 20 hexagons?
+Your choice: correct -
+df.plot.hexbin(x="col1", y="col2", gridsize=20)
+Incorrect -
+df.plot.hexbin(x="col1", y="col2", hex=20)
+Incorrect -
+df.plot.hexbin(x="col1", y="col2", hexsize=20)
+Incorrect -
+df.plot.hexbin(x="col1", y="col2", grid=20)
+
+
+12. Which option can you use in combination with the %matplotlib Jupyter magic function to see all of the available backends?
+Incorrect -
+%matplotlib -list-all
+
+Correct -
+%matplotlib -l
+
+Your choice: incorrect -
+%matplotlib -b
+
+Incorrect -
+%matplotlib -backends
+
+
+13. You install Anaconda in your Windows operating system and launch Jupyter Notebook via the Anaconda terminal. This opens localhost:8888 in your default web browser, Google Chrome. You need to use Jupyter Notebook in Mozilla Firefox and visit the URL localhost:8888. This webpage asks for authentication. How would you get past the authentication step?
+Your choice: incorrect -
+Open a new Anaconda terminal and run conda jupyter list to get an authentication token string.
+
+Incorrect -
+Use the localhost's IP address 127.0.0.1:8888 to skip the authentication step.
+
+Incorrect -
+Open Mozilla Firefox in an incognito mode and re-visit the same URL.
+
+Correct -
+Open the minimized Anaconda terminal and use the string after localhost:8888?token=.
+
+
+14. You must read a CSV file into your current Python environment by skipping the last five rows. During the file read, you need to specify an engine that is feature-rich. You write the command read_csv('demo.csv', engine='c', skipfooter=5), but it leads to a ValueError. How would you resolve the error?
+Incorrect -
+Wrap 5 within brackets in the skipfooter parameter like [5].
+
+Your choice: correct -
+Use the python engine that supports the skipfooter parameter.
+
+Incorrect -
+Provide a range in the skipfooter parameter like range(5).
+
+Incorrect -
+Use the pyarrow engine that supports the skipfooter parameter.
+
+
+15. You decide to use Matplotlib-based Seaborn package to create a scatter plot from columns inside of the df data frame:
+import seaborn as sns
+sns.set()
+
+df = pd.read_csv('some.csv')
+sns.relplot(data=df, x='col1', y='col2')
+The code above will create a scatter plot from the specified columns. However, you want to create a separate plot for each different value inside of the 'col3' column. How can you do that in Seaborn?
+Incorrect -
+sns.relplot(data=df, x='col1', y='col2').sublot('col3')
+Incorrect -
+sns.relplot(data=df, x='col1', y='col2', x='col3')
+Your choice: correct -
+sns.relplot(data=df, x='col1', y='col2', col='col3')
+Incorrect -
+sns.regplot(data=df, x='col1', y='col2', z='col3')
+
+
+16. What are the data types of columns c1, c2, and c3?
+d = pd.DataFrame({"c1": [20, 30, 40],
+               "c2": ["hello", "ps", "!"],
+               "c3": [True, False, False]})
+d.info()
+Correct -
+int64, object, bool
+
+Your choice: incorrect -
+int64, str, bool
+
+Incorrect -
+int, str, bool
+
+Incorrect -
+object, object, object
+
+
+17. You read a CSV file into a Pandas DataFrame that includes your employees' data. You need to find out the exact DataFrame's real memory usage, including its index. Which command would you run?
+Incorrect -
+df.info(memory_usage=True)
+Your choice: correct -
+df.info(memory_usage='deep')
+Incorrect -
+df.show_memory(deep=True)
+Incorrect -
+df.calculate_memory()
+Incorrect -
+
+
+18. Consider the following Series operations:
+import pandas as pd
+s = Series([45, 90, 125, 85, 20])
+s = pd.concat([s, Series([19, 18, 17])])
+if s.loc[2] > 100:
+    print("Item A")
+else:
+    print("Item B")
+You expect the output to be Item A, however, you receive a ValueError instead. How would you resolve the error to arrive at the expected output?
+Incorrect -
+Append .reset_index() to the concat method.
+
+Your choice: correct -
+Append .reset_index(drop=True) to the concat method.
+
+Incorrect -
+Use the s.loc["2"] > 100 condition in the if statement.
+
+Incorrect -
+Use the s.loc[2].values[1] condition in the if statement.
+
+
+19. You read a CSV file into a Pandas DataFrame that has 50,000 rows and 20 columns. You have to get per column data type information and run the df.info(...) command where the info() method is using a parameter.  This command displays only the first three columns' information. Why is the command missing the rest of the columns' information?
+Your choice: correct -
+You must have set pandas.options.display.max_info_columns to a number less than 20.
+
+Incorrect -
+You have set the verbose parameter to True in the info() method.
+
+Incorrect -
+You must have set pandas.options.display.max_info_columns to a number less than or equal to 20.
+
+Incorrect -
+You have set the verbose parameter to False in the info() method.
+
+
+20. What is the difference between the inline and notebook Matplotlib backends inside of the Jupyter Notebook?
+Incorrect -
+The notebook backend restarts the Jupyter Notebook, inline does not.
+
+Incorrect -
+The notebook backend shows all of the plots from the notebook, inline just shows the last plot.
+
+Correct -
+The notebook backend lets you interact with the plot, inline just shows the plot.
+
+Your choice: incorrect -
+The notebook backend requires you to use plt.show(), inline shows the plot automatically.
+
+
+
+
 Python: NumPy
 -----------------------------------------------
 1. You have a NumPy array, a, and a scalar value, k. How can you calculate the element-wise product of array a and the scalar k and store the result in a new array, b?

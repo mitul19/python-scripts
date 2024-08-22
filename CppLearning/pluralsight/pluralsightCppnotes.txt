@@ -1,0 +1,145 @@
+Learn to Program with C++ 17
+------------------------------
+
+Basic Details:
+
+    case sensitive langauge
+    { and } are not ( and )
+    begin and end must match
+    ; at end of most lines 
+        - Remember almost every line ends with a semi colon
+    Double and single quotes are different – look closely
+        Use double quotes " not single ' around words and groups of words
+    Not all application are main()
+    Dont ignore warning while compile opt to fix those.
+    Anything from // to end of the line is a comment even if it looks like code
+    For some libraries also need to link in the library
+    Good libraries are in a namespace
+        To use something that’s in a namespace, use the full name -> std::cout << 2+2 << '\n' << "Hello!";
+        Prevents conflicts if other libraries use the same names
+        To save typing, can use a namespace -> using namespace std; 
+        or (usually better) each piece of it -> using std::cout;
+
+C++ enforces type
+    Variables have type
+    Expressions have type
+    It is ok to “promote”
+        Put an integer (eg 3) into a float
+    You will be warned if you “demote”
+        Put a floating point number (eg 4.9) into an integer
+    Some combinations are just not allowed
+        Put a string into an integer
+        Multiply a string and a float
+
+Variables
+    Variables in C++ have a type
+        string, number, date, Employee, etc
+        Some types are built into the language and some are User Defined
+    Variables must be declared before they are used
+        int limit;
+        float rate;
+    Built in types are not initialized for you
+    Best practice: declare and initialize at once
+        • int limit=100;
+        • float rate=0.23;
+    Can ask the compiler to deduce type when initializing
+        • autox=7;//xisint
+
+Flow of Control 
+    if/else
+        Operators to compare two operands (> >= < <= == !=) Result is true or false
+    while
+    for
+        (initializer; Continue condition; {in/de}crementer)
+        for(int loop=0; loop < 10; loop++)
+    range based for loop
+        Example: vector<int> nums; num.push_back(3); for(auto item:nums) {cout << item << endl;}
+    switch
+    break
+    Continue
+    do
+    goto
+
+Functions 
+    it defines return type, take parameters which have a type and a name
+    int add(int x, int y)
+    {
+        return x + y;
+    }
+    Overloading -> you can have 2 function with same name, CPP allows that as complier is able to distinguish
+        different arguments to distinguish 
+        return type can never be used to distinguish so you cant overload with return types
+        same number of arguments but different type is bit risky
+    Multiple files can be used to put function and implementation separate. larger project take lot of time to compile so spliting it in different modules is good and easy to source control.
+    functions which are not part of classes are called free functions or nonmember functions.
+
+Operator Overloading are just function 
+    String +, +=, == 
+    Vector []
+    cout or cin << and >>
+
+
+Header files
+    Long collections of declaration in many files have disadvantages. 
+    Put all declaration in separate file that is included in each file as you compile
+    Anything that starts with # is an instruction to the preprocessor - a step that runs before the compiler.
+
+Objects and Classes
+    C++ apps are not just made of functions, but of classes and objects too
+    class defines 
+        - idea of object
+        - what data it holds
+        - what functions it can be asked to perform.
+    object is an instance of class 
+    C++ has a very useful string class in the std namespace, it contains lot of useful member function as well. Example: string.substr(2,3) // from 3rd char to 3 char
+
+Standar libraries 
+    collections - vectors  Example: vector<int> nums;
+        holds a number of values, all same type 
+        Size does not need to be known in advance 
+        easy to access specific item
+    Algorithm include
+        Free functions that works with vector and other collections classes
+        Example: sort(begin(words), end(words))
+
+Templates 
+    powerful way to write library
+    work on any type, with out giving up type safety
+    work on both built in and user defined types.
+    Example: vector 
+
+
+Compile
+
+    mpatel@blr-mpd67 pluralsight % clang++ -std=c++17 -Wall -Wextra -Wpedantic -Werror plDemo.cpp -o plDemo
+    mpatel@blr-mpd67 pluralsight % ./plDemo
+    Hello
+
+    How it error out
+        mpatel@blr-mpd67 pluralsight % clang++ -std=c++17 -Wall -Wextra -Wpedantic -Werror plDemo.cpp -o plDemo
+        plDemo.cpp:9:13: error: implicit conversion from 'double' to 'int' changes value from 4.9 to 4 [-Werror,-Wliteral-conversion]
+            int i = 4.9;
+                ~   ^~~
+        1 error generated.
+
+    When you have implementation and Functions in different file. 
+    mpatel@blr-mpd67 pluralsight % clang++ -std=c++17 -Wall -Wextra -Wpedantic -Werror plDemo.cpp Functions.cpp -o plDemo  
+
+    Build process
+        Simple: 
+            Example.cpp --Compile--> Object file --Link--> Executable(.exe)
+        In practice you use multiple files. 
+        Tell the complile to compile each of them and linker to link them and its mechanics for this vary from tool to tool
+    
+    Compile Error:
+        Forget to declaration of function
+        Forget to include Header
+        Functions is not declared in Header
+        these error starts with wording like with SEE(see)
+     
+    Linker Error
+        Forget to implement function
+        Code for function is not in the .cpp file
+        The .cpp file is not being linked.
+        these error starts with wording like with ld(linker description)
+
