@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,12 +9,15 @@
         body {
             font-family: Arial, sans-serif;
         }
+
         #fragments {
-            white-space: pre-wrap; /* Preserve whitespace for newline characters */
+            white-space: pre-wrap;
+            /* Preserve whitespace for newline characters */
             font-family: monospace;
         }
     </style>
 </head>
+
 <body>
     <h1>Fragment Display</h1>
     <label for="fragSizeInput">Enter Fragment Size: </label>
@@ -35,11 +39,11 @@
             for (let i = 0; i < iterationCount; i++) {
                 const start = fragSize * i;
                 const end = start + fragSize - 1;
-                const line = `${i + 1}: ${start} - ${end}\n`;
+                const line = `${i + 1}: ${start}-${end}\n`;
                 fragmentContainer.append(line);
             }
         }
     </script>
 </body>
-</html>
 
+</html>

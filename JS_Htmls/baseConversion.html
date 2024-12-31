@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Base Converter</title>
+    <script type="text/javascript">
+        // Function to convert the number between bases
+        function convertNumber() {
+            // Get input values
+            var fromBase = parseInt(document.getElementById("calc_fromBase").value);
+            var toBase = parseInt(document.getElementById("calc_toBase").value);
+            var number = document.getElementById("calc_number").value;
+
+            // Validate the input
+            if (isNaN(fromBase) || isNaN(toBase) || number === "") {
+                alert("Please enter valid inputs.");
+                return;
+            }
+
+            // Convert the number from the 'fromBase' to decimal
+            var decimalNumber;
+            try {
+                decimalNumber = parseInt(number, fromBase);
+                if (isNaN(decimalNumber)) {
+                    throw "Invalid number for the selected base.";
+                }
+            } catch (e) {
+                alert(e);
+                return;
+            }
+
+            // Convert from decimal to the 'toBase'
+            var convertedNumber = decimalNumber.toString(toBase).toUpperCase();
+
+            // Display the result
+            document.getElementById("result").innerText = "The number " + number + " in base " + fromBase +
+                                                          " is equal to " + convertedNumber + " in base " + toBase;
+        }
+    </script>
+</head>
+<body>
+
+    <h1>Base Conversion</h1>
+
+    <div>
+        <form onsubmit="event.preventDefault(); convertNumber();">
+            <label for="calc_fromBase">From Base:</label>
+            <input type="text" id="calc_fromBase" name="calc_fromBase" value="10"><br><br>
+
+            <label for="calc_toBase">To Base:</label>
+            <input type="text" id="calc_toBase" name="calc_toBase" value="2"><br><br>
+
+            <label for="calc_number">Number to convert:</label>
+            <input type="text" id="calc_number" name="calc_number" value=""><br><br>
+
+            <input type="submit" value="Convert">
+        </form>
+    </div>
+
+    <div id="result"></div>
+
+</body>
+</html>
