@@ -249,6 +249,136 @@ echo "$user"
 20. What is process substitution in the Bash shell?
     Piping of the stdout of one or more processes to the stdin of another.
 
+
+Shell Scripting with Bash: Proficient Average
+-----------------------------------------------
+1. Which is the correct syntax for using variable expansion to provide a default value? 
+${VARNAME:-DEFAULT_VALUE}
+
+2. The output of a script should produce the following results as requested by your manager:
+1 2 3 4 5 6 7 8 9 10
+The output should be on its own line in the console and clear of any prompt. Which solution best meets this requirement?
+for i in {1..10}; do echo -n "$i "; done; echo
+
+3. A Linux administrator is creating a script to run on request in a user's environment to print the process information for the current shell. Upon consideration which command provides the best flexibility?
+ps -fp $$
+
+4. Which character is used after each option letter to indicate that the option requires an argument when using the getopts function?
+:
+
+5. How do Bash c-style and classic for loops differ?
+Classic for loops increment through a list and C-style loops provide more control though increment values.
+
+6. Using the file command to investigate a script the following is printed:
+$ file my.sh
+my.sh: Paul Falstad's zsh script, ASCII text executable
+What can you deduce from the output?
+    The shebang specifies zsh as the script interpreter.
+
+7. The following script has been developed by your colleague who reports that it does not always terminate when the users request:
+while true; do
+ read -p "Do you want to continue: y/n "
+ echo "hello"
+ if [ "$REPLY" == "n" ] ; then
+  break
+ fi
+done
+Some users may have CAPSLOCK engaged that could be causing the problem. What would you suggest as an edit to the script to help your colleague?
+
+    while true; do
+    declare -l REPLY
+    read -p "Do you want to continue: y/n "
+    echo "hello"
+    if [ "$REPLY" == "n" ] ; then
+    break
+    fi
+    done
+
+8. Which variable is used by Bash builtin read command to store the response if the name of the variable is not included in the code?
+REPLY
+
+9. Which option for the test command is used to check that the sticky bit is set on a directory?
+-k
+
+10. You have the following entry in your crontab file:
+0 \* \* \* \* /opt/bin/server-checkup
+What is the outcome of this entry ?
+The server-checkup script is run on an hourly basis.
+
+
+11. What is the difference in the execution of printf with and without the -v option?
+    Using -v the output is stored on a variable; without the option the output is shown on the console unless redirected.
+
+12. Which statement is considered good practice for writing portable code?
+    Use #!/bin/sh 
+
+13.
+declare -i my_var1=42
+
+declare -a my_var2=("apple" "banana" "orange")
+
+declare -r my_var3="Hello, World!"
+
+
+# Modify the variables
+my_var1=10
+my_var2[1]="pear"
+my_var3="Goodbye, World!"
+Which of the commands within the script above is bound to fail?
+    
+    my_var3="Goodbye, World!"
+
+14. Consider the following code:
+DIR='my own dir'
+mkdir $DIR
+How many directories will be created using this code?
+    Three
+
+15. Which loop is best suited to be used while you wait for a condition to become true in Bash?
+    until
+
+16. You are developing a Bash script that needs to execute code when a counter raises above an integer value. As you develop the script you have been testing snippets of code; what solution do you implement? 
+    COUNT=10
+    if (( COUNT > 9 ))
+    then
+    echo "Hello"
+    fi
+
+17. Working at the command line you have successfully used exec to redirect all stdout to a named file; however, you are unable to return stdout to the console when required without logging out. Reviewing your command history, what can you add next time to ensure you can easily redirect stdout back to the console:
+LOG=/tmp/logfile
+exec > $LOG
+echo hello
+
+    Before the exec command add the line to duplicate stdin :
+    exec 6>&1
+
+18.
+check_process() {
+  local process_name="httpd"
+  local process_pid=$(pgrep $process_name)
+..................................
+}
+How would you complete the function so what it will return the process id (PID) of the "httpd" service if it is running or the value 1 if the service is not running? 
+    if [ -z "$process_pid" ]; then
+        return 1
+    else
+        return $process_pid
+    fi
+
+19. Why do you use exec redirection in a script rather than simple redirection?
+    All stdout or all stderr can output from the script needs to go to the same file.
+
+
+20. A colleague has asked for you help in fixing a script that is required to create a configuration file for the time server. The code snippet your colleague created is listed:
+cat > /etc/chrony.d/servers.conf <END
+server 192.168.1.1 prefer iburst
+pool us.pool.ntp.org iburst
+<END
+Based on your experience what is the problem with this code snippet?
+    HEREDOCs should have double less than symbols (<<) at the opening delimiter and only the delimiter name without << at the close of the HEREDOC.
+
+
+
 SQL Essentials: Proficient Above Average
 -----------------------------------------------
 1. You need to find any City in the Address table that begins with “C” and is at least two characters in length. What is one way you could do this? 

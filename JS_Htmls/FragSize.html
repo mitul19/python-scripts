@@ -20,7 +20,7 @@
 
 <body>
     <h1>Fragment Display</h1>
-    <label for="fragSizeInput">Enter Fragment Size: </label>
+    <label for="fragSizeInput">Enter Fragment Size (default 2097151): </label>
     <input type="number" id="fragSizeInput">
     <br>
     <label for="iterationCountInput">Enter Iteration Count (default 1000): </label>
@@ -31,7 +31,7 @@
 
     <script>
         function createFragments() {
-            const fragSize = parseInt(document.getElementById('fragSizeInput').value);
+            const fragSize = parseInt(document.getElementById('fragSizeInput').value) || 2097151;
             const iterationCount = parseInt(document.getElementById('iterationCountInput').value) || 1000;
             const fragmentContainer = document.getElementById('fragments');
             fragmentContainer.innerHTML = ''; // Clear previous fragments
