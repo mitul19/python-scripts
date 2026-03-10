@@ -10,7 +10,7 @@ import pandas as pd
 
 
 def getDailyReturns(data):
-    return data.pct_change()
+    return data.pct_change(fill_method=None)
 
 
 def getAbsReturns(data):
@@ -19,7 +19,7 @@ def getAbsReturns(data):
 
 
 def getVolatility(data):
-    return round(np.std(data) * np.sqrt(252) * 100, 2)
+    return round(np.std(data, axis=0) * np.sqrt(252) * 100, 2)
 
 
 def getMonthlyPrices(data):
@@ -32,7 +32,7 @@ def getMonthlyPrices(data):
 
 
 def getMonthlyReturns(data):
-    return data.pct_change()
+    return data.pct_change(fill_method=None)
 
 
 def getSharpe(data):
@@ -64,8 +64,8 @@ def getNMonthRoC(data, N):
 
 
 def getFIP(data):
-    retPos = np.sum(data.pct_change()[1:] > 0)
-    retNeg = np.sum(data.pct_change()[1:] < 0)
+    retPos = np.sum(data.pct_change(fill_method=None)[1:] > 0, axis=0)
+    retNeg = np.sum(data.pct_change(fill_method=None)[1:] < 0, axis=0)
     return retPos - retNeg
 
 

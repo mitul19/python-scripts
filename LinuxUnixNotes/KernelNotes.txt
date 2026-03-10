@@ -1,0 +1,301 @@
+Introduction
+    What is the Linux kernel
+        The Linux kernel is a program that needs to be loaded into memory and run by a boot loader, often GRUB.
+        It provides an API with system calls and virtual file systems (proc, sys, debugfs) for interaction.
+        The kernel enforces privileges, implements security policies, and provides controlled access to hardware and other resources.
+        It is modular, allowing additional functionality to be loaded through loadable kernel modules (LKMs).
+        The Linux kernel file, typically named something like vmlinuz-5.3.0-29-generic, is located in the boot directory.
+        The uname -r command can be used to identify the current kernel version.
+        The kernel file is compressed and loaded into memory by GRUB during the boot process.
+        It's important not to delete the kernel file as it is crucial for rebooting the system.
+
+Surveying the Linux Kernel
+    Discover and control hardware
+        The Linux kernel interacts with hardware by providing utilities, interfaces, and protection for hardware.
+        Commands like lshw, lspci, lsusb, lsblk, and lscpu can be used to get information about hardware from the kernel.
+        The hdparm command is used for getting information and setting tunables for disks.
+        The kernel provides information through pseudo file systems like /proc, /dev, and /sys, which can be used to control hardware and tune kernel parameters.    
+    System calls in-depth
+        System calls are the interface between user space and the Linux kernel, providing services through a set of functions.
+        Applications call system calls through a library, which then invokes the corresponding function in the kernel.
+        Each system call has a unique number, and the kernel uses this to identify and execute the appropriate function.
+        The strace utility is useful for tracing system calls made by a process, helping in debugging and understanding process behavior.
+        The strace -c command can be used to summarize and count the number of system calls made by a process.
+        The cd command is built into the shell and cannot be traced directly with strace; instead, you need to trace the shell itself.
+        Using strace -follow and strace -O options, you can trace which process (shell or command) opens a file during redirection.
+        $ strace -f -o strace.out bash date.sh
+    Read messages from the kernel and /proc
+        The Linux kernel prints messages using the printk function, similar to C's printf.
+        These messages are stored in a RAM buffer and can be viewed using the dmesg command.
+        The journalctl -k command can be used to view kernel log files.
+        The proc file system (/proc) is a pseudo file system that provides up-to-date information about processes and system parameters.
+        Files in /proc can be used to read system information and, in some cases, to change kernel variables.
+        $ cat cmdline 
+            BOOT_IMAGE=/boot/vmlinuz-5.4.227-5.4.9-amd64-4a7ac96b740181f0 ipv6.autoconf=0 tsc=reliable ghes.disable=0 ghes_edac.force_load=1 console=ttyS1,115200 netconsole.oops_only=1 ro deprecated_cpuinfo=1 gather_data_sampling=off intel_pstate=disable mds=off mitigations=off psi=1 spec_rstack_overflow=off erst_disable ipmi_si.tryacpi=1 ipmi_si.trydmi=0 init=/sbin/init modprobe.blacklist=usb-storage modprobe.blacklist=usbnet modprobe.blacklist=cdc_ncm root=UUID=145398aa-9583-4e15-8d95-920a3cbf0aa4
+        $ dmesg | grep -i boot 
+            [    0.000000] Command line: BOOT_IMAGE=/boot/vmlinuz-5.4.227-5.4.9-amd64-4a7ac96b740181f0 ipv6.autoconf=0 tsc=reliable ghes.disable=0 ghes_edac.force_load=1 console=ttyS1,115200 netconsole.oops_only=1 ro deprecated_cpuinfo=1 gather_data_sampling=off intel_pstate=disable mds=off mitigations=off psi=1 spec_rstack_overflow=off erst_disable ipmi_si.tryacpi=1 ipmi_si.trydmi=0 init=/sbin/init modprobe.blacklist=usb-storage modprobe.blacklist=usbnet modprobe.blacklist=cdc_ncm root=UUID=145398aa-9583-4e15-8d95-920a3cbf0aa4
+    Introduction to /sys
+        The sys file system is mounted on /sys and should be automatically mounted at boot time.
+        It provides a tree structure to show how hardware is connected on your system, including buses and connections.
+        The sys file system contains tens of thousands of files and directories, including valuable information for debugging and tracing kernel functions.
+        It includes information about loadable kernel modules, hardware, and device information, such as block and character device files.
+        strace can be used to trace system calls made by commands like lspci and fdisk.
+        lspci uses the sys file system to gather information about PCI devices.
+        fdisk -l attempts to open files in the sys file system to gather information about disk partitions, but it may fail to find some entries.
+        The sys file system provides valuable information for debugging and tracing kernel functions, including hardware and device information.
+    Device drivers and device files
+        Device files are used to communicate with device drivers for block and character devices, such as keyboards and disks.
+        Device files have a type (C for character, B for block) and are identified by a major and minor number, which the kernel uses to determine the appropriate driver.
+        Device files are typically located in the /dev directory and are created at boot time or when the system discovers a new device.
+    Q&A:
+        You are debugging a device driver and need to find tracing information in the sys file system. Where should you look?
+            The debug file system and tracing information are particularly useful for debugging device drivers and kernel activities.
+        How is the sys file system mounted and accessed at boot time?
+            The sys file system is automatically mounted on /sys at boot time, making it readily accessible.
+        What is the purpose of the major and minor numbers in device files?
+            The major and minor numbers in device files are used by the kernel to identify which device driver to call.
+        You are debugging a program that keeps failing without error messages. How could strace help you understand the issue?
+            Strace can display the system calls made by the process, offering insights into where the failure might be occurring.
+        What is the primary role of system calls in an operating system?
+            System calls provide an interface between user space and the kernel, allowing user applications to request services from the kernel.
+        You are troubleshooting a Linux process and need to find detailed information about its memory usage and open files. Where should you look?
+            The /proc directory for the process contains detailed information about memory usage and open files.
+        What is the purpose of the command dmesg in Linux?
+            The dmesg command is used to display the messages from the kernels RAM buffer.
+
+Booting
+    Understanding the bootloader GRUB
+        GRUB is responsible for loading the Linux kernel into RAM and starting it.
+        It also loads a small initial root file system called the initrd.
+        GRUB can be interrupted before it starts the kernel, allowing for interactive use.
+        It supports some file systems, enabling it to read the disk and locate files by name.
+        GRUB is the most popular bootloader for Linux servers and desktops.
+        Important GRUB config files are located under /etc/grub.d, and changes require running grub2-mkconfig.
+        GRUB allows interactive commands and can pause before starting the kernel, which is useful for troubleshooting boot issues.
+    Kernel command line parameters
+        The Linux kernel supports kernel command-line parameters, which are passed by GRUB.
+        These parameters can be viewed using the dmesg command or in the file /proc/cmdline.
+        There are over 1,000 documented kernel parameters, which can be found in the kernel-parameters.txt file in the kernel source tree.
+        Some parameters are used for debugging, security, or to work around hardware bugs, but caution is needed as incorrect parameters can cause the kernel to misbehave or not boot.
+        crashkernel: Used to reserve memory for a special crash kernel to debug crashes.
+            enforcing: Used to enable or disable SELinux.
+            ftrace: Starts a kernel tracer early to help debug the kernel.
+            init: Specifies a program to run instead of /sbin/init during the boot process.
+            clearcpuid: Disables certain CPU features for security reasons.
+            cachesize: Used to work around hardware bugs.
+    Process 1 and start-up services
+        GRUB passes control to the Linux kernel, providing command line arguments and the location of the initial RAM file system (initramfs).
+        The initramfs may contain a root file system and loadable kernel modules required to mount the real root file system.
+        The Linux kernel creates the first process (process ID 1), typically the init program, which is often linked to systemd.
+        Systemd is responsible for starting all other processes and services, acting as the ancestor of all processes on the system.
+    Q&A:
+        What is the primary role of GRUB during the system startup process?
+            GRUB loads the kernel into RAM and initiates the boot process by passing the kernel command line.
+        What is the purpose of mounting the root file system read-only during the initial boot process in GRUB?
+            Mounting the root file system read-only ensures the system can check for consistency without any processes writing to it.
+        You are configuring your Linux server and need to add a new boot entry to GRUB. What GRUB configuration file should you edit to achieve this?
+            40_custom under /etc/grub.d
+        When does the init process start during the boot process?
+            The init process starts after the kernel creates the very first process, which has process ID one.
+        How can you view the kernel command line parameters currently being used?
+            The dmesg command and the file /proc/cmdline both display the current kernel command line parameters.
+        In addition to the kernel, GRUB may load _____ into RAM.
+            GRUB often loads two files from the file system into RAM, the kernel and the initrd.
+        During troubleshooting, you need to locate a kernel image by its name using the bootloader. Which feature of GRUB allows this interaction?
+            GRUB is built with support for some file systems, allowing it to read disk files by name and find the kernel.
+
+Loadable Kernel Modules
+    Loadable kernel modules (LKMs)
+        The Linux kernel is modular, allowing for Loadable Kernel Modules (LKMs) to be dynamically linked into the kernel.
+        LKMs are typically written in C and are compiled for specific kernel versions, making them non-binary compatible with different kernels.
+        The modularity of the kernel allows for a smaller kernel file and the ability to add functionality after booting, which can reduce memory usage and enable live updates.
+        LKM files are located under /lib/modules in subdirectories for each kernel version.
+        These directories contain both module files and configuration files, including information about dependencies.
+        Modules must match the kernel version and configuration to be loaded correctly.
+        Modules run in kernel mode with full privileges, so caution is needed when writing or loading custom modules.
+        LKMs are installed in the directory /lib/modules/$(uname -r) which corresponds to your kernel version.
+        The directory contains subdirectories and files, including modules.dep which lists module dependencies.
+        Use the command uname -r to get your kernel version and navigate to the appropriate directory.
+        It's important to use a VM when working with custom modules to avoid system corruption.
+        The video demonstrates how to count the number of module files in the Linux kernel using the find command.
+        It explains that each module file corresponds to a line in the modules.dep file, which lists dependencies for each module.
+        The use of commands like uname -r and wc -l to navigate and count lines in the kernel directory is highlighted.
+    Using LKM Commands
+        lsmod: Lists currently loaded modules in the kernel, showing the module name, size, use count, and dependencies.
+        rmmod: Removes a module, but caution is advised as it can leave the kernel in a fragile state.
+        insmod: Inserts a module into the kernel, running its initialization function.
+        modprobe: Uses module information to load or remove modules, handling dependencies automatically.
+        Counting Loadable Modules: Determine the number of loadable modules currently loaded using commands like lsmod.
+        First Module Loaded: Identify the first module loaded into the system.
+        Loading and Unloading Modules: Check if specific modules like msdos are loaded, and load or unload them as needed.
+        Module Information: Retrieve detailed information about modules such as sunrpc, including license, version magic, and number of module parameters.
+        Counting Loadable Modules: Use the lsmod command to list currently loaded modules and determine the number of dynamically loaded modules.
+        First and Last Modules Loaded: Identify the first and last modules loaded using commands like lsmod and tail.
+        Loading and Unloading Modules: Check if specific modules like msdos are loaded, and load or unload them using modprobe and rmmod commands.
+        Module Information: Retrieve detailed information about modules such as sunrpc using the modinfo command, including license, version magic, and number of module parameters.
+    LKM Dependencies & Use Count
+        Use Count: The lsmod command shows the use count of modules, indicating how many times a module is being used.
+        Dependencies: Modules have dependencies listed in the modules.dep file, which modprobe uses to load the necessary modules.
+        Module Removal: The kernel no longer automatically removes unused modules due to the risks involved.
+        Counting Module Usage: Use shell scripts to count the number of modules used by other modules by parsing the output of the lsmod command.
+        Use Count: Identify the module with the highest use count by analyzing the third column in the lsmod output.
+        Dependencies: Determine the module with the most dependencies by examining the modules.dep file and counting the dependencies listed for each module.
+    How LKMs and writing LKMs work
+        Compiling a Kernel Module: To compile a kernel module, you must use the kernel makefile that corresponds to the kernel version you want to load the module into. This ensures compatibility and proper integration.
+        Makefile Structure: The makefile in your directory should have a line like OBJ-M := module_name.o, where module_name is the name of your module. The kernel makefile will use this to compile your module's source code into an object file (.o) and then into a kernel object file (.ko).
+        Header Files: It is crucial to use the correct kernel header files for the kernel you are building the module for. These header files contain necessary definitions and configurations that the compiler needs.
+        Simple Module Structure: A basic loadable kernel module includes an initialization function and a cleanup function. The initialization function is called when the module is loaded, and the cleanup function is called when the module is removed. These functions are registered using the module_init and module_exit macros.
+        Printk for Debugging: Instead of using printf, kernel modules use printk to print messages to the kernel log buffer, which can be viewed using the dmesg command. This is essential for debugging and monitoring the module's behavior.
+        Module Licensing: The module's license is specified using the MODULE_LICENSE macro. Using a GPL license allows the module to access certain kernel APIs that are restricted for proprietary modules.
+        Compiling a Kernel Module: Ensure you have the correct header files, make, and GCC installed. Use the kernel makefile to compile your module.
+        Module Structure: A basic loadable kernel module includes an initialization function and a cleanup function, registered with module_init and module_exit macros.
+        Compiler Consistency: It's crucial to use the same compiler version that was used to build the kernel to avoid misalignment issues.
+        Loading and Unloading Modules: Use insmod to load your module and rmmod to remove it. Check the module's status with lsmod and view messages with dmesg.
+    Q&A:
+        You need to add a specific hardware driver to your Linux system after it has booted. What should you do?
+            Using kernel modules allows you to add functionality without rebooting.
+        What is the primary reason kernel modules are typically written in C?
+            The Linux kernel is primarily written in C, making it the most compatible language.
+        What is a key advantage of writing a driver as a loadable module, compared to not being a module?
+            Debugging can be faster because you can iterate on code changes without having to build a new kernel image and rebooting.
+        What is a consequence of loading your Ethernet driver as a module?
+            NSF root filesystems at boot require the network driver to be statically linked into the kernel image.
+        What do the dependency modules listed with the lsmod command represent?
+            The dependencies list shows the modules that the module in the row requires and thus must be loaded before it.
+        What does the lsmod command do?
+            The lsmod command lists the modules currently loaded into the kernel.
+        What type of files are installed in the /lib/modules directory?
+            Kernel module files are installed in the /lib/modules directory and are specific to the kernel version.
+        What should be included in the kernel module file named lab.c?
+            This is correct as the kernel module file should contain init and cleanup functions, header files, prototypes, GPL license, register macros, and printk statements.
+        You are writing a makefile for a kernel module named newmodule. Which line should you include in your makefile?
+            obj-m := newmodule.o
+            The correct line in the makefile to compile the module is `obj-m := newmodule.o`, where `obj-m stands for object module.
+        What does the use count column signify in the output of lsmod command?
+            The use count shows the number of current users of a particular module, preventing its removal while in use.
+        You need to load a custom module you've written into the kernel. Which command should you typically use?
+            The insmod command is typically used to load a custom module into the kernel.
+        What is the purpose of the module_exit macro in a kernel module?
+            The `module_exit` macro is used to register the function that will be called when the module is removed.
+        You need to ensure that a specific kernel module is not automatically removed. What feature prevents the kernel from removing the module while its in use?
+            The use count feature in the kernel prevents the removal of a module that is currently in use.
+
+Examining Linux Kernel Source code
+    Getting Linux kernel source code
+        Obtaining Kernel Source: You can download the Linux kernel source code from kernel.org using wget to get tarballs or use git clone to get the latest version from the official Torvalds Linux kernel tree.
+        Using Git for Ubuntu: For Ubuntu, use Git to get the kernel source code, and determine the distribution codename from the /etc/lsb-release file.
+        Shell Scripting: Utilize shell scripting to set environment variables for the distribution codename, ensuring the correct path for the Git clone command.
+    Explore the kernel makefile
+        Kernel Makefile Importance: The kernel Makefile is a crucial file for compiling and building the Linux kernel. It provides various targets and commands that can be executed using make.
+        Make Help Command: Using make help in the top-level kernel directory provides a list of available make targets and commands. This includes commands for configuring, building, cleaning, and installing the kernel and its modules.
+        Configuration File: Running a configuration command like make menuconfig or make xconfig generates a .config file in the top-level kernel directory. This text file contains all the configuration choices for the kernel build and can be shared or reused.
+        Kernel Version Information: The Makefile contains variables for version information, such as the kernel version and patch level. This information is crucial for ensuring compatibility and proper identification of the kernel build.
+        Build Targets: The Makefile includes various build targets like bzImage (compressed kernel image), modules (builds loadable kernel modules), modules_install (installs modules), and install (installs the kernel). Each target serves a specific purpose in the build process.
+        Cleaning Targets: The Makefile also provides cleaning targets like clean, mrproper, and distclean, which are used to remove compiled files and reset the build environment.
+        Kernel Configuration Interfaces: The classic interface for configuring the kernel is make menuconfig, but there are other options like make xconfig for graphical configuration.
+        Building the Kernel: Running make all builds all components marked for compilation, including the kernel (vmlinux) and loadable kernel modules (bzImage). The make modules command builds all configured loadable kernel modules.
+        Module Installation: The make modules_install command installs the built modules into the standard location on the system, while the make install command installs the kernel.
+    Examine and build kernel documentation
+        Kernel Source Tree: The kernel source code is constantly evolving, with thousands of lines changing daily. This makes it a more reliable source of information than web searches, which might be outdated.
+        Documentation Files: The Linux kernel source tree includes a subdirectory named 'documentation' with authoritative manuals written by the code authors. These documents are valuable for understanding the kernel's functionality.
+        Recursive Grep: Using recursive grep (e.g., grep -rl semaphore) in the documentation directory can help you find relevant documents quickly.
+        Device Files: The devices.txt file in the source tree documents device files, providing details on character device files and their major and minor numbers.
+        SPHINX Tool: The SPHINX tool can be used to generate PDF or HTML documentation from the source tree. Commands like `make SPHINXDIRS=
+    Search the kernel source
+        Using grep: You can use grep with options like -rl to recursively search for strings in the kernel source code. This helps in finding specific functions or prototypes quickly.
+        cscope Tool: The cscope tool can be used to build an index file for the kernel source, allowing you to search for strings, definitions, and call references with a fast, text-based interface.
+        VI and Tags: The kernel makefile supports tags, which can be used with the VI editor to search for symbols within the editor. This makes navigating the source code more efficient.
+        Combining Tools: Combining cscope and tags with VI can enhance your efficiency in navigating and understanding the kernel source code.
+    Demonstration of kernel source and searching
+        Kernel Source Code: The kernel source code can be cloned from repositories and takes up significant disk space (around 7 GB).
+        Using cscope: The cscope tool is used to index and search the kernel source code efficiently. It provides a text-based interface to search for functions, definitions, and references.
+        Navigating with VI: The VI editor, combined with tags generated by the kernel makefile, allows for efficient navigation within the source code. Commands like control close square bracket and :tn help in jumping to definitions and navigating tags.
+        Generating Documentation: The kernel source includes tools to generate documentation, such as PDF files, from the source code, which can be useful for understanding specific components like the scheduler.
+    Examine kernel driver source
+        Linux Drivers: The Linux kernel supports many hardware devices, including ethernet devices, which can be identified using ip addr and ethtool -i commands.
+        Pseudo Drivers: Some drivers, like dev null, are pseudo drivers that simulate hardware behavior. For example, dev null always returns end of file for read operations and acknowledges any write operation without storing data.
+        Kernel Source Navigation: The video explains how to navigate the kernel source code to understand driver implementations, such as mem.c for dev null and related pseudo drivers.
+    Demonstration: kernel source
+        Identifying Ethernet Devices: The video demonstrates how to identify ethernet devices and their associated drivers using commands like ip addr and ethtool -i.
+        Loadable Kernel Modules (LKMs): It explains how to find the source code for loadable kernel modules, such as the mlx5_core driver for ethernet devices.
+        Navigating Driver Source Code: The video shows how to navigate the driver source code, including looking at the makefile and understanding how the driver is built and configured as a loadable module.
+        Driver Initialization: It details the initialization function of the driver, which is called when the module is loaded, and explains its role in setting up the driver.
+    Additional selected subdirectories
+        Kernel Include Files: The kernel uses its own include files located in the include subdirectory, not the user space directory.
+        File Systems Directory: The fs directory contains code for various file systems, including proc, sysfs, and disk file systems like ext4, btrfs, and xfs.
+        Architecture Directory: The arch directory holds architecture-dependent code for different computer architectures supported by Linux.
+        Security Directory: The security directory contains important files like security.c, which includes hooks for security systems like SELinux and AppArmor.
+    Q&A:
+    You are debugging a kernel module and need to find the definition of a function used throughout the kernel code. Which tool can you use to quickly navigate to the functions definition?
+        cscope indexes the source code, making it easy to navigate to function definitions.
+    You are trying to understand the synchronization mechanisms in the Linux kernel. Which step is recommended?
+        The recommended step is to generate the locking PDF using the make command from the top level directory, as it provides specific and authoritative information.
+    You need to build all loadable kernel modules that were configured. Which make target should you use?
+        The target make modules builds all the loadable kernel modules that were configured.
+    What is the function of the copy_to_user function in the kernel?
+        The copy_to_user function is used to copy data from the kernel space to the user space buffer.
+    From a Ubuntu Noble git tree the tag Ubuntu-6.8.0-54.58 likely is a for a version of _____.
+        Using git to download Ubuntu Noble kernel source will get tags of the form Ubuntu-* for the kernel source versions.
+    What are two tools mentioned for searching through Linux kernel source code?
+        grep and cscope are explicitly mentioned for searching through Linux kernel source code.
+    What does the read function for /dev/null do in the Linux kernel?
+        The read function for /dev/null always returns zero, indicating that there are no more bytes to read.
+    As you are troubleshooting a driver issue, you come across a module that registers as a PCI driver. Which phase of the driver setup would this likely be part of?
+        Registering as a PCI driver typically happens during the initialization phase when the module is loaded.
+    You are trying to determine which driver is being used by your ethernet device on a Linux system. Which command should you use after ip addr to get this information?
+        Using ethtool -i name_of_interface will show the driver and other information related to the specified ethernet interface.
+    You are working on an Ubuntu system and need to find the codename for your current distribution version to get the kernel source. What file should you check?
+        The /etc/lsb-release file contains the DISTRIB_CODENAME variable, which provides the codename for the current Ubuntu distribution.
+    You are working on an Ubuntu system and need to find the codename for your current distribution version to get the kernel source. What file should you check?
+        Official Linux kernel source can be downloaded as tarballs from kernel.org or cloned using Git from the official Torvalds Linux kernel tree.
+    You are tasked with examining the directory that handles support for different computer architectures in Linux. Which directory is this?
+        The arch directory contains support for different computer architectures in Linux.
+    What is the purpose of the .config file generated in the top-level kernel directory?
+        The .config file contains all the configuration choices for the kernel, enabling customized builds.
+
+Configuring and Building a Linux Kernel
+    Using make menuconfig
+        Tool Usage: The video explains the use of the make menuconfig tool for configuring the Linux kernel, which uses a text-based interface navigable with arrow keys.
+        Configuration Options: It describes the different symbols used in the interface (angle brackets and square brackets) and their meanings (e.g., asterisk, M, blank).
+        Dependencies: The video highlights that some configuration options depend on others and advises against manually editing the .config file to avoid breaking dependencies.
+        Search Function: It mentions the search functionality within make menuconfig to find configuration options and related documentation.
+    Using make xconfig
+        Tool Usage: The video explains the use of the make xconfig tool for configuring the Linux kernel, which provides a more modern, mouse-oriented interface compared to menuconfig.
+        Interface Details: It describes how to navigate the interface, including the use of dots, check marks, and empty spaces to indicate module choices.
+        Search Function: The video highlights the search functionality within xconfig, which allows you to find and select configuration options easily.
+        Help Feature: It mentions the integrated help feature in xconfig that provides documentation and advice as you click through options.
+    Demonstration configuing and building
+        Kernel Image Types: The video explains different types of kernel images like bzImage (compressed, stripped kernel file) and vmlinux (raw kernel binary).
+        Make Command: It covers the use of the make command with options like make bzImage and make modules, and how to use the -j option for parallel compilation.
+        Installation: The video discusses the installation process using make modules_install and make install, and the need for sudo privileges.
+        Cleaning: It explains the cleaning targets like make clean and make mrproper for removing built files and configurations.
+        Cross Compilation: The video touches on cross-compiling the kernel for different architectures using a cross-compiler and setting environment variables.
+        Tool Usage: The video demonstrates the use of make xconfig and make menuconfig tools to configure the Linux kernel.
+        Driver Configuration: It shows how to enable or disable a specific driver (e.g., ethernet driver) and save the configuration.
+        Configuration Files: The video explains how changes are saved in the .config file and how to verify these changes using grep.
+        Kernel Configuration: Use make menuconfig or make xconfig to configure the Linux kernel.
+        Tasks: Remove ReisderFS support, enable debug_atomic_sleep, and check if KVM is enabled as a module.
+        Build Process: Build the bzImage and compare its size with the /boot/vmlinuz- kernel version file.
+    Q&A:
+    What is the purpose of the make bzimage command when building a kernel?
+        The make bzimage command creates a bzImage, which is a compressed and stripped kernel file necessary for the bootloader.
+    You are attempting to configure your kernel and need to search for a specific configuration option quickly. Which method would provide a more efficient search process?
+        xconfig includes a search function under the edit menu that allows for efficient searching by typing in a string.
+    You need to build a kernel that supports a specific Ethernet driver. What should be your approach?
+        Configuring the driver as a module or built-in and using make all ensures the correct driver is included in the build process.
+    What does the M symbol signify in the make menuconfig interface?
+        Selecting M means the option is compiled as a loadable kernel module, making it available as a separate module.
+    What advantage does xconfig have over menu config in configuring the kernel?
+        Using xconfig allows you to use a mouse, providing a more modern interface.
+    You are using make menuconfig and notice some options are grayed out. What likely causes this?
+        Grayed-out options typically indicate unsatisfied dependencies between configuration options.
+    You need to check if KVM is enabled as a module in your kernel configuration. What would be the first step in identifying this?
+        KVM (Kernel-based Virtual Machine) settings are located under the virtualization section in the kernel configuration.
+    What file is modified when you save changes in xconfig?
+        The .config file is updated to reflect changes when you save in xconfig.
+
+
+
+
+
+

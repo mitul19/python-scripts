@@ -1,0 +1,182 @@
+Basic commands
+    % docker image build -t patelmitul87/gsd:container .
+    % docker image push patelmitul87/gsd:container
+    The push refers to repository [docker.io/patelmitul87/gsd]
+    f6862df45638: Pushed 
+    0c0c0d7f3e23: Pushed 
+    f0000bd7b16c: Pushed 
+    0b5cff681d64: Pushed 
+    0c975cd5705b: Pushed 
+    4f4fb700ef54: Pushed 
+    d8ad8cd72600: Pushed 
+    4e3b58c2874f: Pushed 
+    2f8b6dddc233: Pushed 
+    container: digest: sha256:e0195009688e6b206e9a875fb32499f7c5d425b37813c578d3a2adc961a1a1e7 size: 856
+    % ls
+    Dockerfile   app.js       package.json readme.md    static       views
+    % docker image ls
+    MAGE                        ID             DISK USAGE   CONTENT SIZE   EXTRA
+    patelmitul87/gsd:container   e0195009688e        283MB         69.5MB        
+    % docker container run -d --name web -p 8000:8080 patelmitul87/gsd:container
+    3c51359b27f911e99d2ec2b5be15c3021c06a10c891d4aca80b8799deae92b8f
+    % docker container ls
+    CONTAINER ID   IMAGE                        COMMAND         CREATED              STATUS              PORTS                                         NAMES
+    3c51359b27f9   patelmitul87/gsd:container   "node app.js"   About a minute ago   Up About a minute   0.0.0.0:8000->8080/tcp, [::]:8000->8080/tcp   web
+    % docker container stop web
+    web
+    % docker container ls -a        
+    CONTAINER ID   IMAGE                        COMMAND         CREATED         STATUS                       PORTS     NAMES
+    3c51359b27f9   patelmitul87/gsd:container   "node app.js"   8 minutes ago   Exited (137) 3 minutes ago             web
+    % docker container rm web   
+    web
+    % docker container ls -a 
+    CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+microservice Work:
+    mpatel@blr-mppb0 compose % ls -l
+    total 32
+    -rw-r--r--  1 mpatel  staff  288 Feb 19 15:44 Dockerfile
+    -rw-r--r--  1 mpatel  staff  332 Feb 19 15:44 README.md
+    drwxr-xr-x  5 mpatel  staff  160 Feb 19 15:44 app
+    -rw-r--r--  1 mpatel  staff  355 Feb 19 15:44 compose.yaml
+    -rw-r--r--  1 mpatel  staff   18 Feb 19 15:44 requirements.txt
+    mpatel@blr-mppb0 compose % docker compose up --detach
+    [+] up 9/9
+    ✔ Image redis:alpine Pulled                                                                                                                                                                                                                                                       11.0s
+    [+] Building 10.8s (12/12) FINISHED                                                                                                                                                                                                                                                     
+    => [internal] load local bake definitions                                                                                                                                                                                                                                         0.0s
+    => => reading from stdin 628B                                                                                                                                                                                                                                                     0.0s
+    => [internal] load build definition from Dockerfile                                                                                                                                                                                                                               0.0s
+    => => transferring dockerfile: 327B                                                                                                                                                                                                                                               0.0s
+    => [internal] load metadata for docker.io/library/python:alpine                                                                                                                                                                                                                   3.2s
+    => [auth] library/python:pull token for registry-1.docker.io                                                                                                                                                                                                                      0.0s
+    => [internal] load .dockerignore                                                                                                                                                                                                                                                  0.0s
+    => => transferring context: 2B                                                                                                                                                                                                                                                    0.0s
+    => [internal] load build context                                                                                                                                                                                                                                                  0.0s
+    => => transferring context: 121.95kB                                                                                                                                                                                                                                              0.0s
+    => [1/4] FROM docker.io/library/python:alpine@sha256:faee120f7885a06fcc9677922331391fa690d911c020abb9e8025ff3d908e510                                                                                                                                                             2.0s
+    => => resolve docker.io/library/python:alpine@sha256:faee120f7885a06fcc9677922331391fa690d911c020abb9e8025ff3d908e510                                                                                                                                                             0.0s
+    => => sha256:15f8dca9b7ef8a409b52b41bbe861b311fdac3be5c543163585c24946d09c3d4 13.46MB / 13.46MB                                                                                                                                                                                   1.8s
+    => => sha256:e1ed0137d8700a790d80689630812c09faf706afb500c8049ad18566c4399c01 248B / 248B                                                                                                                                                                                         0.6s
+    => => sha256:d233c77fc7697acc8330a76ec4404659d8534b1fe00b12be5cabb9a7fde43480 463.01kB / 463.01kB                                                                                                                                                                                 1.8s
+    => => extracting sha256:d233c77fc7697acc8330a76ec4404659d8534b1fe00b12be5cabb9a7fde43480                                                                                                                                                                                          0.0s
+    => => extracting sha256:15f8dca9b7ef8a409b52b41bbe861b311fdac3be5c543163585c24946d09c3d4                                                                                                                                                                                          0.1s
+    => => extracting sha256:e1ed0137d8700a790d80689630812c09faf706afb500c8049ad18566c4399c01                                                                                                                                                                                          0.0s
+    => [2/4] COPY . /app                                                                                                                                                                                                                                                              0.1s
+    => [3/4] WORKDIR /app                                                                                                                                                                                                                                                             0.0s
+    => [4/4] RUN pip install -r requirements.txt                                                                                                                                                                                                                                      4.7s
+    => exporting to image                                                                                                                                                                                                                                                             0.5s 
+    => => exporting layers                                                                                                                                                                                                                                                            0.4s 
+    => => exporting manifest sha256:56562d8f143a086536c331f364e1043e29d9c0e219099179da107a6b043e8de4                                                                                                                                                                                  0.0s 
+    => => exporting config sha256:325701ce4678d65b03114586f58c1addb1c39f23ccbd168289418a4dad76f600                                                                                                                                                                                    0.0s 
+    => => exporting attestation manifest sha256:71903a17ec764930c7f97bb2795ed3a03c253a480ec16b8b8431b04e59d24bc2                                                                                                                                                                      0.0s 
+    => => exporting manifest list sha256:fbb52a80b76407ba92c3f59421b768674effcdf90c1dbce7128fda37eaf7a47c                                                                                                                                                                             0.0s 
+    => => naming to docker.io/library/compose-web-fe:latest                                                                                                                                                                                                                           0.0s
+    [+] up 14/14king to docker.io/library/compose-web-fe:latest                                                                                                                                                                                                                        0.1s
+    ✔ Image redis:alpine          Pulled                                                                                                                                                                                                                                              11.0s
+    ✔ Image compose-web-fe        Built                                                                                                                                                                                                                                               11.4s
+    ✔ Network compose_counter-net Created                                                                                                                                                                                                                                             0.0s
+    ✔ Volume compose_counter-vol  Created                                                                                                                                                                                                                                             0.0s
+    ✔ Container compose-web-fe-1  Created                                                                                                                                                                                                                                             0.0s
+    ✔ Container compose-redis-1   Created                                                                                                                                                                                                                                             0.1s
+    mpatel@blr-mppb0 compose % 
+    mpatel@blr-mppb0 compose % docker container ls
+    CONTAINER ID   IMAGE            COMMAND                  CREATED          STATUS          PORTS                                         NAMES
+    56a03f36baa8   redis:alpine     "docker-entrypoint.s…"   55 seconds ago   Up 55 seconds   6379/tcp                                      compose-redis-1
+    2cd8cbca968b   compose-web-fe   "python app/app.py p…"   55 seconds ago   Up 55 seconds   0.0.0.0:5001->8080/tcp, [::]:5001->8080/tcp   compose-web-fe-1
+    mpatel@blr-mppb0 compose % 
+    mpatel@blr-mppb0 compose % docker compose down --volumes
+    [+] down 4/4
+    ✔ Container compose-web-fe-1  Removed                                                                                                                                                                                                                                              0.2s
+    ✔ Container compose-redis-1   Removed                                                                                                                                                                                                                                              0.3s
+    ✔ Volume compose_counter-vol  Removed                                                                                                                                                                                                                                              0.0s
+    ✔ Network compose_counter-net Removed                                                                                                                                                                                                                                              0.2s
+    mpatel@blr-mppb0 compose % docker container ls          
+    CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+    mpatel@blr-mppb0 compose %
+
+K8s commands:
+
+    # Install Kubernetes in docker.desktop then you will see nodes
+    mpatel@blr-mppb0 dynamic-duo % ls -l
+    total 40
+    -rw-r--r--  1 mpatel  staff   121 Mar  4 15:29 Dockerfile
+    -rw-r--r--  1 mpatel  staff   185 Mar  4 15:29 Readme.md
+    -rw-r--r--  1 mpatel  staff   481 Mar  4 15:31 app.yaml
+    -rw-r--r--  1 mpatel  staff   207 Mar  4 15:29 package.json
+    -rw-r--r--  1 mpatel  staff  3464 Mar  4 15:29 server.js
+    mpatel@blr-mppb0 dynamic-duo % kubectl get nodes
+    NAME                    STATUS   ROLES           AGE   VERSION
+    desktop-control-plane   Ready    control-plane   41s   v1.35.0
+    desktop-worker          Ready    <none>          32s   v1.35.0
+    desktop-worker2         Ready    <none>          32s   v1.35.0
+    desktop-worker3         Ready    <none>          32s   v1.35.0
+    mpatel@blr-mppb0 dynamic-duo % cat app.yaml
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+    name: dynamic-duo
+    spec:
+    replicas: 4
+    selector:
+        matchLabels:
+        app: dynamic-duo
+    template:
+        metadata:
+        labels:
+            app: dynamic-duo
+        spec:
+        containers:
+        - name: web-pod
+            image: patelmitul87/dynamic-duo:1.0
+            ports:
+            - containerPort: 8080
+    ---
+    apiVersion: v1
+    kind: Service
+    metadata:
+    name: lb
+    spec:
+    type: LoadBalancer
+    ports:
+    - port: 8080
+    selector:
+        app: dynamic-duo
+    mpatel@blr-mppb0 dynamic-duo % 
+
+Apply it on k8s cluster see its working
+    mpatel@blr-mppb0 dynamic-duo % kubectl apply -f app.yaml 
+    deployment.apps/dynamic-duo created
+    service/lb created
+    mpatel@blr-mppb0 dynamic-duo % kubectl get deploy       
+    NAME          READY   UP-TO-DATE   AVAILABLE   AGE
+    dynamic-duo   4/4     4            4           55s
+    mpatel@blr-mppb0 dynamic-duo % kubectl get pods -o wide
+    NAME                          READY   STATUS    RESTARTS   AGE    IP           NODE              NOMINATED NODE   READINESS GATES
+    dynamic-duo-64cdbc658-78mw4   1/1     Running   0          2m2s   10.244.1.3   desktop-worker3   <none>           <none>
+    dynamic-duo-64cdbc658-jdx84   1/1     Running   0          2m2s   10.244.3.2   desktop-worker2   <none>           <none>
+    dynamic-duo-64cdbc658-kbfjs   1/1     Running   0          2m2s   10.244.1.2   desktop-worker3   <none>           <none>
+    dynamic-duo-64cdbc658-zltsq   1/1     Running   0          2m2s   10.244.2.2   desktop-worker    <none>           <none>
+    mpatel@blr-mppb0 dynamic-duo % kubectl get pods        
+    NAME                          READY   STATUS    RESTARTS   AGE
+    dynamic-duo-64cdbc658-78mw4   1/1     Running   0          2m46s
+    dynamic-duo-64cdbc658-jdx84   1/1     Running   0          2m46s
+    dynamic-duo-64cdbc658-kbfjs   1/1     Running   0          2m46s
+    dynamic-duo-64cdbc658-zltsq   1/1     Running   0          2m46s
+    mpatel@blr-mppb0 dynamic-duo % kubectl delete pod dynamic-duo-64cdbc658-kbfjs
+    pod "dynamic-duo-64cdbc658-kbfjs" deleted from default namespace
+    mpatel@blr-mppb0 dynamic-duo % kubectl get pods                                            
+    NAME                          READY   STATUS    RESTARTS   AGE
+    dynamic-duo-64cdbc658-78mw4   1/1     Running   0          4m37s
+    dynamic-duo-64cdbc658-hdvrz   1/1     Running   0          14s
+    dynamic-duo-64cdbc658-jdx84   1/1     Running   0          4m37s
+    dynamic-duo-64cdbc658-zltsq   1/1     Running   0          4m37s
+    mpatel@blr-mppb0 dynamic-duo % curl -sS http://localhost:8080/ | grep dynamic-duo-64cdbc658
+                <div class="hostname">dynamic-duo-64cdbc658-zltsq</div>
+    mpatel@blr-mppb0 dynamic-duo % curl -sS http://localhost:8080/ | grep dynamic-duo-64cdbc658
+                <div class="hostname">dynamic-duo-64cdbc658-hdvrz</div>
+    mpatel@blr-mppb0 dynamic-duo % curl -sS http://localhost:8080/ | grep dynamic-duo-64cdbc658
+                <div class="hostname">dynamic-duo-64cdbc658-78mw4</div>
+    mpatel@blr-mppb0 dynamic-duo % curl -sS http://localhost:8080/ | grep dynamic-duo-64cdbc658
+                <div class="hostname">dynamic-duo-64cdbc658-zltsq</div>
+    mpatel@blr-mppb0 dynamic-duo % 

@@ -10,4 +10,4 @@ Open Source Code.
 """
 
 # take argument and print encoded output
-print(ul.quote_plus(sys.argv[1]))
+print(ul.quote_plus(sys.argv[1],safe=';/?@=&'))
